@@ -1,0 +1,7 @@
+{
+  "extends": "tslint:all",
+  "rules": {
+    "file-name-casing": false,
+    "completed-docs": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0-pre",
+  "description": "phrase.shop, a web app to generate secure yet memorable passphrases",
+  "homepage": "https://github.com/philipmw/phrase.shop",
+  "license": "MIT",
+  "dependencies": {
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philipmw/phrase.shop"
+  },
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/react": "~16",
+    "@types/react-dom": "latest",
+    "enzyme": "latest",
+    "enzyme-adapter-react-16": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "ts-loader": "latest",
+    "tslint": "latest",
+    "typescript": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "webpack-dev-server": "latest"
+  },
+  "scripts": {
+    "build": "webpack --display-error-details && npm run lint",
+    "lint": "tslint -t verbose --project tsconfig.json --config tslint-src.json --exclude '**/*.test.tsx'",
+    "start": "webpack-dev-server --open",
+    "test": "tslint -t verbose --project tsconfig.json --config tslint-test.json '**/*.test.tsx' && jest"
+  }
+}
