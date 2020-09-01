@@ -2,13 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>phrase shop</title>
     <!-- update these versions only simultaneously with package.json -->
     <script type="text/javascript" src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
+    <style type="text/css">
+        div#phrase {
+            font-size: larger;
+            padding: 1em;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        div#generate {
+            margin: 1em;
+            text-align: center;
+        }
+        div#menu {
+            margin-top: 1em;
+        }
+        .part { display: inline-block; padding: 0.6em 0.1em; }
+        .part.type-english { background-color: lightyellow; color: black; }
+        .part.type-usstate { color: red; }
+        .part.type-color { color: blue; }
+        .part.type-digit { color: green; }
+        .part.type-symbol { color: darkgrey; }
+    </style>
 </head>
 <body>
-<h1>phrase shop</h1>
 <div id="app-root"></div>
 <!-- this must be the last line of body -->
 <script type="text/javascript" src="app.bundle.js"></script>

@@ -2,6 +2,9 @@
   "extends": "tslint:all",
   "rules": {
     "file-name-casing": false,
-    "completed-docs": false
+    "completed-docs": false,
+    "comment-format": false,
+    "typedef": false,
+    "no-bitwise": false
   }
 }
