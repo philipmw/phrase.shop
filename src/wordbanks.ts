@@ -1,12 +1,12 @@
 import shuffle from "fisher-yates";
 
 export enum PartType {
-  english = "e",
-  digit = "d",
-  usstate = "us",
-  color = "c",
-  symbol = "s",
-  musicalnote = "m",
+  english,
+  digit,
+  usstate,
+  color,
+  symbol,
+  musicalnote,
 }
 
 type Dict = {
