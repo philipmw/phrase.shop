@@ -6,6 +6,7 @@
     "allowJs": true,
     "noImplicitReturns": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "jsx": "react"
   },
   "include": [
