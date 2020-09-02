@@ -12,8 +12,14 @@ export enum PartType {
 type Dict = {
   [key in PartType]: string[];
 };
+
+// The following exists to try to satisfy TSLint.  Ideally I could convince
+// TSLint that `shuffle` is safe, but I have not been able to, so I at least
+// centralize its usage and disable warnings on this line.
+const typedShuffle = (things: string[]): string[] => shuffle(things); // tslint:disable-line
+
 export const dictionary: Dict = {
-  [PartType.english]: shuffle([ // http://ogden.basic-english.org/words.html
+  [PartType.english]: typedShuffle([ // http://ogden.basic-english.org/words.html
     // operations (100 words)
     "come", "get", "give", "go", "keep", "let", "make", "put", "seem", "take", "be", "do", "have", "say", "see", "send",
     "may", "will", "about", "across", "after", "against", "among", "at", "before", "between", "by", "down", "from",
@@ -92,16 +98,16 @@ export const dictionary: Dict = {
     "secret", "short", "shut", "simple", "slow", "small", "soft", "solid", "special", "strange", "thin", "white",
     "wrong",
   ]),
-  [PartType.digit]: shuffle(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
-  [PartType.usstate]: shuffle([
+  [PartType.digit]: typedShuffle(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
+  [PartType.usstate]: typedShuffle([
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
     "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
     "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
     "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]),
-  [PartType.color]: shuffle(["red", "orange", "yellow", "green", "blue", "purple", "brown", "black"]),
-  [PartType.symbol]: shuffle(["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "_", "+"]),
-  [PartType.musicalnote]: shuffle([
+  [PartType.color]: typedShuffle(["red", "orange", "yellow", "green", "blue", "purple", "brown", "black"]),
+  [PartType.symbol]: typedShuffle(["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "_", "+"]),
+  [PartType.musicalnote]: typedShuffle([
     "A", "Ab", "A#",
     "B", "Bb", "B#",
     "C", "Cb", "C#",
