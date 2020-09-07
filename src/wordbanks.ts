@@ -13,9 +13,9 @@ export enum PartType {
 export const partTypeList: PartType[] = [
   PartType.english,
   PartType.digit,
-  PartType.usstate,
-  PartType.color,
   PartType.symbol,
+  PartType.color,
+  PartType.usstate,
   PartType.musicalnote,
 ];
 
