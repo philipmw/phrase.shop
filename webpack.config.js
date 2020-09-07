@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development',
   entry: './src/App.tsx',
   output: {
-    path: path.resolve(__dirname, 'web'),
+    path: path.resolve(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
     filename: 'app.bundle.js'
   },
   externals: {
@@ -17,7 +17,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'web')
+    contentBase: path.join(__dirname, 'docs') //`docs` as a GitHub Pages requirement
   },
   resolve: {
     extensions: [

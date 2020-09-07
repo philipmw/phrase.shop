@@ -9,6 +9,16 @@ export enum PartType {
   musicalnote,
 }
 
+// This exists because iterating over an enum appears to be discouraged in TypeScript.
+export const partTypeList: PartType[] = [
+  PartType.english,
+  PartType.digit,
+  PartType.usstate,
+  PartType.color,
+  PartType.symbol,
+  PartType.musicalnote,
+];
+
 type Dict = {
   [key in PartType]: string[];
 };
@@ -18,8 +28,23 @@ type Dict = {
 // centralize its usage and disable warnings on this line.
 const typedShuffle = (things: string[]): string[] => shuffle(things); // tslint:disable-line
 
+const BINARY_BASE = 2;
+const ENGLISH_ENTROPY_BITS = 9;
+
+/**
+ * The dictionary works in one of two ways:
+ *
+ *   For English, I start with Ogden's Basic English, which has 850 words.  I want a whole number
+ *   of entropy bits, so I round down to 512 words, so I need to eliminate 338 words.  I choose to
+ *   eliminate the longest words, so I sort the original word list ascending by word length and take
+ *   the first (the shortest) 512 words.
+ *
+ *   For all other parts, I want a whole number of entropy bits without permanently eliminating
+ *   any particular value.  Each time the app starts, it shuffles the full set so that the bottom
+ *   2^n elements of the resulting list are different each time the program runs.
+ */
 export const dictionary: Dict = {
-  [PartType.english]: typedShuffle([ // http://ogden.basic-english.org/words.html
+  [PartType.english]: [ // http://ogden.basic-english.org/words.html
     // operations (100 words)
     "come", "get", "give", "go", "keep", "let", "make", "put", "seem", "take", "be", "do", "have", "say", "see", "send",
     "may", "will", "about", "across", "after", "against", "among", "at", "before", "between", "by", "down", "from",
@@ -47,7 +72,7 @@ export const dictionary: Dict = {
     "judge", "jump", "kick", "kiss", "knowledge", "land", "language", "laugh", "law", "lead", "learning", "leather",
     "letter", "level", "lift", "light", "limit", "linen", "liquid", "list", "look", "loss", "love", "machine", "man",
     "manager", "mark", "market", "mass", "meal", "measure", "meat", "meeting", "memory", "metal", "middle", "milk",
-    "mind", "mine", "minute", "mist", "money", "month", "morning ,mother", "motion", "mountain", "move", "music",
+    "mind", "mine", "minute", "mist", "money", "month", "morning", "mother", "motion", "mountain", "move", "music",
     "name", "nation", "need", "news", "night", "noise", "note", "number", "observation", "offer", "oil", "operation",
     "opinion", "order", "organization", "ornament", "owner", "page", "pain", "paint", "paper", "part", "paste",
     "payment", "peace", "person", "place", "plant", "play", "pleasure", "point", "poison", "polish", "porter",
@@ -97,7 +122,9 @@ export const dictionary: Dict = {
     "late", "left", "loose", "loud", "low", "mixed", "narrow", "old", "opposite", "public", "rough", "sad", "safe",
     "secret", "short", "shut", "simple", "slow", "small", "soft", "solid", "special", "strange", "thin", "white",
     "wrong",
-  ]),
+  ]
+    .sort((a, b) => a.length - b.length)
+    .slice(0, Math.pow(BINARY_BASE, ENGLISH_ENTROPY_BITS)),
   [PartType.digit]: typedShuffle(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
   [PartType.usstate]: typedShuffle([
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -105,7 +132,12 @@ export const dictionary: Dict = {
     "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
     "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]),
-  [PartType.color]: typedShuffle(["red", "orange", "yellow", "green", "blue", "purple", "brown", "black"]),
+  [PartType.color]: typedShuffle([ // https://en.wikipedia.org/wiki/List_of_software_palettes#Microsoft_Windows_default_16-color_palette
+    "black", "maroon", "green", "olive",
+    "navy", "purple", "teal", "silver",
+    "gray", "red", "lime", "yellow",
+    "blue", "fuchsia", "aqua", "white",
+  ]),
   [PartType.symbol]: typedShuffle(["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "_", "+"]),
   [PartType.musicalnote]: typedShuffle([
     "A", "Ab", "A#",
@@ -117,11 +149,45 @@ export const dictionary: Dict = {
     "G", "Gb", "G#"]),
 };
 
-export const entropyReq = {
-  [PartType.english]: 9,
-  [PartType.digit]: 3,
-  [PartType.usstate]: 5,
-  [PartType.color]: 3,
-  [PartType.symbol]: 4,
-  [PartType.musicalnote]: 4,
+interface IProps {
+  entropyReqBits: number;
+  maxLength: number;
+  minLength: number;
+
+}
+type Props = {
+  [key in PartType]: IProps
+};
+
+export const partTypeProps: Props = {
+  [PartType.english]: {
+    entropyReqBits: ENGLISH_ENTROPY_BITS,
+    maxLength: Math.max(...dictionary[PartType.english].map((entry) => entry.length)),
+    minLength: Math.min(...dictionary[PartType.english].map((entry) => entry.length)),
+  },
+  [PartType.digit]: {
+    entropyReqBits: 3,
+    maxLength: 1,
+    minLength: 1,
+  },
+  [PartType.usstate]: {
+    entropyReqBits: 5,
+    maxLength: 2,
+    minLength: 2,
+  },
+  [PartType.color]: {
+    entropyReqBits: 4,
+    maxLength: Math.max(...dictionary[PartType.color].map((entry) => entry.length)),
+    minLength: Math.min(...dictionary[PartType.color].map((entry) => entry.length)),
+  },
+  [PartType.symbol]: {
+    entropyReqBits: 4,
+    maxLength: 1,
+    minLength: 1,
+  },
+  [PartType.musicalnote]: {
+    entropyReqBits: 4,
+    maxLength: 2,
+    minLength: 1,
+  },
 };

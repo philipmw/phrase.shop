@@ -8,13 +8,13 @@ configure({ adapter: new Adapter() });
 
 describe("Heading", () => {
   it("renders a <h2>", () => {
-    const wrapper = shallow(<Phrase parts={[]}/>);
+    const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
     expect(wrapper.type())
         .toBe("h2");
   });
 
   it("puts the `text` attribute inside <h2>", () => {
-    const wrapper = shallow(<Phrase parts={[]}/>);
+    const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
     expect(wrapper.text())
         .toBe("blah");
   });

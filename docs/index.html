@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>phrase shop</title>
+    <!-- update these versions only simultaneously with package.json -->
+<!--    <script type="text/javascript" src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>-->
+<!--    <script type="text/javascript" src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>-->
+    <script type="text/javascript" src="https://unpkg.com/react@16.13.1/umd/react.production.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.production.min.js"></script>
+    <style type="text/css">
+        button .callToAction {
+            font-weight: bold;
+        }
+        div#app-root {
+            background-color: #f0f0f0;
+            padding: 1em;
+        }
+
+        div#main-action {
+            margin: 1em;
+            text-align: center;
+        }
+        div#menu {
+            margin-top: 1em;
+        }
+        div#phrase {
+            font-size: 24pt;
+            padding: 0.5em;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        div#welcome {
+            font-style: italic;
+        }
+        .part { display: inline-block; padding: 0.1em 0.1em; }
+        .part.plain { font-family: monospace; font-weight: bold; }
+        .part.unset { font-style: italic; font-weight: lighter; }
+        .part.type-english { }
+        .part.type-usstate { color: red; }
+        .part.type-color { color: blue; }
+        .part.type-digit { color: green; }
+        .part.type-symbol { color: darkgrey; }
+        .part.type-musicalnote { background-color: lightyellow; color: black; }
+    </style>
+</head>
+<body>
+<div id="app-root"></div>
+
+<div id="about">
+    <p>This small web app was invented and built by me, <a href="https://github.com/philipmw">Philip White</a>.</p>
+    <p>I was inspired by <a href="https://dicekeys.com">DiceKeys</a> and <a href="https://en.wikipedia.org/wiki/Diceware">Diceware</a>, but all implementations of Diceware that I could find online were DIY: throw dice, manually look it up in a table.  I wanted a one-stop shop for myself, so I built this.  I also find randomness fascinating, and building this app was an opportunity to explore it.</p>
+    <p>This app has the highest respect for your privacy.  It generates passphrases entirely offline, and does not use any tracking technologies.</p>
+    <p>Feel free to get in touch and say hello.  This app is <a href="https://github.com/philipmw/phrase.shop">developed and hosted on GitHub</a> and licensed under MIT.  I welcome your contributions.</p>
+</div>
+<!-- this must be the last line of body -->
+<script type="text/javascript" src="app.bundle.js"></script>
+</body>
+</html>

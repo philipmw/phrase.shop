@@ -9,6 +9,7 @@ import * as wb from "./wordbanks";
 
 interface IState {
   entropySource: IEntropySource;
+  isGenerated: boolean;
   phraseParts: IPartProps[];
 }
 
@@ -17,35 +18,49 @@ class App extends React.PureComponent<{}, IState> {
     super(props);
     this.state = {
       entropySource: new ComputerEntropySource(),
+      isGenerated: false,
       phraseParts: [],
     };
   }
 
   public render() {
     return <div>
-      <Phrase parts={this.state.phraseParts}/>
-      <Menu addPhrasePart={this.addPhrasePart} generatePlaintext={this.generatePlaintext}/>
-      <Entropy sourceName={this.state.entropySource.name} bitsAvailable={this.state.entropySource.bitsAvailable()}/>
+      <Phrase isGenerated={this.state.isGenerated}
+              parts={this.state.phraseParts}/>
+      <Menu addPhrasePart={this.addPhrasePart}
+            generatePlaintext={this.generatePlaintext}
+            isGenerated={this.state.isGenerated}
+            reset={this.reset}/>
+      <Entropy sourceName={this.state.entropySource.name}
+               bitsAvailable={this.state.entropySource.bitsAvailable()}/>
     </div>;
   }
 
   private readonly addPhrasePart = (type: wb.PartType) => {
     this.setState((state) => ({
+      isGenerated: false,
       phraseParts: state.phraseParts.concat({key: this.state.phraseParts.length, type}),
     }));
   }
 
   private readonly generatePlaintext = () => {
     this.setState((state) => ({
+      isGenerated: true,
       phraseParts: state.phraseParts.map((part) => ({
         ...part,
         plaintext: wb.dictionary[part.type][
-          this.state.entropySource.getBits(wb.entropyReq[part.type])
+          this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits)
           ],
       })),
     }));
   }
 
+  private readonly reset = () => {
+    this.setState((state) => ({
+      isGenerated: false,
+      phraseParts: [],
+    }));
+  }
 }
 
 ReactDOM.render(

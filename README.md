@@ -2,6 +2,13 @@
 
 [**phrase.shop**](https://phrase.shop) is a small web app to generate secure yet memorable passphrases.
 
+Some references:
+
+* [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
+* [Fair coin (Wikipedia)](https://en.wikipedia.org/wiki/Fair_coin)
+* [How To Turn Loaded Dice into Fair Coins](http://markus-jakobsson.com/papers/jakobsson-ieeeit00.pdf)
+* [Gist: atoponce/bias.py](https://gist.github.com/atoponce/c594f6463cdf067ea8cabd899939c24f)
+
 ## Prerequisites
 
 Install [`npm`](https://www.npmjs.com/) using whatever

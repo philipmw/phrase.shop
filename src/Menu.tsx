@@ -1,32 +1,73 @@
 import * as React from "react";
 
-import * as wb from "./wordbanks";
+import { PartType, partTypeList, partTypeProps } from "./wordbanks";
 
 interface IProps {
-  addPhrasePart(type: wb.PartType): void;
+  isGenerated: boolean;
+
+  addPhrasePart(type: PartType): void;
   generatePlaintext(): void;
+  reset(): void;
 }
+
+interface IMenuEntry {
+  name: string;
+}
+
+type MenuData = {
+  [key in PartType]: IMenuEntry
+};
+
+const menuData: MenuData = {
+  [PartType.english]: {
+    name: "simple english",
+  },
+  [PartType.digit]: {
+    name: "digit",
+  },
+  [PartType.usstate]: {
+    name: "US state abbr",
+  },
+  [PartType.color]: {
+    name: "color",
+  },
+  [PartType.symbol]: {
+    name: "symbol",
+  },
+  [PartType.musicalnote]: {
+    name: "musical note",
+  },
+};
 
 export class Menu extends React.PureComponent<IProps> {
   public render() {
+    if (this.props.isGenerated) {
+      return <div id="main-action">
+        <button type="button" onClick={() => { this.props.reset(); }}>start over</button>
+      </div>;
+    }
+
+    const menuItems = partTypeList.map((menuItem) => {
+      const lengthStr = partTypeProps[menuItem].minLength === partTypeProps[menuItem].maxLength
+        ? `${partTypeProps[menuItem].minLength}`
+        : `${partTypeProps[menuItem].minLength}-${partTypeProps[menuItem].maxLength}`;
+
+      return <button type="button" key={menuItem} onClick={() => { this.props.addPhrasePart(menuItem); }}>
+        <span className="callToAction">
+          + { menuData[menuItem].name }
+        </span> ({partTypeProps[menuItem].entropyReqBits} bits, length {lengthStr})
+      </button>;
+    });
+
     return <div id="menu">
       <div id="add-components">
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.english); }}
-          value="+ simple english"/>
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.usstate); }}
-          value="+ US state abbr"/>
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.color); }}
-          value="+ color"/>
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.digit); }}
-          value="+ digit"/>
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.symbol); }}
-          value="+ symbol"/>
-        <input type="button" onClick={() => { this.props.addPhrasePart(wb.PartType.musicalnote); }}
-          value="+ musical note"/>
+        {menuItems}
       </div>
-      <div id="generate">
-        <input type="button" onClick={() => { this.props.generatePlaintext(); }}
-          value="generate!"/>
+
+      <div id="main-action">
+        <button type="button" onClick={() => { this.props.generatePlaintext(); }}>
+          <span className="callToAction" >generate!</span>
+        </button>
       </div>
     </div>;
   }
