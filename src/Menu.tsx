@@ -4,6 +4,7 @@ import { PartType, partTypeList, partTypeProps } from "./wordbanks";
 
 interface IProps {
   isGenerated: boolean;
+  qtyOfPhraseParts: number;
 
   addPhrasePart(type: PartType): void;
   generatePlaintext(): void;
@@ -65,7 +66,9 @@ export class Menu extends React.PureComponent<IProps> {
       </div>
 
       <div id="main-action">
-        <button type="button" onClick={() => { this.props.generatePlaintext(); }}>
+        <button type="button"
+                disabled={this.props.qtyOfPhraseParts === 0}
+                onClick={() => { this.props.generatePlaintext(); }}>
           <span className="callToAction" >generate!</span>
         </button>
       </div>

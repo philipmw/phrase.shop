@@ -30,6 +30,7 @@ class App extends React.PureComponent<{}, IState> {
       <Menu addPhrasePart={this.addPhrasePart}
             generatePlaintext={this.generatePlaintext}
             isGenerated={this.state.isGenerated}
+            qtyOfPhraseParts={this.state.phraseParts.length}
             reset={this.reset}/>
       <Entropy sourceName={this.state.entropySource.name}
                bitsAvailable={this.state.entropySource.bitsAvailable()}/>
