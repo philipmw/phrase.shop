@@ -19,8 +19,8 @@ type MenuData = {
 };
 
 const menuData: MenuData = {
-  [PartType.english]: {
-    name: "simple english",
+  [PartType.word]: {
+    name: "word",
   },
   [PartType.digit]: {
     name: "digit",
