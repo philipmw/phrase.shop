@@ -60,7 +60,21 @@
         div#welcome {
             font-style: italic;
         }
-        .part { display: inline-block; padding: 0.1em 0.1em; }
+        .part {
+            display: inline-block;
+            padding: 0.1em 0.1em;
+            animation-duration: 200ms;
+            animation-name: phrase-fadein;
+            animation-timing-function: ease-in;
+        }
+        @keyframes phrase-fadein {
+            from {
+                color: #1a1a1a;
+            }
+            to {
+                color: #e0e0e0;
+            }
+        }
         .part.plain { font-family: monospace; font-weight: bold; }
         .part.unset { font-style: italic; font-weight: lighter; }
         .part.type-english { }
