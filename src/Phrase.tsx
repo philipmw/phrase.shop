@@ -42,7 +42,7 @@ export class Phrase extends React.PureComponent<IProps> {
     return <div>
       <p>
         This passphrase { this.props.isGenerated ? "is" : "will be" } { lengthText } characters in length
-        and { this.props.isGenerated ? "" : "will" } cost this shop { bitsOfEntropy } bits of entropy to generate:</p>
+        and { this.props.isGenerated ? "" : "will" } cost { bitsOfEntropy } bits of entropy to generate:</p>
       <div id="phrase">
         {this.props.parts.map((part) => <span key={part.key}><pp.PhrasePart {...part}/></span>)}
       </div>
