@@ -41,9 +41,9 @@ Build:
 
     $ npm run build
 
-This will create `web/app.bundle.js`.
+This will create `docs/app.bundle.js`.
 
-Then upload the contents of `web/` to your web host.
+Then upload the contents of `docs/` to your web host.
 
 # React/TS template #
 
