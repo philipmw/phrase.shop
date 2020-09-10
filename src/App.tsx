@@ -23,6 +23,13 @@ class App extends React.PureComponent<{}, IState> {
     };
   }
 
+  public componentDidMount = () => {
+    console.log("Welcome to phrase.shop.");
+    wb.partTypeList.forEach((partType) => {
+      console.log(`${partType} dictionary initialized with ${wb.dictionary[partType].length} elements`);
+    });
+  }
+
   public render() {
     return <div>
       <Phrase isGenerated={this.state.isGenerated}
