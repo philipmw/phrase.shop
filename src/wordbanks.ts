@@ -30,6 +30,7 @@ const typedShuffle = (things: string[]): string[] => shuffle(things); // tslint:
 
 const BINARY_BASE = 2;
 const ENGLISH_ENTROPY_BITS = 10;
+const MIN_ALLOWED_WORD_LENGTH = 4;
 
 /**
  * The dictionary works in one of two ways:
@@ -37,7 +38,7 @@ const ENGLISH_ENTROPY_BITS = 10;
  *   For English, I use the Voice Of America Special English.  See the `voa/` subdirectory
  *   for a script that generates the wordbank.  This script outputs 1,517 words.  I want a
  *   power of two elements in the wordbank, so I want to round down to 1,024 words.
- *   I choose to eliminate the longest words, to give the customer the biggest bang
+ *   I choose to eliminate the shortest and longest words, to give the customer the biggest bang
  *   for their buck.
  *
  *   For all other parts, I want a whole number of entropy bits without permanently eliminating
@@ -1564,6 +1565,7 @@ export const dictionary: Dict = {
     "stomach",
     "uterus",
   ]
+    .filter((a) => a.length >= MIN_ALLOWED_WORD_LENGTH)
     .sort((a, b) => a.length - b.length)
     .slice(0, Math.pow(BINARY_BASE, ENGLISH_ENTROPY_BITS)),
   [PartType.digit]: typedShuffle(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
