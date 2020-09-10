@@ -1,12 +1,12 @@
 import shuffle from "fisher-yates";
 
 export enum PartType {
-  word,
-  digit,
-  usstate,
-  color,
-  symbol,
-  musicalnote,
+  word = "word",
+  digit = "digit",
+  usstate = "usstate",
+  color = "color",
+  symbol = "symbol",
+  musicalnote = "musicalnote",
 }
 
 // This exists because iterating over an enum appears to be discouraged in TypeScript.

@@ -6,16 +6,14 @@ import { Phrase } from "./Phrase";
 
 configure({ adapter: new Adapter() });
 
-describe("Heading", () => {
-  it("renders a <h2>", () => {
+describe("Phrase", () => {
+  it("renders a welcome div when there are no parts", () => {
     const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
     expect(wrapper.type())
-        .toBe("h2");
-  });
-
-  it("puts the `text` attribute inside <h2>", () => {
-    const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
+      .toBe("div");
+    expect(wrapper.is("#welcome"))
+      .toBeTruthy();
     expect(wrapper.text())
-        .toBe("blah");
+      .toMatch(/welcome to phrase shop/);
   });
 });
