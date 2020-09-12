@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
@@ -7,17 +6,21 @@ import { Menu } from "./Menu";
 import { IPartProps, Phrase } from "./Phrase";
 import * as wb from "./wordbanks";
 
+interface IProps {
+  entropySource?: IEntropySource;
+}
+
 interface IState {
   entropySource: IEntropySource;
   isGenerated: boolean;
   phraseParts: IPartProps[];
 }
 
-class App extends React.PureComponent<{}, IState> {
-  public constructor(props: {}) {
+export class App extends React.PureComponent<IProps, IState> {
+  public constructor(props: IProps) {
     super(props);
     this.state = {
-      entropySource: new ComputerEntropySource(),
+      entropySource: props.entropySource !== undefined ? props.entropySource : new ComputerEntropySource(),
       isGenerated: false,
       phraseParts: [],
     };
@@ -70,8 +73,3 @@ class App extends React.PureComponent<{}, IState> {
     }));
   }
 }
-
-ReactDOM.render(
-  <App/>,
-  document.getElementById("app-root"),
-);

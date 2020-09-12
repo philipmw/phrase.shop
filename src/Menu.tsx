@@ -44,7 +44,7 @@ export class Menu extends React.PureComponent<IProps> {
   public render() {
     if (this.props.isGenerated) {
       return <div id="main-action">
-        <button type="button" onClick={() => { this.props.reset(); }}>start over</button>
+        <button type="button" id="reset" onClick={() => { this.props.reset(); }}>start over</button>
       </div>;
     }
 
@@ -53,7 +53,10 @@ export class Menu extends React.PureComponent<IProps> {
         ? `${partTypeProps[menuItem].minLength}`
         : `${partTypeProps[menuItem].minLength}-${partTypeProps[menuItem].maxLength}`;
 
-      return <button type="button" key={menuItem} onClick={() => { this.props.addPhrasePart(menuItem); }}>
+      return <button type="button"
+                     className={`add ${menuItem}`}
+                     key={menuItem}
+                     onClick={() => { this.props.addPhrasePart(menuItem); }}>
         <span className="callToAction">
           + { menuData[menuItem].name }
         </span> ({partTypeProps[menuItem].entropyReqBits} bits, length {lengthStr})
@@ -67,6 +70,7 @@ export class Menu extends React.PureComponent<IProps> {
 
       <div id="main-action">
         <button type="button"
+                id="generate"
                 disabled={this.props.qtyOfPhraseParts === 0}
                 onClick={() => { this.props.generatePlaintext(); }}>
           <span className="callToAction" >generate!</span>

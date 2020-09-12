@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/App.tsx',
+  entry: './src/appEntry.tsx',
   output: {
     path: path.resolve(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
     filename: 'app.bundle.js'
