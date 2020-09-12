@@ -2,12 +2,12 @@
 
 [**phrase.shop**](https://phrase.shop) is a small web app to generate secure yet memorable passphrases.
 
-Some references:
+![](./screenshot-iPhoneX.png)
 
+## Purpose
+
+* [You Should Probably Change Your Password](https://www.youtube.com/watch?v=aHaBH4LqGsI)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
-* [Fair coin (Wikipedia)](https://en.wikipedia.org/wiki/Fair_coin)
-* [How To Turn Loaded Dice into Fair Coins](http://markus-jakobsson.com/papers/jakobsson-ieeeit00.pdf)
-* [Gist: atoponce/bias.py](https://gist.github.com/atoponce/c594f6463cdf067ea8cabd899939c24f)
 
 ## Prerequisites
 
@@ -48,3 +48,7 @@ Then upload the contents of `docs/` to your web host.
 # React/TS template #
 
 The React/TS template for this web app came from https://github.com/philipmw/spa-template.
+
+# favicon #
+
+I made the favicon with Inkscape 1.0, with all the creativity that I could muster.
