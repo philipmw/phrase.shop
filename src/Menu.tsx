@@ -43,8 +43,16 @@ const menuData: MenuData = {
 export class Menu extends React.PureComponent<IProps> {
   public render() {
     if (this.props.isGenerated) {
-      return <div id="main-action">
-        <button type="button" id="reset" onClick={() => { this.props.reset(); }}>start over</button>
+      return <div id="main-actions">
+        <button type="button"
+                id="reset"
+                onClick={() => { this.props.reset(); }}>⇠ start over</button>
+        <button type="button"
+                id="generate"
+                disabled={this.props.qtyOfPhraseParts === 0}
+                onClick={() => { this.props.generatePlaintext(); }}>
+          <span className="callToAction" >↻ regenerate</span>
+        </button>
       </div>;
     }
 
@@ -68,7 +76,12 @@ export class Menu extends React.PureComponent<IProps> {
         {menuItems}
       </div>
 
-      <div id="main-action">
+      <div id="main-actions">
+        <button type="button"
+                id="reset"
+                disabled={this.props.qtyOfPhraseParts === 0}
+                onClick={() => { this.props.reset(); }}>
+          ⇠ start over</button>
         <button type="button"
                 id="generate"
                 disabled={this.props.qtyOfPhraseParts === 0}

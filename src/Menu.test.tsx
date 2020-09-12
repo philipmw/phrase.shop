@@ -36,10 +36,14 @@ describe("Menu", () => {
         .toBeTruthy();
     });
 
-    it("does not have a Start Over button", () => {
+    it("has a disabled Start Over button", () => {
       const buttonWrapper = wrapper.find("button#reset");
       expect(buttonWrapper)
-        .toHaveLength(0);
+        .toHaveLength(1);
+      expect(buttonWrapper
+        .render()
+        .attr("disabled"))
+        .toBeTruthy();
     });
 
     it("adds a phrase part on clicking an Add button", () => {
@@ -69,10 +73,14 @@ describe("Menu", () => {
         .toBeFalsy();
     });
 
-    it("does not have a Start Over button", () => {
+    it("has an enabled Start Over button", () => {
       const buttonWrapper = wrapper.find("button#reset");
       expect(buttonWrapper)
-        .toHaveLength(0);
+        .toHaveLength(1);
+      expect(buttonWrapper
+        .render()
+        .attr("disabled"))
+        .toBeFalsy();
     });
 
     it("generates the phrase on clicking the Generate button", () => {
@@ -97,10 +105,21 @@ describe("Menu", () => {
         .toHaveLength(0);
     });
 
-    it("does not have a Generate button", () => {
+    it("has an enabled Generate button", () => {
       const buttonWrapper = wrapper.find("button#generate");
       expect(buttonWrapper)
-        .toHaveLength(0);
+        .toHaveLength(1);
+      expect(buttonWrapper
+        .render()
+        .attr("disabled"))
+        .toBeFalsy();
+    });
+
+    it("regenerates the phrase on clicking the Generate button", () => {
+      const buttonWrapper = wrapper.find("button#generate");
+      buttonWrapper.simulate("click");
+      expect(generatePlaintextFn)
+        .toHaveBeenCalled();
     });
 
     it("has a Start Over button", () => {
