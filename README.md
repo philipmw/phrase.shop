@@ -9,22 +9,28 @@
 * [You Should Probably Change Your Password](https://www.youtube.com/watch?v=aHaBH4LqGsI)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
 
-## Prerequisites
+## Developing
+
+![](https://github.com/philipmw/phrase.shop/workflows/Continuous%20Integration/badge.svg)
+
+I welcome your contributions.
+
+### Prerequisites
 
 Install [`npm`](https://www.npmjs.com/) using whatever
 means is most convenient for you, such as [Homebrew](https://brew.sh/) on macOS.
 
-## Initialization
+### Initialization
 
     $ npm install
  
 This creates a `node_modules` directory.
 
-## Unit-test
+### Unit-test
 
     $ npm test
 
-## View locally
+### View locally
 
     $ npm start
 
@@ -35,7 +41,7 @@ in the browser immediately.
 The other way that works is to build the app explicitly (`npm run build`), then
 simply open _index.html_ from the local filesystem in the browser.
 
-## Publish to the Internet
+### Publish to the Internet
 
 Build:
 
@@ -45,10 +51,10 @@ This will create `docs/app.bundle.js`.
 
 Then upload the contents of `docs/` to your web host.
 
-# React/TS template #
+### React/TS template
 
 The React/TS template for this web app came from https://github.com/philipmw/spa-template.
 
-# favicon #
+### favicon
 
 I made the favicon with Inkscape 1.0, with all the creativity that I could muster.
