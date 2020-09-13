@@ -13,7 +13,18 @@ interface IProps {
   setEntropySource(source: IEntropySource): void;
 }
 
-export class Entropy extends React.PureComponent<IProps> {
+interface IState {
+  diceSides: number;
+}
+
+export class Entropy extends React.PureComponent<IProps, IState> {
+  public constructor(props: IProps) {
+    super(props);
+    this.state = {
+      diceSides: 6, // can't go wrong with good ol' 6
+    };
+  }
+
   public render() {
     if (this.props.bitsNeeded === 0) {
       return <div id="entropy"></div>;
@@ -51,10 +62,18 @@ export class Entropy extends React.PureComponent<IProps> {
         this.props.source instanceof DiceEntropySource
         ? <Dice bitsAvailable={this.props.bitsAvailable}
                 bitsNeeded={this.props.bitsNeeded}
+                diceSides={this.state.diceSides}
+                onDiceSidesChange={this.onDiceSidesChange}
                 onEntropyChange={this.props.onEntropyChange}
                 source={this.props.source}/>
         : undefined
       }
     </div>;
+  }
+
+  private readonly onDiceSidesChange = (newSides: number) => {
+    this.setState((state) => ({
+      diceSides: newSides,
+    }));
   }
 }

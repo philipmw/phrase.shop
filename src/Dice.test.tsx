@@ -9,12 +9,15 @@ configure({ adapter: new Adapter() });
 
 describe("Dice", () => {
   it("displays entropy collected", () => {
+    const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
     source.submitRoll(5, 8); // For a scoach of entropy
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
                                   bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
@@ -22,12 +25,15 @@ describe("Dice", () => {
       .toMatch(/Entropy collected: 3 out of 5 bits/);
   });
 
-  it("renders six dice roll values to start", () => {
+  it("renders roll buttons for its sides", () => {
+    const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
                                   bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
@@ -36,11 +42,14 @@ describe("Dice", () => {
   });
 
   it("submits rolls to the DiceEntropySource", () => {
+    const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
                                   bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
@@ -53,19 +62,20 @@ describe("Dice", () => {
   });
 
   it("supports changing dice sides", () => {
+    const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
                                   bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
-    expect(wrapper.find("div#dice-roll-values button"))
-      .toHaveLength(6);
-    wrapper.find("input#dice-sides-slider")
+    wrapper.find("input#number-input")
       .simulate("change", { target: { valueAsNumber: 16 }});
-    expect(wrapper.find("div#dice-roll-values button"))
-      .toHaveLength(16);
+    expect(onDiceSidesChangeFn)
+      .toHaveBeenCalledWith(16);
   });
 });

@@ -5,25 +5,16 @@ import { DiceEntropySource } from "./DiceEntropySource";
 interface IProps {
   bitsAvailable: number;
   bitsNeeded: number;
+  diceSides: number;
   source: DiceEntropySource;
+  onDiceSidesChange(newSides: number): void;
   onEntropyChange(): void;
 }
 
-interface IState {
-  diceSides: number;
-}
-
-export class Dice extends React.PureComponent<IProps, IState> {
-  public constructor(props: IProps) {
-    super(props);
-    this.state = {
-      diceSides: 6,
-    };
-  }
-
+export class Dice extends React.PureComponent<IProps> {
   public render() {
-    const a: number[] = new Array(this.state.diceSides);
-    for (let i = 0; i < this.state.diceSides; i += 1) {
+    const a: number[] = new Array(this.props.diceSides);
+    for (let i = 0; i < this.props.diceSides; i += 1) {
       a[i] = i + 1; // dice are 1-based
     }
 
@@ -33,30 +24,33 @@ export class Dice extends React.PureComponent<IProps, IState> {
       </p>
       <progress id="entropyBits" max={this.props.bitsNeeded} value={this.props.source.bitsAvailable()}/>
 
-      <p>
-        How many sides do your dice have?
-        <input type="range"
-               id="dice-sides-slider"
-               min="2"
-               max="100"
-               value={ this.state.diceSides }
-               onChange={(what) => {
-                 const newSides = what.target.valueAsNumber;
-                 this.setState((state) => ({
-                   diceSides: newSides,
-                 }));
-               }}/>
-        { this.state.diceSides }
-      </p>
+      <div id="dice-sides">
+        <p>
+          How many sides do your dice have?&nbsp;
+          <input type="number"
+                 id="number-input"
+                 min="2"
+                 max="100"
+                 value={ this.props.diceSides }
+                 onChange={(what) => {
+                   const newSides = what.target.valueAsNumber;
+                   this.props.onDiceSidesChange(newSides);
+                 }}/>
+        </p>
 
-      <p>Roll your physical dice, then record the outcome here.</p>
+      </div>
+
+      <p>
+        Roll your physical dice, then record the outcomes here.
+        Not all your rolls may add entropy.
+        Keep rolling until you collect enough entropy for your phrase.</p>
 
       <div id="dice-roll-values">
         { a.map((i: number) =>
           <button key={i}
                   name="rollValue"
                   onClick={() => {
-                    this.props.source.submitRoll(i, this.state.diceSides);
+                    this.props.source.submitRoll(i, this.props.diceSides);
                     this.props.onEntropyChange();
                   }}
                   value={i}>
