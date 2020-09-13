@@ -37,7 +37,7 @@ export class Phrase extends React.PureComponent<IProps> {
       <p id="stats">
         {
           this.props.isGenerated
-            ? `Thank you for your business. Your new passphrase is ${lengthText} characters long.`
+            ? `Thank you for your patronage. Your new passphrase is ${lengthText} characters long.`
             : `This passphrase will be ${lengthText} characters long.`
         }
       </p>

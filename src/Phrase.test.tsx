@@ -73,7 +73,7 @@ describe("Phrase", () => {
         .find("#stats")
         .render()
         .text())
-        .toEqual("Thank you for your business. Your new passphrase is 6 characters long.");
+        .toEqual("Thank you for your patronage. Your new passphrase is 6 characters long.");
     });
 
     it("renders phrase parts", () => {
