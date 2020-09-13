@@ -39,7 +39,7 @@ describe("Phrase", () => {
         .find("#stats")
         .render()
         .text())
-        .toEqual("This passphrase will be 5-8 characters in length and will cost 13 bits of entropy to generate:");
+        .toEqual("This passphrase will be 5-8 characters long.");
     });
 
     it("renders phrase parts", () => {
@@ -73,7 +73,7 @@ describe("Phrase", () => {
         .find("#stats")
         .render()
         .text())
-        .toEqual("This passphrase is 6 characters in length and cost 13 bits of entropy to generate:");
+        .toEqual("Thank you for your business. Your new passphrase is 6 characters long.");
     });
 
     it("renders phrase parts", () => {

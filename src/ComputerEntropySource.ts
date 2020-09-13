@@ -1,10 +1,13 @@
 const BINARY_BASE = 2;
 const MAX_BITS = 32;
+const BITS_ADVERTISED = 9999;
 
 export class ComputerEntropySource implements IEntropySource {
-  public readonly name = "your computer";
-
-  public readonly bitsAvailable = () => (-1);
+  // We support infinite bits!
+  // But, psst... don't request more than 32 at a time.
+  // This is a compromise to simplify the code.
+  // It is fine until we have a phrase part that demands >32 bits.  Unlikely.
+  public readonly bitsAvailable = () => (BITS_ADVERTISED);
 
   public readonly getBits = (qty: number): number => {
     if (qty > MAX_BITS) {

@@ -4,6 +4,7 @@
     "file-name-casing": false,
     "no-implicit-dependencies": false,
     "no-unsafe-any": false,
-    "typedef": false
+    "typedef": false,
+    "no-magic-numbers": false
   }
 }

@@ -13,10 +13,6 @@ interface IProps {
 }
 
 export class Phrase extends React.PureComponent<IProps> {
-  public constructor(props: IProps) {
-    super(props);
-  }
-
   public render() {
     if (this.props.parts.length === 0) {
       return <div id="welcome">
@@ -36,13 +32,15 @@ export class Phrase extends React.PureComponent<IProps> {
       }),
       {max: 0, min: 0});
     const lengthText = len.min === len.max ? `${len.min}` : `${len.min}-${len.max}`;
-    const bitsOfEntropy = this.props.parts.reduce(
-      (acc, pprops) => (acc + wb.partTypeProps[pprops.type].entropyReqBits), 0);
 
     return <div>
       <p id="stats">
-        This passphrase { this.props.isGenerated ? "is" : "will be" } { lengthText } characters in length
-        and { this.props.isGenerated ? "" : "will " }cost { bitsOfEntropy } bits of entropy to generate:</p>
+        {
+          this.props.isGenerated
+            ? `Thank you for your business. Your new passphrase is ${lengthText} characters long.`
+            : `This passphrase will be ${lengthText} characters long.`
+        }
+      </p>
       <div id="phrase">
         {this.props.parts.map((part) => <span key={part.key}><pp.PhrasePart {...part}/></span>)}
       </div>

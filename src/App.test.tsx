@@ -25,7 +25,6 @@ describe("App", () => {
         .mockImplementation(() => (-1)),
       getBits: jest.fn()
         .mockImplementation(() => (0)),
-      name: "test entropy source",
     };
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
 
@@ -59,5 +58,41 @@ describe("App", () => {
       .reset();
     expect(wrapper.state())
       .toEqual(initialState);
+  });
+
+  it("updates entropy attributes on entropy change", () => {
+    let bitsAvailable = 5;
+    const entropySourceMock: IEntropySource = {
+      bitsAvailable: () => (bitsAvailable),
+      getBits: () => { throw new Error("unsupported"); },
+    };
+    const wrapper = shallow(<App entropySource={entropySourceMock}/>);
+    expect(wrapper.state()
+      .entropyBitsAvailable)
+      .toEqual(5);
+
+    bitsAvailable = 17;
+    wrapper.instance()
+      .onEntropyChange();
+    expect(wrapper.state()
+      .entropyBitsAvailable)
+      .toEqual(17);
+  });
+
+  it("updates entropy source when asked", () => {
+    const wrapper = shallow(<App/>);
+    const entropySourceMock: IEntropySource = {
+      bitsAvailable: () => (5),
+      getBits: () => { throw new Error("unsupported"); },
+    };
+    expect(wrapper.state()
+      .entropySource)
+      .not
+      .toEqual(entropySourceMock);
+    wrapper.instance()
+      .setEntropySource(entropySourceMock);
+    expect(wrapper.state()
+      .entropySource)
+      .toEqual(entropySourceMock);
   });
 });

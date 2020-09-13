@@ -29,8 +29,8 @@
   },
   "scripts": {
     "build": "webpack --display-error-details && npm run lint",
-    "lint": "tslint -t verbose --project tsconfig.json --config tslint-src.json --exclude '**/*.test.tsx'",
+    "lint": "tslint -t verbose --project tsconfig.json --config tslint-src.json --exclude '**/*.test.ts*'",
     "start": "webpack-dev-server --open",
-    "test": "tslint -t verbose --project tsconfig.json --config tslint-test.json '**/*.test.tsx' && jest"
+    "test": "tslint -t verbose --project tsconfig.json --config tslint-test.json '**/*.test.ts*' && jest"
   }
 }

@@ -6,7 +6,6 @@
     "comment-format": false,
     "typedef": false,
     "no-bitwise": false,
-    "max-file-line-count": false,
-    "no-console": false
+    "max-file-line-count": false
   }
 }

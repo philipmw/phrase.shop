@@ -3,6 +3,8 @@ import * as React from "react";
 import { PartType, partTypeList, partTypeProps } from "./wordbanks";
 
 interface IProps {
+  entropyBitsAvailable: number;
+  entropyBitsNeeded: number;
   isGenerated: boolean;
   qtyOfPhraseParts: number;
 
@@ -49,7 +51,9 @@ export class Menu extends React.PureComponent<IProps> {
                 onClick={() => { this.props.reset(); }}>⇠ start over</button>
         <button type="button"
                 id="generate"
-                disabled={this.props.qtyOfPhraseParts === 0}
+                disabled={
+                  this.props.qtyOfPhraseParts === 0 ||
+                  this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
                 onClick={() => { this.props.generatePlaintext(); }}>
           <span className="callToAction" >↻ regenerate</span>
         </button>
@@ -84,7 +88,9 @@ export class Menu extends React.PureComponent<IProps> {
           ⇠ start over</button>
         <button type="button"
                 id="generate"
-                disabled={this.props.qtyOfPhraseParts === 0}
+                disabled={
+                  this.props.qtyOfPhraseParts === 0 ||
+                  this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
                 onClick={() => { this.props.generatePlaintext(); }}>
           <span className="callToAction" >generate!</span>
         </button>

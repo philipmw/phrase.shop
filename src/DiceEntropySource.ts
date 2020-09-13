@@ -1,23 +1,31 @@
-const PC_BYTES = 100;
+const ARRAY_SIZE = 100;
 const BINARY_BASE = 2;
-const BITS_IN_BYTE = 8;
+const BITS_PER_ARRAY_ELEM = 8;
 
 export class DiceEntropySource implements IEntropySource {
   /*
-  All bytes except the last are full.
-  The last byte has entropy in the N lower bits, where N is identified by `lowerBitsInLastByte`.
+  Entropy is stored in `entropy`.  The actual size of this array is fixed, so we use
+  `entropyIdx` to index to the partial element.
+
+  In `entropy[entropyIdx], the partial element, `lowerBitsInIdx0` represents how many
+  lower bits hold entropy.  In that partial element, entropy may be represented
+  as an integer, such that when we add bits of entropy, we increase the number.
    */
-  public readonly name = "dice";
-  private entropy: Uint8Array;
-  private lowerBitsInLastByte: number;
+
+  public static readonly entropyBitsPerRoll = (numSides: number): number => Math.floor(Math.log2(numSides));
+
+  private readonly entropy: Uint8Array;
+  private entropyIdx: number;
+  private lowerBitsInIdx0: number;
 
   public constructor() {
-    this.entropy = window.crypto.getRandomValues(new Uint8Array(PC_BYTES));
-    this.lowerBitsInLastByte = BITS_IN_BYTE;
+    this.entropy = new Uint8Array(ARRAY_SIZE);
+    this.entropyIdx = 0;
+    this.lowerBitsInIdx0 = 0;
   }
 
   public bitsAvailable() {
-    return (this.entropy.length - 1) * BITS_IN_BYTE + this.lowerBitsInLastByte;
+    return this.entropyIdx * BITS_PER_ARRAY_ELEM + this.lowerBitsInIdx0;
   }
 
   public getBits(qty: number): number {
@@ -28,27 +36,48 @@ export class DiceEntropySource implements IEntropySource {
     let output = 0;
     let bitsNeeded = qty;
     while (bitsNeeded > 0) {
-      const lastByte = this.entropy[this.entropy.length - 1];
-      if (this.lowerBitsInLastByte >= bitsNeeded) {
-        // only need to worry about the last byte
-
-        output <<= bitsNeeded;
-        output |= lastByte & (Math.pow(BINARY_BASE, bitsNeeded) - 1);
-
-        this.entropy[this.entropy.length - 1] >>= bitsNeeded;
-        this.lowerBitsInLastByte -= bitsNeeded;
-        bitsNeeded = 0;
-      } else {
-        // we need to consume the entire last byte, then keep going
-        output <<= this.lowerBitsInLastByte;
-        output &= lastByte & Math.pow(BINARY_BASE, this.lowerBitsInLastByte);
-
-        bitsNeeded -= this.lowerBitsInLastByte;
-        this.entropy = this.entropy.slice(0, this.entropy.length - 1);
-        this.lowerBitsInLastByte = BITS_IN_BYTE;
+      if (this.lowerBitsInIdx0 === 0) {
+        // this element is exhausted
+        this.entropyIdx -= 1;
+        this.lowerBitsInIdx0 = BITS_PER_ARRAY_ELEM;
       }
+
+      output <<= 1; // make space
+      output += this.entropy[this.entropyIdx] % BINARY_BASE; // accumulate entropy into output
+      this.entropy[this.entropyIdx] >>= 1; // bottom bit has been consumed
+      this.lowerBitsInIdx0 -= 1;
+      bitsNeeded -= 1;
     }
 
     return output;
+  }
+
+  public submitRoll(face: number, numSides: number) {
+    if (face > numSides) {
+      throw new Error("Face must exist on the die");
+    }
+
+    const bitsToAdd = DiceEntropySource.entropyBitsPerRoll(numSides);
+    const zeroIdxFace = face - 1; // face is 1-indexed, but we want 0-indexed
+    const moduloFace = zeroIdxFace % Math.pow(BINARY_BASE, bitsToAdd);
+    if (zeroIdxFace > moduloFace) {
+      // we do not support bit accumulation across rolls, so for now we just discard this roll.
+      return;
+    }
+
+    // we need to accumulate `bitsToAdd` worth of bits from `moduloFace`.
+    let remainingBitsToAdd = bitsToAdd;
+    let remainingEntropy = moduloFace;
+    while (remainingBitsToAdd > 0) {
+      if (BITS_PER_ARRAY_ELEM - this.lowerBitsInIdx0 === 0) { // this element is full
+        this.entropyIdx += 1;
+        this.lowerBitsInIdx0 = 0;
+      }
+      this.entropy[this.entropyIdx] <<= 1; // make space in bottom bit
+      this.entropy[this.entropyIdx] += (remainingEntropy % BINARY_BASE); // accumulate bottom bit
+      this.lowerBitsInIdx0 += 1;
+      remainingEntropy >>= 1; // bottom bit has been consumed
+      remainingBitsToAdd -= 1;
+    }
   }
 }

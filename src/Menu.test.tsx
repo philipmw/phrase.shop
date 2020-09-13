@@ -15,6 +15,8 @@ describe("Menu", () => {
   describe("initial state", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      entropyBitsAvailable={0}
+      entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
       isGenerated={false}
       qtyOfPhraseParts={0}
@@ -57,6 +59,8 @@ describe("Menu", () => {
   describe("when phrase exists but is not generated", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      entropyBitsAvailable={0}
+      entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
       isGenerated={false}
       qtyOfPhraseParts={1}
@@ -89,11 +93,20 @@ describe("Menu", () => {
       expect(generatePlaintextFn)
         .toHaveBeenCalled();
     });
+
+    it("resets the phrase on clicking the Start Over button", () => {
+      const buttonWrapper = wrapper.find("button#reset");
+      buttonWrapper.simulate("click");
+      expect(resetFn)
+        .toHaveBeenCalled();
+    });
   });
 
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      entropyBitsAvailable={0}
+      entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
       isGenerated={true}
       qtyOfPhraseParts={1}
