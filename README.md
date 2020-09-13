@@ -9,6 +9,18 @@
 * [You Should Probably Change Your Password](https://www.youtube.com/watch?v=aHaBH4LqGsI)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
 
+## Dice
+
+While any modern computer's randomness is just fine, using physical dice is more fun.
+
+I like [hexadecimal (16-sided) dice from Gamescience](https://www.gamescience.com/D16--16-Sided-Dice_c_20.html).
+I have three of these, bought specifically for this project.
+I roll all three at a time, for 12 bits of entropy per roll.
+This makes generating even the longest passphrase a breeze.
+
+Gamescience also sells a [100-sided monster of a dice](https://www.gamescience.com/D100--100-Sided-Dice_c_25.html),
+which would yield a massive 6 bits of entropy per roll.
+
 ## Developing
 
 ![](https://github.com/philipmw/phrase.shop/workflows/Continuous%20Integration/badge.svg)
