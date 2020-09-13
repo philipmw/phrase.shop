@@ -27,15 +27,22 @@
         button {
             border: 4px double #800000;
             background-color: #ff1600;
-            font-size: 12pt;
-            margin-top: 1em;
-            margin-right: 1em;
         }
         button:active {
             background-color: #ff9010;
         }
         button:disabled {
             background-color: #800000;
+        }
+        button.add, button#generate, button#reset {
+            font-size: 12pt;
+            margin-top: 1em;
+            margin-right: 1em;
+        }
+        button.diceRollValue {
+            font-size: 12pt;
+            margin-bottom: 1em;
+            margin-right: 1em;
         }
         button .callToAction {
             font-weight: bold;
@@ -44,6 +51,10 @@
             background-color: #1a1a1a;
             padding: 1em;
             font-size: 14pt;
+        }
+        div#dice-sides-change-elements {
+            /* we want to keep the dec/inc buttons and field together */
+            display: inline-block;
         }
         div#main-actions {
             margin: 1em;

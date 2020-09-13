@@ -61,7 +61,7 @@ describe("Dice", () => {
       .toHaveBeenCalled();
   });
 
-  it("supports changing dice sides", () => {
+  it("supports changing dice sides through input field", () => {
     const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
@@ -77,5 +77,60 @@ describe("Dice", () => {
       .simulate("change", { target: { valueAsNumber: 16 }});
     expect(onDiceSidesChangeFn)
       .toHaveBeenCalledWith(16);
+  });
+
+  it("does not allow setting sides to an empty value", () => {
+    const onDiceSidesChangeFn = jest.fn();
+    const onEntropyChangeFn = jest.fn();
+    const source = new DiceEntropySource();
+
+    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
+                                  bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
+                                  onEntropyChange={onEntropyChangeFn}
+                                  source={source}/>);
+
+    wrapper.find("input#number-input")
+      .simulate("change", { target: { value: "" }});
+    expect(onDiceSidesChangeFn)
+      .not
+      .toHaveBeenCalled();
+  });
+
+  it("supports decrementing dice sides through button", () => {
+    const onDiceSidesChangeFn = jest.fn();
+    const onEntropyChangeFn = jest.fn();
+    const source = new DiceEntropySource();
+
+    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
+                                  bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
+                                  onEntropyChange={onEntropyChangeFn}
+                                  source={source}/>);
+
+    wrapper.find("button#decrement")
+      .simulate("click");
+    expect(onDiceSidesChangeFn)
+      .toHaveBeenCalledWith(5);
+  });
+
+  it("supports incrementing dice sides through button", () => {
+    const onDiceSidesChangeFn = jest.fn();
+    const onEntropyChangeFn = jest.fn();
+    const source = new DiceEntropySource();
+
+    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
+                                  bitsNeeded={5}
+                                  diceSides={6}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
+                                  onEntropyChange={onEntropyChangeFn}
+                                  source={source}/>);
+
+    wrapper.find("button#increment")
+      .simulate("click");
+    expect(onDiceSidesChangeFn)
+      .toHaveBeenCalledWith(7);
   });
 });

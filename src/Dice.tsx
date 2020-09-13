@@ -27,15 +27,30 @@ export class Dice extends React.PureComponent<IProps> {
       <div id="dice-sides">
         <p>
           How many sides do your dice have?&nbsp;
-          <input type="number"
-                 id="number-input"
-                 min="2"
-                 max="100"
-                 value={ this.props.diceSides }
-                 onChange={(what) => {
-                   const newSides = what.target.valueAsNumber;
-                   this.props.onDiceSidesChange(newSides);
-                 }}/>
+          <div id="dice-sides-change-elements">
+            <button id="decrement"
+                    onClick={() => {
+                      this.props.onDiceSidesChange(this.props.diceSides - 1);
+                    }}>&lt;-</button>
+            <input type="number"
+                   id="number-input"
+                   min="2"
+                   max="100"
+                   value={ this.props.diceSides }
+                   onChange={(what) => {
+                     if (what.target.value === "") {
+                       // We cannot support an empty field, so do not allow deleting
+                       // the last digit.  I don't know how to handle this better.
+                     } else {
+                       const newSides = what.target.valueAsNumber;
+                       this.props.onDiceSidesChange(newSides);
+                     }
+                   }}/>
+            <button id="increment"
+                    onClick={() => {
+                      this.props.onDiceSidesChange(this.props.diceSides + 1);
+                    }}>+&gt;</button>
+          </div>
         </p>
 
       </div>
@@ -48,6 +63,7 @@ export class Dice extends React.PureComponent<IProps> {
       <div id="dice-roll-values">
         { a.map((i: number) =>
           <button key={i}
+                  className="diceRollValue"
                   name="rollValue"
                   onClick={() => {
                     this.props.source.submitRoll(i, this.props.diceSides);
