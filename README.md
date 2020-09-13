@@ -34,6 +34,13 @@ which would yield a massive 6 bits of entropy per roll.
 I welcome your contributions.
 In particular, I'm very supportive of newbie developers.
 
+If you are new to developing web applications, I recommend the book
+[_Test-Driven React_](https://pragprog.com/titles/tbreact/test-driven-react/).
+This book shaped and gave me confidence for this project by introducing me to
+[Jest](https://jestjs.io/),
+[Enzyme](https://enzymejs.github.io/enzyme/), and
+[Wallaby](https://wallabyjs.com/).
+
 The workflow I propose:
 
 1. Decide what to work on.
