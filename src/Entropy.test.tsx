@@ -125,5 +125,28 @@ describe("Entropy", () => {
       expect(wrapper.find(Dice))
         .toBeTruthy();
     });
+
+    it("supports changing dice sides", () => {
+      const initialDiceSides: number = wrapper.state()
+        .diceSides;
+      wrapper.instance()
+        .onDiceSidesChange(initialDiceSides + 5);
+      expect(wrapper.state().diceSides)
+        .toEqual(initialDiceSides + 5);
+    });
+
+    it("rejects proposed dice sides out of range", () => {
+      const initialDiceSides = wrapper.state().diceSides;
+      wrapper.instance()
+        .onDiceSidesChange(1);
+      expect(wrapper.state()
+        .diceSides)
+        .toEqual(initialDiceSides);
+      wrapper.instance()
+        .onDiceSidesChange(101);
+      expect(wrapper.state()
+        .diceSides)
+        .toEqual(initialDiceSides);
+    });
   });
 });

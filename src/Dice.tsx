@@ -11,6 +11,10 @@ interface IProps {
   onEntropyChange(): void;
 }
 
+const DICE_FACES = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+export const DICE_SIDES_MIN = 2;
+export const DICE_SIDES_MAX = 100;
+
 export class Dice extends React.PureComponent<IProps> {
   public render() {
     const a: number[] = new Array(this.props.diceSides);
@@ -34,15 +38,12 @@ export class Dice extends React.PureComponent<IProps> {
                     }}>&lt;-</button>
             <input type="number"
                    id="number-input"
-                   min="2"
-                   max="100"
+                   min={DICE_SIDES_MIN}
+                   max={DICE_SIDES_MAX}
                    value={ this.props.diceSides }
                    onChange={(what) => {
-                     if (what.target.value === "") {
-                       // We cannot support an empty field, so do not allow deleting
-                       // the last digit.  I don't know how to handle this better.
-                     } else {
-                       const newSides = what.target.valueAsNumber;
+                     const newSides = what.target.valueAsNumber;
+                     if (!Number.isNaN(newSides)) {
                        this.props.onDiceSidesChange(newSides);
                      }
                    }}/>
@@ -70,8 +71,16 @@ export class Dice extends React.PureComponent<IProps> {
                     this.props.onEntropyChange();
                   }}
                   value={i}>
-            {i}</button>) }
+            {this.diceSideRender(i)}</button>) }
       </div>
     </div>;
+  }
+
+  private readonly diceSideRender = (side: number): string => {
+    if (side <= DICE_FACES.length) {
+      return DICE_FACES[side - 1];
+    }
+
+    return side.toString();
   }
 }

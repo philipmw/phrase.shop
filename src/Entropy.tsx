@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
-import { Dice } from "./Dice";
+import { Dice, DICE_SIDES_MAX, DICE_SIDES_MIN } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
 
 interface IProps {
@@ -72,6 +72,9 @@ export class Entropy extends React.PureComponent<IProps, IState> {
   }
 
   private readonly onDiceSidesChange = (newSides: number) => {
+    if (newSides < DICE_SIDES_MIN || newSides > DICE_SIDES_MAX) {
+      return;
+    }
     this.setState((state) => ({
       diceSides: newSides,
     }));

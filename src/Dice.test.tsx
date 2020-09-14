@@ -25,20 +25,38 @@ describe("Dice", () => {
       .toMatch(/Entropy collected: 3 out of 5 bits/);
   });
 
-  it("renders roll buttons for its sides", () => {
+  it("renders as many roll buttons as there are sides", () => {
     const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
                                   bitsNeeded={5}
-                                  diceSides={6}
+                                  diceSides={8}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
     expect(wrapper.find("div#dice-roll-values button"))
-      .toHaveLength(6);
+      .toHaveLength(8);
+  });
+
+  it("renders unicode dice for the first six", () => {
+    const onDiceSidesChangeFn = jest.fn();
+    const onEntropyChangeFn = jest.fn();
+    const source = new DiceEntropySource();
+
+    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
+                                  bitsNeeded={5}
+                                  diceSides={8}
+                                  onDiceSidesChange={onDiceSidesChangeFn}
+                                  onEntropyChange={onEntropyChangeFn}
+                                  source={source}/>);
+
+    expect(wrapper.find("div#dice-roll-values button")
+      .at(5)
+      .text())
+      .toEqual("⚅");
   });
 
   it("submits rolls to the DiceEntropySource", () => {
@@ -79,7 +97,7 @@ describe("Dice", () => {
       .toHaveBeenCalledWith(16);
   });
 
-  it("does not allow setting sides to an empty value", () => {
+  it("does not allow setting sides to a NaN value", () => {
     const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
@@ -92,7 +110,7 @@ describe("Dice", () => {
                                   source={source}/>);
 
     wrapper.find("input#number-input")
-      .simulate("change", { target: { value: "" }});
+      .simulate("change", { target: { valueAsNumber: NaN }});
     expect(onDiceSidesChangeFn)
       .not
       .toHaveBeenCalled();
