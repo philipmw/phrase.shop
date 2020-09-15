@@ -4,10 +4,12 @@
 
 ![](./screenshot-iPhoneX.png)
 
-## Purpose
+## Purpose and inspiration
 
 * [You Should Probably Change Your Password](https://www.youtube.com/watch?v=aHaBH4LqGsI)
+* [Diceware](https://en.wikipedia.org/wiki/Diceware)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
+* [DiceKeys](https://dicekeys.com/)
 
 ## Design principles
 
@@ -34,16 +36,19 @@ which would yield a massive 6 bits of entropy per roll.
 I welcome your contributions.
 In particular, I'm very supportive of newbie developers.
 
+This app is written in [TypeScript](https://typescriptlang.org/)
+and uses [React](https://reactjs.org/) as the web framework.
+For unit tests, it uses [Jest](https://jestjs.io/)
+and [Enzyme](https://enzymejs.github.io/enzyme/).
+
 If you are new to developing web applications, I recommend the book
-[_Test-Driven React_](https://pragprog.com/titles/tbreact/test-driven-react/).
-This book shaped and gave me confidence for this project by introducing me to
-[Jest](https://jestjs.io/),
-[Enzyme](https://enzymejs.github.io/enzyme/), and
-[Wallaby](https://wallabyjs.com/).
+[_Test-Driven React_](https://pragprog.com/titles/tbreact/test-driven-react/),
+which will introduce you to React, Jest, Enzyme, and [Wallaby.js](https://wallabyjs.com/).
 
 The workflow I propose:
 
 1. Decide what to work on.
+   There are a number of open issues that you're welcome to resolve, or you can scratch your own itch.
    Before starting development, please open an issue for your desired change so we can discuss it and align
    on _whether_ it needs to be addressed and _how_ to address it.
    If you don't lead with an issue, you risk wasting your time developing something I'll disagree with and won't accept.
@@ -55,7 +60,7 @@ The workflow I propose:
 
 4. Submit a pull request on GitHub.
    Check that your change passes the Continuous Integration workflow.
-   I'll review your contribution, and we'll either have a discussion or I'll accept it as-is.
+   I'll review your contribution, and we'll either have a discussion, or I'll accept your change as-is.
 
 5. You'll see your contribution on https://phrase.shop!
 
