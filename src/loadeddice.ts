@@ -11,7 +11,7 @@ export const q2 = (r: number, s: number): boolean[] => {
     const si = bitOfAt(s, i);
     const ri = bitOfAt(r - 1, i);
     if (si && !ri) {
-      return bitsOfFrom(r, i - 1);
+      return bitsOfFrom(r - 1, i - 1);
     }
   }
 

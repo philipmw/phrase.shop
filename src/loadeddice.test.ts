@@ -5,12 +5,12 @@ const RADIX = 10;
 describe("HtTLDiFC algorithms", () => {
   describe("q2", () => {
     const expectedResults = {
-      1: [false, true],
-      2: [true, false],
-      3: [true, true],
-      4: [false, false],
-      5: [true],
-      6: [false],
+      1: [false, false],
+      2: [false, true],
+      3: [true, false],
+      4: [true, true],
+      5: [false],
+      6: [true],
       7: [],
     };
 
@@ -23,19 +23,30 @@ describe("HtTLDiFC algorithms", () => {
   });
 
   describe("bitOfAt", () => {
-    it("returns first bit of value 111", () => {
+    it("returns expected bits of value 111", () => {
+      expect(bitOfAt(111, 7))
+        .toEqual(true);
+      expect(bitOfAt(111, 6))
+        .toEqual(true);
+      expect(bitOfAt(111, 5))
+        .toEqual(false);
+      expect(bitOfAt(111, 4))
+        .toEqual(true);
+      expect(bitOfAt(111, 3))
+        .toEqual(true);
+      expect(bitOfAt(111, 2))
+        .toEqual(true);
       expect(bitOfAt(111, 1))
         .toEqual(true);
     });
 
-    it("returns first bit of value 2", () => {
-      expect(bitOfAt(2, 1))
-        .toEqual(false);
-    });
-
-    it("returns 11th bit of value 1024", () => {
-      expect(bitOfAt(1024, 11))
+    it("returns expected bits of value 6", () => {
+      expect(bitOfAt(6, 3))
         .toEqual(true);
+      expect(bitOfAt(6, 2))
+        .toEqual(true);
+      expect(bitOfAt(6, 1))
+        .toEqual(false);
     });
   });
 
@@ -45,14 +56,14 @@ describe("HtTLDiFC algorithms", () => {
         .toEqual([false, true, false]);
     });
 
-    it("returns bits of 14 (1110b) from 3rd", () => {
-      expect(bitsOfFrom(14, 3))
+    it("returns bits of 6 (110b) from 3rd", () => {
+      expect(bitsOfFrom(6, 3))
         .toEqual([true, true, false]);
     });
 
-    it("returns bits of 15 (1111b) from 5th", () => {
-      expect(bitsOfFrom(15, 5))
-        .toEqual([false, true, true, true, true]);
+    it("returns bits of 7 (111b) from 5th", () => {
+      expect(bitsOfFrom(7, 5))
+        .toEqual([false, false, true, true, true]);
     });
   });
 });
