@@ -1,6 +1,6 @@
 # phrase.shop #
 
-[**phrase.shop**](https://phrase.shop) is a small web app to generate secure yet memorable passphrases.
+[**phrase.shop**](https://phrase.shop) is a web app to generate secure yet memorable passphrases.
 
 ![](./screenshot-iPhoneX.png)
 
@@ -10,6 +10,23 @@
 * [Diceware](https://en.wikipedia.org/wiki/Diceware)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
 * [DiceKeys](https://dicekeys.com/)
+
+## Features
+
+While there are several passphrase generators online, this one has the following strengths:
+
+* You can make the phrase as complex as you like. You are not limited to five rolls of six-sided dice.
+* It uses _Voice Of America's_ [*Learning English*](https://en.wikipedia.org/wiki/Learning_English_(version_of_English))
+  vocabulary of core English words.
+* It uses multiple word banks, such as colors, US state abbreviations and musical notes, to help your memory.
+* If you don’t want to use your computer’s random number generator, you can roll physical
+  dice and submit the rolls to the app to collect entropy.
+  There’s a progress bar showing how much entropy you’ve collected, and you can generate the
+  passphrase only once you’ve rolled enough times.
+  What this feature lacks in practicality it makes up for in educational and entertainment value!
+* The app is open-source, and contributions are welcome.
+* The app's only motivations is making you good passphrases. Its only customer is you.
+  There are no ads and no data collection.
 
 ## Design principles
 
