@@ -1,9 +1,9 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { h } from "preact";
+import * as ReactDOM from "preact/compat";
 
 import { App } from "./App";
 
 ReactDOM.render(
   <App/>,
-  document.getElementById("app-root"),
+  document.getElementById("app-root") as HTMLElement,
 );

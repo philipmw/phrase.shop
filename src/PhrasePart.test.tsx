@@ -1,6 +1,6 @@
 import { configure, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import * as React from "react";
+import Adapter from "enzyme-adapter-preact-pure";
+import { h } from "preact";
 
 import { PhrasePart } from "./PhrasePart";
 import { PartType } from "./wordbanks";

@@ -4,8 +4,8 @@
   "homepage": "https://github.com/philipmw/phrase.shop",
   "license": "MIT",
   "dependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "preact": "10.4.8",
+    "preact-compat": "3.19.0",
     "fisher-yates": "1.0.3"
   },
   "repository": {
@@ -14,13 +14,11 @@
   },
   "devDependencies": {
     "@types/jest": "latest",
-    "@types/react": "~16",
-    "@types/react-dom": "latest",
     "enzyme": "latest",
-    "enzyme-adapter-react-16": "latest",
+    "enzyme-adapter-preact-pure": "latest",
     "jest": "latest",
     "ts-jest": "latest",
-    "ts-loader": "latest",
+    "ts-loader": "^8.0.4",
     "tslint": "latest",
     "typescript": "latest",
     "webpack": "latest",

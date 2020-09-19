@@ -1,4 +1,5 @@
-import * as React from "react";
+import { h } from "preact";
+import { PureComponent } from "preact/compat";
 
 import { PartType, partTypeList, partTypeProps } from "./wordbanks";
 
@@ -42,7 +43,7 @@ const menuData: MenuData = {
   },
 };
 
-export class Menu extends React.PureComponent<IProps> {
+export class Menu extends PureComponent<IProps> {
   public render() {
     if (this.props.isGenerated) {
       return <div id="main-actions">

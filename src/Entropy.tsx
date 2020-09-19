@@ -1,4 +1,5 @@
-import React from "react";
+import { h } from "preact";
+import { PureComponent } from "preact/compat";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Dice, DICE_SIDES_MAX, DICE_SIDES_MIN } from "./Dice";
@@ -17,7 +18,7 @@ interface IState {
   diceSides: number;
 }
 
-export class Entropy extends React.PureComponent<IProps, IState> {
+export class Entropy extends PureComponent<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
     this.state = {
@@ -46,6 +47,8 @@ export class Entropy extends React.PureComponent<IProps, IState> {
                    this.props.setEntropySource(new ComputerEntropySource());
                  }}
                  checked={this.props.source instanceof ComputerEntropySource}
+                 // data-checked exists here to work around https://github.com/preactjs/preact/issues/2762
+                 data-checked={this.props.source instanceof ComputerEntropySource}
                  value="computer"/> 🖥 my computer will make randomness</li>
         <li>
           <input type="radio"
@@ -55,6 +58,8 @@ export class Entropy extends React.PureComponent<IProps, IState> {
                    this.props.setEntropySource(new DiceEntropySource());
                  }}
                  checked={this.props.source instanceof DiceEntropySource}
+                 // data-checked exists here to work around https://github.com/preactjs/preact/issues/2762
+                 data-checked={this.props.source instanceof DiceEntropySource}
                  value="dice"/> 🎲 I will roll my dice</li>
       </ul>
 
@@ -64,7 +69,9 @@ export class Entropy extends React.PureComponent<IProps, IState> {
                 bitsNeeded={this.props.bitsNeeded}
                 diceSides={this.state.diceSides}
                 onDiceSidesChange={this.onDiceSidesChange}
-                onEntropyChange={this.props.onEntropyChange}
+                onEntropyChange={() => {
+                  this.props.onEntropyChange();
+                }}
                 source={this.props.source}/>
         : undefined
       }

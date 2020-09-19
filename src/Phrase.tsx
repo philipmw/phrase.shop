@@ -1,4 +1,5 @@
-import * as React from "react";
+import { h } from "preact";
+import { PureComponent } from "preact/compat";
 
 import * as pp from "./PhrasePart";
 import * as wb from "./wordbanks";
@@ -12,7 +13,7 @@ interface IProps {
   parts: IPartProps[];
 }
 
-export class Phrase extends React.PureComponent<IProps> {
+export class Phrase extends PureComponent<IProps> {
   public render() {
     if (this.props.parts.length === 0) {
       return <div id="welcome">

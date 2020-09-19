@@ -1,4 +1,5 @@
-import React from "react";
+import { h } from "preact";
+import { PureComponent } from "preact/compat";
 
 import { DiceEntropySource } from "./DiceEntropySource";
 
@@ -15,7 +16,7 @@ const DICE_FACES = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 export const DICE_SIDES_MIN = 2;
 export const DICE_SIDES_MAX = 100;
 
-export class Dice extends React.PureComponent<IProps> {
+export class Dice extends PureComponent<IProps> {
   public render() {
     const a: number[] = new Array(this.props.diceSides);
     for (let i = 0; i < this.props.diceSides; i += 1) {
@@ -24,9 +25,9 @@ export class Dice extends React.PureComponent<IProps> {
 
     return <div id="dice-interaction">
       <p>
-        Entropy collected: { this.props.source.bitsAvailable() } out of { this.props.bitsNeeded } bits
+        Entropy collected: { this.props.bitsAvailable } out of { this.props.bitsNeeded } bits
       </p>
-      <progress id="entropyBits" max={this.props.bitsNeeded} value={this.props.source.bitsAvailable()}/>
+      <progress id="entropyBits" max={this.props.bitsNeeded} value={this.props.bitsAvailable.toFixed(2)}/>
 
       <div id="dice-sides">
         <p>
@@ -42,9 +43,11 @@ export class Dice extends React.PureComponent<IProps> {
                    max={DICE_SIDES_MAX}
                    value={ this.props.diceSides }
                    onChange={(what) => {
-                     const newSides = what.target.valueAsNumber;
-                     if (!Number.isNaN(newSides)) {
-                       this.props.onDiceSidesChange(newSides);
+                     if (what.target !== null && what.target instanceof HTMLInputElement) {
+                       const newSides = what.target.valueAsNumber;
+                       if (!Number.isNaN(newSides)) {
+                         this.props.onDiceSidesChange(newSides);
+                       }
                      }
                    }}/>
             <button id="increment"

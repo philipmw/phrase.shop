@@ -1,4 +1,5 @@
-import * as React from "react";
+import { h } from "preact";
+import { PureComponent } from "preact/compat";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
@@ -17,7 +18,7 @@ interface IState {
   phraseParts: IPartProps[];
 }
 
-export class App extends React.PureComponent<IProps, IState> {
+export class App extends PureComponent<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
 
@@ -88,6 +89,7 @@ export class App extends React.PureComponent<IProps, IState> {
 
   private readonly setEntropySource = (source: IEntropySource) => {
     this.setState((state) => ({
+      entropyBitsAvailable: source.bitsAvailable(),
       entropySource: source,
     }));
   }

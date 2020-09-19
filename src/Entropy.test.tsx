@@ -1,6 +1,6 @@
 import { configure, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import * as React from "react";
+import Adapter from "enzyme-adapter-preact-pure";
+import { h } from "preact";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Dice } from "./Dice";
@@ -72,13 +72,13 @@ describe("Entropy", () => {
                                      source={new ComputerEntropySource()}/>);
 
     it("has computer radio button checked", () => {
-      expect(wrapper.render()
-        .find("input.computer")
-        .attr("checked"))
+      expect(wrapper.find("input.computer")
+        .render()
+        .data("checked"))
         .toBeTruthy();
-      expect(wrapper.render()
-        .find("input.dice")
-        .attr("checked"))
+      expect(wrapper.find("input.dice")
+        .render()
+        .data("checked"))
         .toBeFalsy();
     });
 
@@ -102,13 +102,13 @@ describe("Entropy", () => {
                                      source={new DiceEntropySource()}/>);
 
     it("has dice radio button checked", () => {
-      expect(wrapper.render()
-        .find("input.computer")
-        .attr("checked"))
+      expect(wrapper.find("input.computer")
+        .render()
+        .data("checked"))
         .toBeFalsy();
-      expect(wrapper.render()
-        .find("input.dice")
-        .attr("checked"))
+      expect(wrapper.find("input.dice")
+        .render()
+        .data("checked"))
         .toBeTruthy();
     });
 

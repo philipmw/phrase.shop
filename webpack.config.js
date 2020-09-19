@@ -7,10 +7,6 @@ module.exports = {
     path: path.resolve(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
     filename: 'app.bundle.js'
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
-  },
   module: {
     rules: [
       {test: /\.(ts|tsx)$/, use: 'ts-loader'}
@@ -20,6 +16,12 @@ module.exports = {
     contentBase: path.join(__dirname, 'docs') //`docs` as a GitHub Pages requirement
   },
   resolve: {
+    alias: {
+      "react": "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",
+      // Must be below test-utils
+    },
     extensions: [
       '.js', // needed for webpack-dev-server: https://github.com/webpack/webpack-dev-server/issues/720#issuecomment-268470989
       '.ts',

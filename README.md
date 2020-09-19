@@ -54,7 +54,7 @@ I welcome your contributions.
 In particular, I'm very supportive of newbie developers.
 
 This app is written in [TypeScript](https://typescriptlang.org/)
-and uses [React](https://reactjs.org/) as the web framework.
+and uses [Preact](https://preactjs.com/) as the web framework.
 For unit tests, it uses [Jest](https://jestjs.io/)
 and [Enzyme](https://enzymejs.github.io/enzyme/).
 
