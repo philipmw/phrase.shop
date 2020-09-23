@@ -1,4 +1,4 @@
-import { configure, shallow } from "enzyme";
+import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
@@ -73,12 +73,10 @@ describe("Entropy", () => {
 
     it("has computer radio button checked", () => {
       expect(wrapper.find("input.computer")
-        .render()
-        .data("checked"))
+        .prop("checked"))
         .toBeTruthy();
       expect(wrapper.find("input.dice")
-        .render()
-        .data("checked"))
+        .prop("checked"))
         .toBeFalsy();
     });
 
@@ -94,7 +92,7 @@ describe("Entropy", () => {
 
   describe("when entropy source is Dice", () => {
     const setEntropySourceFn = jest.fn();
-    const wrapper = shallow(<Entropy bitsAvailable={0}
+    const wrapper = mount(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseIsGenerated={false}
@@ -103,12 +101,10 @@ describe("Entropy", () => {
 
     it("has dice radio button checked", () => {
       expect(wrapper.find("input.computer")
-        .render()
-        .data("checked"))
+        .prop("checked"))
         .toBeFalsy();
       expect(wrapper.find("input.dice")
-        .render()
-        .data("checked"))
+        .prop("checked"))
         .toBeTruthy();
     });
 

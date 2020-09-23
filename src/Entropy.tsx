@@ -47,8 +47,6 @@ export class Entropy extends PureComponent<IProps, IState> {
                    this.props.setEntropySource(new ComputerEntropySource());
                  }}
                  checked={this.props.source instanceof ComputerEntropySource}
-                 // data-checked exists here to work around https://github.com/preactjs/preact/issues/2762
-                 data-checked={this.props.source instanceof ComputerEntropySource}
                  value="computer"/> 🖥 my computer will make randomness</li>
         <li>
           <input type="radio"
@@ -58,8 +56,6 @@ export class Entropy extends PureComponent<IProps, IState> {
                    this.props.setEntropySource(new DiceEntropySource());
                  }}
                  checked={this.props.source instanceof DiceEntropySource}
-                 // data-checked exists here to work around https://github.com/preactjs/preact/issues/2762
-                 data-checked={this.props.source instanceof DiceEntropySource}
                  value="dice"/> 🎲 I will roll my dice</li>
       </ul>
 
