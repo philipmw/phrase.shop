@@ -1,4 +1,4 @@
-import { configure, mount, shallow } from "enzyme";
+import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
@@ -92,7 +92,7 @@ describe("Entropy", () => {
 
   describe("when entropy source is Dice", () => {
     const setEntropySourceFn = jest.fn();
-    const wrapper = mount(<Entropy bitsAvailable={0}
+    const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseIsGenerated={false}
