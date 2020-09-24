@@ -16,12 +16,18 @@ interface IProps {
 export class Phrase extends PureComponent<IProps> {
   public render() {
     if (this.props.parts.length === 0) {
-      return <div id="welcome">
-        <h1>welcome to phrase shop</h1>
-        <p>Build your memorable and secure passphrase!</p>
-      </div>;
+      return this.renderEmpty();
     }
 
+    return this.renderPhrase();
+  }
+
+  private readonly renderEmpty = () => <div>
+      <p id="stats">Build your next secure and memorable passphrase below.</p>
+      <div id="phrase" class="empty">* * *</div>
+    </div>
+
+  private renderPhrase() {
     const len = this.props.parts.reduce(
       (acc, pprops) => ({
         max: acc.max + (pprops.plaintext === undefined

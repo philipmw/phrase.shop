@@ -63,10 +63,14 @@
             margin-top: 1em;
         }
         div#phrase {
-            font-size: 24pt;
+            font-size: 2em;
             padding: 0.5em;
             border: 1px solid black;
             border-radius: 5px;
+            min-height: 1em;
+        }
+        div#phrase.empty {
+            color: #800000;
         }
         div#welcome {
             font-style: italic;
@@ -79,7 +83,7 @@
         }
         .part {
             display: inline-block;
-            padding: 0.1em 0.1em;
+            padding: 0 0.1em;
             animation-duration: 200ms;
             animation-name: phrase-fadein;
             animation-timing-function: ease-in;

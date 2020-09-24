@@ -11,13 +11,11 @@ describe("Phrase", () => {
   describe("when there are no parts", () => {
     const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
 
-    it("renders a welcome", () => {
-      expect(wrapper.type())
-        .toBe("div");
-      expect(wrapper.is("#welcome"))
-        .toBeTruthy();
+    it("renders a call to action", () => {
+      expect(wrapper.find("div#phrase.empty"))
+        .toHaveLength(1);
       expect(wrapper.text())
-        .toMatch(/welcome to phrase shop/);
+        .toMatch(/Build your next/);
     });
   });
 
