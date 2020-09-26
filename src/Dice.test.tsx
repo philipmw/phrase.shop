@@ -1,4 +1,4 @@
-import { configure, shallow } from "enzyme";
+import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
@@ -79,40 +79,40 @@ describe("Dice", () => {
       .toHaveBeenCalled();
   });
 
-  // Skipping this test because of https://github.com/preactjs/enzyme-adapter-preact-pure/issues/123
-  it.skip("supports changing dice sides through input field", () => {
+  it("supports changing dice sides through input field", () => {
     const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
-    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
-                                  diceSides={6}
-                                  onDiceSidesChange={onDiceSidesChangeFn}
-                                  onEntropyChange={onEntropyChangeFn}
-                                  source={source}/>);
+    const wrapper = mount(<Dice bitsAvailable={source.bitsAvailable()}
+                                bitsNeeded={5}
+                                diceSides={6}
+                                onDiceSidesChange={onDiceSidesChangeFn}
+                                onEntropyChange={onEntropyChangeFn}
+                                source={source}/>);
 
-    wrapper.find("input#number-input")
-      .simulate("change", { target: { valueAsNumber: 16 }});
+    const numField = wrapper.find("input#number-input");
+    numField.getDOMNode().value = "16";
+    numField.simulate("input");
     expect(onDiceSidesChangeFn)
       .toHaveBeenCalledWith(16);
   });
 
-  // Skipping this test because of https://github.com/preactjs/enzyme-adapter-preact-pure/issues/123
-  it.skip("does not allow setting sides to a NaN value", () => {
+  it("does not allow setting sides to a NaN value", () => {
     const onDiceSidesChangeFn = jest.fn();
     const onEntropyChangeFn = jest.fn();
     const source = new DiceEntropySource();
 
-    const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
-                                  diceSides={6}
-                                  onDiceSidesChange={onDiceSidesChangeFn}
-                                  onEntropyChange={onEntropyChangeFn}
-                                  source={source}/>);
+    const wrapper = mount(<Dice bitsAvailable={source.bitsAvailable()}
+                                bitsNeeded={5}
+                                diceSides={6}
+                                onDiceSidesChange={onDiceSidesChangeFn}
+                                onEntropyChange={onEntropyChangeFn}
+                                source={source}/>);
 
-    wrapper.find("input#number-input")
-      .simulate("change", { target: { valueAsNumber: NaN }});
+    const numField = wrapper.find("input#number-input");
+    numField.getDOMNode().value = NaN;
+    numField.simulate("input");
     expect(onDiceSidesChangeFn)
       .not
       .toHaveBeenCalled();
