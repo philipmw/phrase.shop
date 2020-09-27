@@ -14,5 +14,6 @@ module.exports = {
     "json",
     "node"
   ],
-  "collectCoverage": true
+  "collectCoverage": true,
+  "coverageReporters": ["lcovonly", "text"]
 };
