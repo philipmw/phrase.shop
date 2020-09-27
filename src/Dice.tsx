@@ -42,9 +42,12 @@ export class Dice extends PureComponent<IProps> {
                    min={DICE_SIDES_MIN}
                    max={DICE_SIDES_MAX}
                    value={ this.props.diceSides }
-                   onChange={(what) => {
-                     if (what.target !== null && what.target instanceof HTMLInputElement) {
-                       const newSides = what.target.valueAsNumber;
+                   onChange={(e) => {
+                     // This conditional exists primarily for TypeScript's benefit, because
+                     // `e` is a generic Event rather than the specific Change Event, so
+                     // typescript claims that `target` is nullable.
+                     if (e.target !== null && e.target instanceof HTMLInputElement) {
+                       const newSides = e.target.valueAsNumber;
                        if (!Number.isNaN(newSides)) {
                          this.props.onDiceSidesChange(newSides);
                        }

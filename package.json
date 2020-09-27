@@ -17,7 +17,7 @@
     "enzyme": "latest",
     "enzyme-adapter-preact-pure": "latest",
     "jest": "latest",
-    "ts-jest": "latest",
+    "ts-jest": "^26.4.0",
     "ts-loader": "^8.0.4",
     "tslint": "latest",
     "typescript": "latest",

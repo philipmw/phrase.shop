@@ -144,5 +144,14 @@ describe("Entropy", () => {
         .diceSides)
         .toEqual(initialDiceSides);
     });
+
+    it("propagates entropy changes", () => {
+      const dice = wrapper.find(Dice);
+      dice.get(0)
+        .props
+        .onEntropyChange();
+      expect(emptyOnEntropyChangeFn)
+        .toHaveBeenCalled();
+    });
   });
 });
