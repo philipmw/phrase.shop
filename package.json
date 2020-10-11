@@ -21,14 +21,14 @@
     "ts-loader": "^8.0.4",
     "tslint": "latest",
     "typescript": "latest",
-    "webpack": "latest",
+    "webpack": "^5.0.0",
     "webpack-cli": "latest",
     "webpack-dev-server": "latest"
   },
   "scripts": {
     "build": "webpack --display-error-details && npm run lint",
     "lint": "tslint -t verbose --project tsconfig.json --config tslint-src.json --exclude '**/*.test.ts*'",
-    "start": "webpack-dev-server --open",
+    "start": "webpack serve",
     "test": "tslint -t verbose --project tsconfig.json --config tslint-test.json '**/*.test.ts*' && jest"
   }
 }
