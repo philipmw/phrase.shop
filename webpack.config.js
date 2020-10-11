@@ -13,7 +13,8 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'docs') //`docs` as a GitHub Pages requirement
+    contentBase: path.join(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
+    open: true,
   },
   resolve: {
     alias: {
