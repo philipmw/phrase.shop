@@ -13,7 +13,8 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'docs') //`docs` as a GitHub Pages requirement
+    contentBase: path.join(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
+    open: true,
   },
   resolve: {
     alias: {
@@ -26,5 +27,8 @@ module.exports = {
       '.js', // needed for webpack-dev-server: https://github.com/webpack/webpack-dev-server/issues/720#issuecomment-268470989
       '.ts',
       '.tsx']
+  },
+  stats: {
+    errorDetails: true
   }
 };
