@@ -41,6 +41,9 @@ const menuData: MenuData = {
   [PartType.musicalnote]: {
     name: "musical note",
   },
+  [PartType.usairport]: {
+    name: "US airport",
+  },
 };
 
 export class Menu extends PureComponent<IProps> {
