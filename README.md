@@ -18,7 +18,7 @@ While there are several passphrase generators online, this one has the following
 * You can make the phrase as complex as you like. You are not limited to five rolls of six-sided dice.
 * It uses _Voice Of America's_ [*Learning English*](https://en.wikipedia.org/wiki/Learning_English_(version_of_English))
   vocabulary of core English words.
-* It uses multiple word banks, such as colors, US state abbreviations and musical notes, to help your memory.
+* It uses multiple word banks, such as colors, US state abbreviations, US airport abbreviations, and musical notes, to help your memory.
 * If you don’t want to use your computer’s random number generator, you can roll physical
   dice and submit the rolls to the app to collect entropy.
   There’s a progress bar showing how much entropy you’ve collected, and you can generate the
@@ -90,7 +90,7 @@ means is most convenient for you, such as [Homebrew](https://brew.sh/) on macOS.
 Initialize:
 
     $ npm install
- 
+
 This creates a `node_modules` directory.
 
 Run unit tests:
