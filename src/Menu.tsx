@@ -42,7 +42,7 @@ const menuData: MenuData = {
     name: "musical note",
   },
   [PartType.usairport]: {
-    name: "US airport",
+    name: "US airport abbr",
   },
 };
 

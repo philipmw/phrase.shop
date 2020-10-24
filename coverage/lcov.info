@@ -418,7 +418,7 @@ FN:1643,(anonymous_8)
 FNF:8
 FNH:8
 FNDA:5,(anonymous_1)
-FNDA:30,(anonymous_2)
+FNDA:25,(anonymous_2)
 FNDA:7585,(anonymous_3)
 FNDA:43495,(anonymous_4)
 FNDA:5120,(anonymous_5)
@@ -435,7 +435,7 @@ DA:8,5
 DA:9,5
 DA:10,5
 DA:14,5
-DA:31,30
+DA:31,25
 DA:33,5
 DA:34,5
 DA:35,5

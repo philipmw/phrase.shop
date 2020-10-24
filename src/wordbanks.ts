@@ -17,8 +17,8 @@ export const partTypeList: PartType[] = [
   PartType.symbol,
   PartType.color,
   PartType.usstate,
-  PartType.musicalnote,
   PartType.usairport,
+  PartType.musicalnote,
 ];
 
 type Dict = {
@@ -1592,7 +1592,7 @@ export const dictionary: Dict = {
     "E", "Eb", "E#",
     "F", "Fb", "F#",
     "G", "Gb", "G#"]),
-  [PartType.usairport]: typedShuffle([
+  [PartType.usairport]: [
     "ATL",
     "LAX",
     "ORD",
@@ -1608,7 +1608,7 @@ export const dictionary: Dict = {
     "PHX",
     "IAH",
     "MIA",
-    "BOS"]),
+    "BOS"],
 };
 
 interface IProps {
