@@ -13,9 +13,6 @@
 /*!********************************************!*\
   !*** ./node_modules/fisher-yates/index.js ***!
   \********************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module */
-/*! CommonJS bailout: module.exports is used directly at 1:0-14 */
 /***/ ((module) => {
 
 eval("module.exports = function shuffle (array, rng) {\n  rng = rng || Math.random\n\n  var result = []\n\n  for (var i = 0; i < array.length; ++i) {\n    var j = Math.floor(rng() * (i + 1))\n\n    if (j !== i) {\n      result[i] = result[j]\n    }\n\n    result[j] = array[i]\n  }\n\n  return result\n}\n\n\n//# sourceURL=webpack:///./node_modules/fisher-yates/index.js?");
@@ -26,45 +23,6 @@ eval("module.exports = function shuffle (array, rng) {\n  rng = rng || Math.rand
 /*!**********************************************************!*\
   !*** ./node_modules/preact/compat/dist/compat.module.js ***!
   \**********************************************************/
-/*! namespace exports */
-/*! export Children [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Component [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/dist/preact.module.js .Component */
-/*! export Fragment [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/dist/preact.module.js .Fragment */
-/*! export PureComponent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export StrictMode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Suspense [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export SuspenseList [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cloneElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createContext [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/dist/preact.module.js .createContext */
-/*! export createElement [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/dist/preact.module.js .createElement */
-/*! export createFactory [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createPortal [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createRef [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/dist/preact.module.js .createRef */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export findDOMNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export forwardRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hydrate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isValidElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export lazy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export memo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unmountComponentAtNode [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export unstable_batchedUpdates [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useCallback [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useCallback */
-/*! export useContext [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useContext */
-/*! export useDebugValue [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useDebugValue */
-/*! export useEffect [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useEffect */
-/*! export useErrorBoundary [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useErrorBoundary */
-/*! export useImperativeHandle [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useImperativeHandle */
-/*! export useLayoutEffect [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useLayoutEffect */
-/*! export useMemo [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useMemo */
-/*! export useReducer [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useReducer */
-/*! export useRef [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useRef */
-/*! export useState [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/preact/hooks/dist/hooks.module.js .useState */
-/*! export version [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -76,22 +34,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!***************************************************!*\
   !*** ./node_modules/preact/dist/preact.module.js ***!
   \***************************************************/
-/*! namespace exports */
-/*! export Component [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Fragment [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __u [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export cloneElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createContext [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export createRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export h [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export hydrate [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export isValidElement [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export options [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export toChildArray [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -103,20 +45,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!********************************************************!*\
   !*** ./node_modules/preact/hooks/dist/hooks.module.js ***!
   \********************************************************/
-/*! namespace exports */
-/*! export useCallback [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useContext [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useDebugValue [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useEffect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useErrorBoundary [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useImperativeHandle [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useLayoutEffect [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useMemo [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useReducer [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useRef [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export useState [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -128,11 +56,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!*********************!*\
   !*** ./src/App.tsx ***!
   \*********************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
-/*! CommonJS bailout: this is used directly at 9:26-30 */
-/*! CommonJS bailout: this is used directly at 14:20-24 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -144,11 +67,6 @@ eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ?
 /*!**************************************!*\
   !*** ./src/ComputerEntropySource.ts ***!
   \**************************************/
-/*! flagged exports */
-/*! export ComputerEntropySource [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -160,13 +78,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!**********************!*\
   !*** ./src/Dice.tsx ***!
   \**********************/
-/*! flagged exports */
-/*! export DICE_SIDES_MAX [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export DICE_SIDES_MIN [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export Dice [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -178,11 +89,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!**********************************!*\
   !*** ./src/DiceEntropySource.ts ***!
   \**********************************/
-/*! flagged exports */
-/*! export DiceEntropySource [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -194,11 +100,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!*************************!*\
   !*** ./src/Entropy.tsx ***!
   \*************************/
-/*! flagged exports */
-/*! export Entropy [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -210,11 +111,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!**********************!*\
   !*** ./src/Menu.tsx ***!
   \**********************/
-/*! flagged exports */
-/*! export Menu [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -226,11 +122,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!************************!*\
   !*** ./src/Phrase.tsx ***!
   \************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
-/*! CommonJS bailout: this is used directly at 9:26-30 */
-/*! CommonJS bailout: this is used directly at 14:20-24 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -242,11 +133,6 @@ eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ?
 /*!****************************!*\
   !*** ./src/PhrasePart.tsx ***!
   \****************************/
-/*! flagged exports */
-/*! export PhrasePart [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__ */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -258,11 +144,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /*!**************************!*\
   !*** ./src/appEntry.tsx ***!
   \**************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
-/*! CommonJS bailout: this is used directly at 9:26-30 */
-/*! CommonJS bailout: this is used directly at 14:20-24 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -274,20 +155,10 @@ eval("\nvar __createBinding = (this && this.__createBinding) || (Object.create ?
 /*!***************************!*\
   !*** ./src/loadeddice.ts ***!
   \***************************/
-/*! flagged exports */
-/*! export __esModule [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export bitOfAt [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export bitsOfFrom [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export q2 [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__ */
-/*! CommonJS bailout: exports.bitOfAt(...) prevents optimization as exports is passed as call context at 12:19-34 */
-/*! CommonJS bailout: exports.bitOfAt(...) prevents optimization as exports is passed as call context at 13:19-34 */
-/*! CommonJS bailout: exports.bitsOfFrom(...) prevents optimization as exports is passed as call context at 15:19-37 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
-eval("\n/**\n * This module implements algorithm Q2 from the paper \"How to Turn Loaded Dice into Fair Coins\",\n * http://markus-jakobsson.com/papers/jakobsson-ieeeit00.pdf\n */\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.bitsOfFrom = exports.bitOfAt = exports.q2 = void 0;\n/* tslint:disable:no-magic-numbers */\nexports.q2 = (r, s) => {\n    const k = 32; // FIXME\n    for (let i = k; i >= 2; i -= 1) {\n        const si = exports.bitOfAt(s, i);\n        const ri = exports.bitOfAt(r - 1, i);\n        if (si && !ri) {\n            return exports.bitsOfFrom(r - 1, i - 1);\n        }\n    }\n    return [];\n};\n// Return the `b`th bit (1-indexed) of `n`.\nexports.bitOfAt = (n, b) => ((n >> (b - 1)) % 2 === 1);\n// Return the bottom `b` bits (1-indexed) of `n`.\nexports.bitsOfFrom = (n, b) => {\n    const output = new Array(b);\n    for (let i = b; i > 0; i -= 1) {\n        const iz = i - 1; // 0-indexed i\n        output[b - i] = ((n >> iz) % 2) === 1;\n    }\n    return output;\n};\n\n\n//# sourceURL=webpack:///./src/loadeddice.ts?");
+eval("\n/**\n * This module implements algorithm Q2 from the paper \"How to Turn Loaded Dice into Fair Coins\",\n * http://markus-jakobsson.com/papers/jakobsson-ieeeit00.pdf\n */\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.bitsOfFrom = exports.bitOfAt = exports.q2 = void 0;\n/* tslint:disable:no-magic-numbers */\nconst q2 = (r, s) => {\n    const k = 32; // FIXME\n    for (let i = k; i >= 2; i -= 1) {\n        const si = exports.bitOfAt(s, i);\n        const ri = exports.bitOfAt(r - 1, i);\n        if (si && !ri) {\n            return exports.bitsOfFrom(r - 1, i - 1);\n        }\n    }\n    return [];\n};\nexports.q2 = q2;\n// Return the `b`th bit (1-indexed) of `n`.\nconst bitOfAt = (n, b) => ((n >> (b - 1)) % 2 === 1);\nexports.bitOfAt = bitOfAt;\n// Return the bottom `b` bits (1-indexed) of `n`.\nconst bitsOfFrom = (n, b) => {\n    const output = new Array(b);\n    for (let i = b; i > 0; i -= 1) {\n        const iz = i - 1; // 0-indexed i\n        output[b - i] = ((n >> iz) % 2) === 1;\n    }\n    return output;\n};\nexports.bitsOfFrom = bitsOfFrom;\n\n\n//# sourceURL=webpack:///./src/loadeddice.ts?");
 
 /***/ }),
 
@@ -295,9 +166,6 @@ eval("\n/**\n * This module implements algorithm Q2 from the paper \"How to Turn
 /*!**************************!*\
   !*** ./src/wordbanks.ts ***!
   \**************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: top-level-this-exports, __webpack_exports__, __webpack_require__ */
-/*! CommonJS bailout: this is used directly at 2:23-27 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -362,7 +230,7 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	__webpack_require__("./src/appEntry.tsx");
-/******/ 	// This entry module used 'exports' so it can't be inlined
 /******/ })()
 ;

@@ -13,16 +13,16 @@
     "url": "https://github.com/philipmw/phrase.shop"
   },
   "devDependencies": {
-    "@types/jest": "latest",
+    "@types/jest": "^26.0.19",
     "enzyme": "latest",
     "enzyme-adapter-preact-pure": "latest",
-    "jest": "latest",
-    "ts-jest": "^26.4.0",
-    "ts-loader": "^8.0.4",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-loader": "^8.0.12",
     "tslint": "latest",
-    "typescript": "latest",
-    "webpack": "^5.0.0",
-    "webpack-cli": "latest",
+    "typescript": "^4.1.3",
+    "webpack": "^5.10.1",
+    "webpack-cli": "^4.2.0",
     "webpack-dev-server": "latest"
   },
   "scripts": {
