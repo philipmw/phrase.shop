@@ -16,15 +16,9 @@
                 display: none;
             }
         }
-        a {
-            color: lightyellow;
-        }
-        a:visited {
-            color: #e0e0e0;
-        }
         body {
-            background-color: #303030;
-            color: #e0e0e0;
+            background-color: #e0e0e0;
+            color: #303030;
         }
         button {
             border: 4px double #803030;
@@ -36,7 +30,8 @@
             background-color: #ff9090;
         }
         button:disabled {
-            background-color: #b03030;
+            border: 4px double #c06060;
+            background-color: #e09090;
         }
         button.add, button#generate, button#reset {
             font-size: 12pt;
@@ -52,7 +47,7 @@
             font-weight: bold;
         }
         div#app-root {
-            background-color: #1a1a1a;
+            background-color: #c0c0c0;
             padding: 1em;
             font-size: 14pt;
         }
@@ -110,8 +105,28 @@
         .part.type-usstate { color: red; }
         .part.type-color { color: #8080ff; }
         .part.type-digit { color: green; }
-        .part.type-symbol { color: darkgrey; }
+        .part.type-symbol { color: #803030; }
         .part.type-musicalnote { background-color: lightyellow; color: black; }
+
+        @media (prefers-color-scheme: dark) {
+            a {
+                color: lightyellow;
+            }
+            a:visited {
+                color: #e0e0e0;
+            }
+            body {
+                background-color: #303030;
+                color: #e0e0e0;
+            }
+            button:disabled {
+                background-color: #b03030;
+            }
+            div#app-root {
+                background-color: #1a1a1a;
+            }
+            .part.type-symbol { color: darkgrey; }
+        }
     </style>
 </head>
 <body>
