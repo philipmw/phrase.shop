@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="A web app to generate secure yet memorable passphrases"/>
+    <meta name="description" content="phrase.shop generates secure yet memorable passphrases (passwords) to keep you safe on the Internet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>phrase shop</title>
+    <title>phrase shop: secure yet memorable passphrases</title>
     <link rel="shortcut icon" href="favicon.png">
     <link rel="apple-touch-icon" sizes="80x80" href="favicon-80.png">
     <link rel="apple-touch-icon" sizes="152x152" href="favicon-152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
     <style>
+        /* hide the page title on small screens */
+        @media only screen and (max-height: 47em) {
+            h1 {
+                display: none;
+            }
+        }
         a {
             color: lightyellow;
         }
@@ -109,6 +115,9 @@
     </style>
 </head>
 <body>
+
+<h1>phrase shop: secure yet memorable passphrases</h1>
+
 <div id="app-root"></div>
 
 <div id="about">

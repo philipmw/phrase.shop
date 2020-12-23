@@ -23,7 +23,7 @@ export class Phrase extends PureComponent<IProps> {
   }
 
   private readonly renderEmpty = () => <div>
-      <p id="stats">Build your next secure and memorable passphrase below.</p>
+      <p id="stats">Build your next passphrase:</p>
       <div id="phrase" class="empty">* * *</div>
     </div>
 

@@ -15,7 +15,7 @@ describe("Phrase", () => {
       expect(wrapper.find("div#phrase.empty"))
         .toHaveLength(1);
       expect(wrapper.text())
-        .toMatch(/Build your next/);
+        .toMatch(/Build your next passphrase/);
     });
   });
 
