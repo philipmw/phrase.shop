@@ -10,6 +10,7 @@
 * [Diceware](https://en.wikipedia.org/wiki/Diceware)
 * [How long should my passphrase be?](http://world.std.com/~reinhold/dicewarefaq.html#howlong)
 * [DiceKeys](https://dicekeys.com/)
+* [Man vs. Machine, or, why Man is not a Particularly Good Source of Entropy.](http://www.loper-os.org/bad-at-entropy/manmach.html)
 
 ## Features
 
