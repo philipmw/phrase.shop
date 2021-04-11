@@ -26,6 +26,15 @@ const menuData: MenuData = {
   [PartType.word]: {
     name: "word",
   },
+  [PartType.noun]: {
+    name: "noun",
+  },
+  [PartType.verb]: {
+    name: "verb",
+  },
+  [PartType.adjective]: {
+    name: "adjective",
+  },
   [PartType.digit]: {
     name: "digit",
   },
