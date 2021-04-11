@@ -33,10 +33,13 @@
             border: 4px double #d08080;
             background-color: #d09090;
         }
-        button.add, button#generate, button#reset {
-            font-size: 12pt;
+        button#generate, button#reset {
             margin-top: 1em;
             margin-right: 1em;
+        }
+        button.add, button#generate, button#reset {
+            font-size: 12pt;
+            padding: .5em 1em;
         }
         button.diceRollValue {
             font-size: 12pt;
@@ -80,6 +83,24 @@
         }
         div#dice-sides input#number-input {
             width: 3em;
+        }
+        .menu-item {
+            display: inline-flex;
+            justify-content: space-between;
+            border: 1px solid #b0b0b0;
+            border-radius: 1em;
+            min-width: 12em;
+            margin: 0 2em 1em 2em;
+            padding: 0.3em;
+        }
+        .menu-item .part {
+            font-size: 20pt;
+        }
+        .menu-item .detail {
+            display: inline-block;
+        }
+        .menu-item .detail p {
+            margin: 0;
         }
         progress {
             width: 100%;
@@ -128,6 +149,9 @@
             }
             div#app-root {
                 background-color: #1a1a1a;
+            }
+            .menu-item {
+                border: 1px solid black;
             }
             .part.type-symbol { color: darkgrey; }
         }

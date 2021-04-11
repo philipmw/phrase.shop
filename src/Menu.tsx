@@ -65,18 +65,24 @@ export class Menu extends PureComponent<IProps> {
     }
 
     const menuItems = partTypeList.map((menuItem) => {
-      const lengthStr = partTypeProps[menuItem].minLength === partTypeProps[menuItem].maxLength
-        ? `${partTypeProps[menuItem].minLength}`
-        : `${partTypeProps[menuItem].minLength}-${partTypeProps[menuItem].maxLength}`;
+      const optLength = partTypeProps[menuItem].maxLength - partTypeProps[menuItem].minLength;
+      const lengthStr = Array(partTypeProps[menuItem].minLength)
+        .fill("🀫")
+        .concat(Array(optLength)
+          .fill("🀆"))
+        .join("");
 
-      return <button type="button"
-                     className={`add ${menuItem}`}
-                     key={menuItem}
-                     onClick={() => { this.props.addPhrasePart(menuItem); }}>
-        <span className="callToAction">
-          + { menuData[menuItem].name }
-        </span> ({partTypeProps[menuItem].entropyReqBits} bits, length {lengthStr})
-      </button>;
+      return <div className="menu-item">
+        <div className="detail">
+          <p className={`part type-${menuItem}`}>{ menuData[menuItem].name }</p>
+          <p>{lengthStr}</p>
+          <p>{partTypeProps[menuItem].entropyReqBits} bits of entropy</p>
+        </div>
+        <button type="button"
+                className={`add ${menuItem}`}
+                key={menuItem}
+                onClick={() => { this.props.addPhrasePart(menuItem); }}>+</button>
+      </div>;
     });
 
     return <div id="menu">
