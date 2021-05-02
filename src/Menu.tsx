@@ -35,6 +35,18 @@ const menuData: MenuData = {
   [PartType.adjective]: {
     name: "adjective",
   },
+  [PartType.adverb]: {
+    name: "adverb",
+  },
+  [PartType.preposition]: {
+    name: "preposition",
+  },
+  [PartType.conjunction]: {
+    name: "conjunction",
+  },
+  [PartType.determiner]: {
+    name: "determiner",
+  },
   [PartType.digit]: {
     name: "digit",
   },
