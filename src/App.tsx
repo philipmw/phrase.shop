@@ -18,6 +18,8 @@ interface IState {
   phraseParts: IPartProps[];
 }
 
+const getUniqueId = () => Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
+
 export class App extends PureComponent<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
@@ -40,6 +42,7 @@ export class App extends PureComponent<IProps, IState> {
       <Phrase isGenerated={this.state.isGenerated}
               parts={this.state.phraseParts}/>
       <Menu addPhrasePart={this.addPhrasePart}
+            setPhraseParts={this.setPhraseParts}
             entropyBitsAvailable={this.state.entropySource.bitsAvailable()}
             entropyBitsNeeded={bitsOfEntropy}
             generatePlaintext={this.generatePlaintext}
@@ -58,7 +61,7 @@ export class App extends PureComponent<IProps, IState> {
   private readonly addPhrasePart = (type: wb.PartType) => {
     this.setState((state) => ({
       isGenerated: false,
-      phraseParts: state.phraseParts.concat({key: this.state.phraseParts.length, type}),
+      phraseParts: state.phraseParts.concat({key: getUniqueId(), type}),
     }));
   }
 
@@ -92,6 +95,13 @@ export class App extends PureComponent<IProps, IState> {
       entropyBitsAvailable: source.bitsAvailable(),
       entropySource: source,
     }));
+  }
+
+  private readonly setPhraseParts = (types: wb.PartType[]) => {
+    this.setState({
+      isGenerated: false,
+      phraseParts: types.map((type) => ({key: getUniqueId(), type})),
+    });
   }
 
 }

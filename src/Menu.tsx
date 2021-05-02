@@ -12,6 +12,7 @@ interface IProps {
   addPhrasePart(type: PartType): void;
   generatePlaintext(): void;
   reset(): void;
+  setPhraseParts(types: PartType[]): void;
 }
 
 interface IMenuEntry {
@@ -106,6 +107,26 @@ export class Menu extends PureComponent<IProps> {
       </div>;
     });
 
+    const ctaButton = this.props.qtyOfPhraseParts === 0
+      ? <button type="button"
+                id="generate"
+                onClick={() => { this.props.setPhraseParts([
+                  PartType.determiner,
+                  PartType.digit,
+                  PartType.digit,
+                  PartType.adjective,
+                  PartType.noun,
+                  PartType.verb,
+                ]); }}>
+          <span className="callToAction">🍱 house special</span>
+        </button>
+      : <button type="button"
+                id="generate"
+                disabled={this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
+                onClick={() => { this.props.generatePlaintext(); }}>
+          <span className="callToAction" >generate!</span>
+        </button>;
+
     return <div id="menu">
       <div id="add-components">
         {menuItems}
@@ -117,14 +138,7 @@ export class Menu extends PureComponent<IProps> {
                 disabled={this.props.qtyOfPhraseParts === 0}
                 onClick={() => { this.props.reset(); }}>
           ⇠ start over</button>
-        <button type="button"
-                id="generate"
-                disabled={
-                  this.props.qtyOfPhraseParts === 0 ||
-                  this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
-                onClick={() => { this.props.generatePlaintext(); }}>
-          <span className="callToAction" >generate!</span>
-        </button>
+        { ctaButton }
       </div>
     </div>;
   }

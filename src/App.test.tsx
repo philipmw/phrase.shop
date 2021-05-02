@@ -19,6 +19,17 @@ describe("App", () => {
       .toHaveLength(1);
   });
 
+  it("allows setting entire phrase", () => {
+    const wrapper = shallow(<App/>);
+    expect(wrapper.state("phraseParts"))
+      .toHaveLength(0);
+
+    wrapper.instance()
+      .setPhraseParts([wb.PartType.word, wb.PartType.digit]);
+    expect(wrapper.state("phraseParts"))
+      .toHaveLength(2);
+  });
+
   it("generates passphrases", () => {
     const mockEntropySource: IEntropySource = {
       bitsAvailable: jest.fn()

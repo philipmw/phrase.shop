@@ -9,12 +9,14 @@ configure({ adapter: new Adapter() });
 
 describe("Menu", () => {
   const addPhrasePartFn = jest.fn();
+  const setPhrasePartsFn = jest.fn();
   const generatePlaintextFn = jest.fn();
   const resetFn = jest.fn();
 
   describe("initial state", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      setPhraseParts={setPhrasePartsFn}
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
@@ -28,14 +30,14 @@ describe("Menu", () => {
         .toHaveLength(wb.partTypeList.length);
     });
 
-    it("has a disabled Generate button", () => {
+    it("has a House Special button", () => {
       const buttonWrapper = wrapper.find("button#generate");
       expect(buttonWrapper)
         .toHaveLength(1);
       expect(buttonWrapper
         .render()
-        .attr("disabled"))
-        .toBeTruthy();
+        .text())
+        .toContain("house");
     });
 
     it("has a disabled Start Over button", () => {
@@ -59,6 +61,7 @@ describe("Menu", () => {
   describe("when phrase exists but is not generated", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      setPhraseParts={setPhrasePartsFn}
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
@@ -105,6 +108,7 @@ describe("Menu", () => {
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
+      setPhraseParts={setPhrasePartsFn}
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
