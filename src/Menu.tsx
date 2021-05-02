@@ -124,14 +124,10 @@ export class Menu extends PureComponent<IProps> {
                 id="generate"
                 disabled={this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
                 onClick={() => { this.props.generatePlaintext(); }}>
-          <span className="callToAction" >generate!</span>
+          <span className="callToAction" >📜 generate!</span>
         </button>;
 
     return <div id="menu">
-      <div id="add-components">
-        {menuItems}
-      </div>
-
       <div id="main-actions">
         <button type="button"
                 id="reset"
@@ -140,6 +136,11 @@ export class Menu extends PureComponent<IProps> {
           ⇠ start over</button>
         { ctaButton }
       </div>
+
+      <div id="add-components">
+        {menuItems}
+      </div>
+
     </div>;
   }
 }
