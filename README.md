@@ -50,7 +50,7 @@ which would yield a massive 6 bits of entropy per roll.
 ## Developing
 
 ![Continuous Integration status](https://github.com/philipmw/phrase.shop/workflows/Continuous%20Integration/badge.svg)
-[![Coverage status](https://coveralls.io/repos/github/philipmw/phrase.shop/badge.svg?branch=master)](https://coveralls.io/github/philipmw/phrase.shop?branch=master)
+[![Coverage status](https://coveralls.io/repos/github/philipmw/phrase.shop/badge.svg?branch=main)](https://coveralls.io/github/philipmw/phrase.shop?branch=main)
 
 I welcome your contributions.
 In particular, I'm very supportive of newbie developers.
