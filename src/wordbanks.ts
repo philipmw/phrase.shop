@@ -48,13 +48,13 @@ const typedShuffle = (things: string[]): string[] => shuffle(things); // tslint:
 
 const BINARY_BASE = 2;
 const ENGLISH_ENTROPY_BITS = 10;
-const NOUN_ENTROPY_BITS = 7;
-const VERB_ENTROPY_BITS = 7;
-const ADJECTIVE_ENTROPY_BITS = 5;
+const NOUN_ENTROPY_BITS = 8;
+const VERB_ENTROPY_BITS = 8;
+const ADJECTIVE_ENTROPY_BITS = 6;
 const ADVERB_ENTROPY_BITS = 5;
 const PREPOSITION_ENTROPY_BITS = 4;
-const CONJUNCTION_ENTROPY_BITS = 3;
-const DETERMINER_ENTROPY_BITS = 3;
+const CONJUNCTION_ENTROPY_BITS = 4;
+const DETERMINER_ENTROPY_BITS = 4;
 const MIN_ALLOWED_ENGLISH_LENGTH = 4;
 
 /**
