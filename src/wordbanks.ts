@@ -53,7 +53,7 @@ const takeRandomNBitsShortestItemsOf = (items: string[], bits: number) =>
 
 const BINARY_BASE = 2;
 const ENGLISH_ENTROPY_BITS = 10;
-const NOUN_ENTROPY_BITS = 9;
+const NOUN_ENTROPY_BITS = 10;
 const VERB_ENTROPY_BITS = 9;
 const ADJECTIVE_ENTROPY_BITS = 8;
 const ADVERB_ENTROPY_BITS = 7;
