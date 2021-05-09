@@ -36,14 +36,10 @@ describe("Menu", () => {
         .toHaveLength(3);
     });
 
-    it("has a disabled Start Over button", () => {
+    it("has does not have a Start Over button", () => {
       const buttonWrapper = wrapper.find("button#reset");
       expect(buttonWrapper)
-        .toHaveLength(1);
-      expect(buttonWrapper
-        .render()
-        .attr("disabled"))
-        .toBeTruthy();
+        .toHaveLength(0);
     });
 
     it("adds a phrase part on clicking an Add button", () => {

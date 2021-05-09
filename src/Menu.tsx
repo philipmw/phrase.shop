@@ -107,7 +107,7 @@ export class Menu extends PureComponent<IProps> {
       </div>;
     });
 
-    const phraseTemplates = <span>
+    const phraseTemplateButtons = <span>
       <button type="button"
               id="generate"
               onClick={() => { this.props.setPhraseParts([
@@ -147,23 +147,22 @@ export class Menu extends PureComponent<IProps> {
       </button>
     </span>;
 
-    const ctaButton = this.props.qtyOfPhraseParts === 0
-      ? phraseTemplates
-      : <button type="button"
-                id="generate"
-                disabled={this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
-                onClick={() => { this.props.generatePlaintext(); }}>
+    const phraseInProgressButtons = <span>
+        <button type="button"
+                id="reset"
+                onClick={() => { this.props.reset(); }}>
+          ⇠ start over</button>
+      <button type="button"
+              id="generate"
+              disabled={this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
+              onClick={() => { this.props.generatePlaintext(); }}>
           <span className="callToAction" >📜 generate!</span>
-        </button>;
+        </button>
+    </span>;
 
     return <div id="menu">
       <div id="main-actions">
-        <button type="button"
-                id="reset"
-                disabled={this.props.qtyOfPhraseParts === 0}
-                onClick={() => { this.props.reset(); }}>
-          ⇠ start over</button>
-        { ctaButton }
+        { this.props.qtyOfPhraseParts === 0 ? phraseTemplateButtons : phraseInProgressButtons }
       </div>
 
       <div id="add-components">
