@@ -40,23 +40,29 @@ export class Entropy extends PureComponent<IProps, IState> {
       {charge}
       <ul>
         <li>
-          <input type="radio"
-                 name="source"
-                 className="computer"
-                 onChange={() => {
-                   this.props.setEntropySource(new ComputerEntropySource());
-                 }}
-                 checked={this.props.source instanceof ComputerEntropySource}
-                 value="computer"/> 🖥 my computer will make randomness</li>
+          <label>
+            <input type="radio"
+                   name="source"
+                   className="computer"
+                   onChange={() => {
+                     this.props.setEntropySource(new ComputerEntropySource());
+                   }}
+                   checked={this.props.source instanceof ComputerEntropySource}
+                   value="computer"/> 🖥 my computer will make randomness
+          </label>
+        </li>
         <li>
-          <input type="radio"
-                 name="source"
-                 className="dice"
-                 onChange={() => {
-                   this.props.setEntropySource(new DiceEntropySource());
-                 }}
-                 checked={this.props.source instanceof DiceEntropySource}
-                 value="dice"/> 🎲 I will roll my dice</li>
+          <label>
+            <input type="radio"
+                   name="source"
+                   className="dice"
+                   onChange={() => {
+                     this.props.setEntropySource(new DiceEntropySource());
+                   }}
+                   checked={this.props.source instanceof DiceEntropySource}
+                   value="dice"/> 🎲 I will roll my dice
+          </label>
+        </li>
       </ul>
 
       {
