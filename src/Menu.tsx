@@ -126,7 +126,6 @@ export class Menu extends PureComponent<IProps> {
                 PartType.adjective,
                 PartType.noun,
                 PartType.conjunction,
-                PartType.digit,
                 PartType.noun,
               ]); }}>
         <span className="callToAction">🍱 🔒 💪💪</span>
