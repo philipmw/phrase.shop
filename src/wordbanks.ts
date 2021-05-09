@@ -46,6 +46,11 @@ type Dict = {
 // centralize its usage and disable warnings on this line.
 const typedShuffle = (things: string[]): string[] => shuffle(things); // tslint:disable-line
 
+const takeRandomNBitsShortestItemsOf = (items: string[], bits: number) =>
+  typedShuffle(items)
+    .sort((a, b) => a.length - b.length)
+    .slice(0, Math.pow(BINARY_BASE, bits));
+
 const BINARY_BASE = 2;
 const ENGLISH_ENTROPY_BITS = 10;
 const NOUN_ENTROPY_BITS = 8;
@@ -58,44 +63,31 @@ const DETERMINER_ENTROPY_BITS = 4;
 const MIN_ALLOWED_ENGLISH_LENGTH = 4;
 
 /**
- * The dictionary works in one of two ways:
- *
- *   For English, I use the Voice Of America Special English.  See the `voa/` subdirectory
- *   for a script that generates the wordbank.  This script outputs 1,517 words.  I want a
- *   power of two elements in the wordbank, so I want to round down to 1,024 words.
- *   I choose to eliminate the shortest and longest words, to give the customer the biggest bang
- *   for their buck.
- *
- *   For all other parts, I want a whole number of entropy bits without permanently eliminating
- *   any particular value.  Each time the app starts, it shuffles the full set so that the bottom
- *   2^n elements of the resulting list are different each time the program runs.
+ * For most of these wordbanks, we want a whole number of entropy bits without permanently
+ * eliminating any particular value.  So we shuffle using a stable sort, remove longest words
+ * to reduce phrase length variance, and take the first 2^N entries.
  */
 export const dictionary: Dict = {
-  [PartType.word]: allWords()
-    .filter((a) => a.length >= MIN_ALLOWED_ENGLISH_LENGTH)
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, ENGLISH_ENTROPY_BITS)),
-  [PartType.noun]: nouns()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, NOUN_ENTROPY_BITS)),
-  [PartType.verb]: verbs()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, VERB_ENTROPY_BITS)),
-  [PartType.adjective]: adjectives()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, ADJECTIVE_ENTROPY_BITS)),
-  [PartType.adverb]: adverbs()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, ADVERB_ENTROPY_BITS)),
-  [PartType.preposition]: prepositions()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, PREPOSITION_ENTROPY_BITS)),
-  [PartType.conjunction]: conjunctions()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, CONJUNCTION_ENTROPY_BITS)),
-  [PartType.determiner]: determiners()
-    .sort((a, b) => a.length - b.length)
-    .slice(0, Math.pow(BINARY_BASE, DETERMINER_ENTROPY_BITS)),
+  [PartType.word]:
+    takeRandomNBitsShortestItemsOf(
+      // eliminate the shortest words to reduce phrase length variance.
+      allWords()
+        .filter((a) => a.length >= MIN_ALLOWED_ENGLISH_LENGTH),
+      ENGLISH_ENTROPY_BITS),
+  [PartType.noun]:
+    takeRandomNBitsShortestItemsOf(nouns(), NOUN_ENTROPY_BITS),
+  [PartType.verb]:
+    takeRandomNBitsShortestItemsOf(verbs(), VERB_ENTROPY_BITS),
+  [PartType.adjective]:
+    takeRandomNBitsShortestItemsOf(adjectives(), ADJECTIVE_ENTROPY_BITS),
+  [PartType.adverb]:
+    takeRandomNBitsShortestItemsOf(adverbs(), ADVERB_ENTROPY_BITS),
+  [PartType.preposition]:
+    takeRandomNBitsShortestItemsOf(prepositions(), PREPOSITION_ENTROPY_BITS),
+  [PartType.conjunction]:
+    takeRandomNBitsShortestItemsOf(conjunctions(), CONJUNCTION_ENTROPY_BITS),
+  [PartType.determiner]:
+    takeRandomNBitsShortestItemsOf(determiners(), DETERMINER_ENTROPY_BITS),
   [PartType.digit]: typedShuffle(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
   [PartType.usstate]: typedShuffle([
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
