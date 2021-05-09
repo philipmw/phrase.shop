@@ -107,19 +107,49 @@ export class Menu extends PureComponent<IProps> {
       </div>;
     });
 
+    const phraseTemplates = <span>
+      <button type="button"
+              id="generate"
+              onClick={() => { this.props.setPhraseParts([
+                PartType.determiner,
+                PartType.digit,
+                PartType.adjective,
+                PartType.noun,
+              ]); }}>
+        <span className="callToAction">🍱 🔒 💪</span>
+      </button>
+      <button type="button"
+              id="generate"
+              onClick={() => { this.props.setPhraseParts([
+                PartType.determiner,
+                PartType.digit,
+                PartType.adjective,
+                PartType.noun,
+                PartType.conjunction,
+                PartType.digit,
+                PartType.noun,
+              ]); }}>
+        <span className="callToAction">🍱 🔒 💪💪</span>
+      </button>
+      <button type="button"
+              id="generate"
+              onClick={() => { this.props.setPhraseParts([
+                PartType.determiner,
+                PartType.digit,
+                PartType.adjective,
+                PartType.noun,
+                PartType.verb,
+                PartType.conjunction,
+                PartType.digit,
+                PartType.noun,
+                PartType.verb,
+              ]); }}>
+        <span className="callToAction">🍱 🔒 💪💪💪</span>
+      </button>
+    </span>;
+
     const ctaButton = this.props.qtyOfPhraseParts === 0
-      ? <button type="button"
-                id="generate"
-                onClick={() => { this.props.setPhraseParts([
-                  PartType.determiner,
-                  PartType.digit,
-                  PartType.digit,
-                  PartType.adjective,
-                  PartType.noun,
-                  PartType.verb,
-                ]); }}>
-          <span className="callToAction">🍱 house special</span>
-        </button>
+      ? phraseTemplates
       : <button type="button"
                 id="generate"
                 disabled={this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
@@ -138,9 +168,16 @@ export class Menu extends PureComponent<IProps> {
       </div>
 
       <div id="add-components">
-        {menuItems}
+        <section class="accordion">
+          <input type="checkbox" name="collapse" id="phrase-components"/>
+          <label for="phrase-components">
+            &nbsp;Shop for phrase parts à la carte
+          </label>
+          <div class="accordion-content">
+            {menuItems}
+          </div>
+        </section>
       </div>
-
     </div>;
   }
 }

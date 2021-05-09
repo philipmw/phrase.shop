@@ -30,14 +30,10 @@ describe("Menu", () => {
         .toHaveLength(wb.partTypeList.length);
     });
 
-    it("has a House Special button", () => {
+    it("has three phrase templates", () => {
       const buttonWrapper = wrapper.find("button#generate");
       expect(buttonWrapper)
-        .toHaveLength(1);
-      expect(buttonWrapper
-        .render()
-        .text())
-        .toContain("house");
+        .toHaveLength(3);
     });
 
     it("has a disabled Start Over button", () => {
@@ -74,6 +70,10 @@ describe("Menu", () => {
       const buttonWrapper = wrapper.find("button#generate");
       expect(buttonWrapper)
         .toHaveLength(1);
+      expect(buttonWrapper
+        .render()
+        .text())
+        .toContain("generate");
       expect(buttonWrapper
         .render()
         .attr("disabled"))

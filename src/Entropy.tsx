@@ -28,7 +28,7 @@ export class Entropy extends PureComponent<IProps, IState> {
 
   public render() {
     if (this.props.bitsNeeded === 0) {
-      return <div id="entropy"></div>;
+      return <div></div>;
     }
 
     const charge = <span id="charge">

@@ -57,6 +57,9 @@
             /* we want to keep the dec/inc buttons and field together */
             display: inline-block;
         }
+        div#entropy {
+            margin-top: 1em;
+        }
         div#entropy li {
             list-style-type: none;
         }
@@ -127,6 +130,17 @@
         .part.type-digit { color: green; }
         .part.type-symbol { color: #803030; }
         .part.type-musicalnote { background-color: lightyellow; color: black; }
+
+        /* start accordion: https://codeconvey.com/html-expand-collapse-text-without-javascript/ */
+        .accordion .accordion-content {
+            height: 0;
+            overflow: hidden;
+        }
+        .accordion > input[name="collapse"]:checked ~ .accordion-content {
+            margin-top: 1em;
+            height: auto;
+        }
+        /* end accordion */
 
         @media (prefers-color-scheme: dark) {
             a {
