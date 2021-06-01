@@ -3,8 +3,16 @@ import { PureComponent } from "preact/compat";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
+import { getUrlSearchParams, isAnimationEnabled } from "./featureflags";
 import { Menu } from "./Menu";
-import { IPartProps, Phrase } from "./Phrase";
+import { IPartProps, Phrase, PhraseGenState } from "./Phrase";
+import {
+  ANIMATION_TIMEOUT_MS,
+  DISAMBIG_MODULO,
+  getInsecureRandomBits,
+  IAnimationState,
+  MAX_TEMP_WORDS,
+} from "./phraseAnimation";
 import * as wb from "./wordbanks";
 
 interface IProps {
@@ -14,8 +22,9 @@ interface IProps {
 interface IState {
   entropyBitsAvailable: number;
   entropySource: IEntropySource;
-  isGenerated: boolean;
+  phraseGenState: PhraseGenState;
   phraseParts: IPartProps[];
+  urlSearchParams: URLSearchParams;
 }
 
 const getUniqueId = () => Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
@@ -29,8 +38,9 @@ export class App extends PureComponent<IProps, IState> {
     this.state = {
       entropyBitsAvailable: entropySource.bitsAvailable(),
       entropySource,
-      isGenerated: false,
+      phraseGenState: PhraseGenState.NOT_STARTED,
       phraseParts: [],
+      urlSearchParams: getUrlSearchParams(),
     };
   }
 
@@ -39,19 +49,19 @@ export class App extends PureComponent<IProps, IState> {
       (acc, pprops) => (acc + wb.partTypeProps[pprops.type].entropyReqBits), 0);
 
     return <div>
-      <Phrase isGenerated={this.state.isGenerated}
+      <Phrase genState={this.state.phraseGenState}
               parts={this.state.phraseParts}/>
       <Menu addPhrasePart={this.addPhrasePart}
             setPhraseParts={this.setPhraseParts}
             entropyBitsAvailable={this.state.entropySource.bitsAvailable()}
             entropyBitsNeeded={bitsOfEntropy}
             generatePlaintext={this.generatePlaintext}
-            isGenerated={this.state.isGenerated}
+            phraseGenState={this.state.phraseGenState}
             qtyOfPhraseParts={this.state.phraseParts.length}
             reset={this.reset}/>
       <Entropy bitsAvailable={this.state.entropySource.bitsAvailable()}
                bitsNeeded={bitsOfEntropy}
-               phraseIsGenerated={this.state.isGenerated}
+               phraseGenState={this.state.phraseGenState}
                onEntropyChange={this.onEntropyChange}
                setEntropySource={this.setEntropySource}
                source={this.state.entropySource}/>
@@ -60,21 +70,114 @@ export class App extends PureComponent<IProps, IState> {
 
   private readonly addPhrasePart = (type: wb.PartType) => {
     this.setState((state) => ({
-      isGenerated: false,
+      phraseGenState: PhraseGenState.NOT_STARTED,
       phraseParts: state.phraseParts.concat({key: getUniqueId(), type}),
     }));
   }
 
+  /**
+   * For ow, animation is too tightly coupled with this `App` component.
+   * Biggest problem is that animation needs to repeatedly read and write this component's state.
+   */
+  private readonly animateOneWordAtATime = (animStateStart?: IAnimationState) => {
+    let animState: IAnimationState = animStateStart !== undefined
+        ? animStateStart
+        : { phrasePartIdx: 0, showingTempWordNum: 0 };
+
+    if (animState.showingTempWordNum >= MAX_TEMP_WORDS) {
+      // finalize this word and advance to the next word
+      this.setState((state) => ({
+        phraseParts: state.phraseParts.map((part, i) => {
+          if (i === animState.phrasePartIdx) {
+            // cryptographically secure random
+            const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
+
+            return {
+              ...part,
+              plaintext: {
+                isFinal: true,
+                text: wb.dictionary[part.type][randomIdx],
+              },
+            };
+          }
+
+          return part;
+        }),
+      }));
+      animState = {
+        phrasePartIdx: animState.phrasePartIdx + 1,
+        showingTempWordNum: 0,
+      };
+    }
+
+    if (animState.phrasePartIdx < this.state.phraseParts.length) {
+      // select new random word
+      this.setState((state) => ({
+        phraseParts: state.phraseParts.map((part, i) => {
+          if (i === animState.phrasePartIdx) {
+            const randomIdx = getInsecureRandomBits(wb.partTypeProps[part.type].entropyReqBits);
+
+            return {
+              ...part,
+              plaintext: {
+                isFinal: false,
+                tempDisambig: animState.showingTempWordNum % DISAMBIG_MODULO,
+                text: wb.dictionary[part.type][randomIdx],
+              },
+            };
+          }
+
+          return part;
+        }),
+      }));
+      animState = {
+        phrasePartIdx: animState.phrasePartIdx,
+        showingTempWordNum: animState.showingTempWordNum + 1,
+      };
+    }
+
+    if (animState.phrasePartIdx >= this.state.phraseParts.length) {
+      // finished
+      this.setState((state) => ({
+        phraseGenState: PhraseGenState.GENERATED,
+      }));
+    } else {
+      // not finished yet
+      window.setTimeout(
+          () => {
+            this.animateOneWordAtATime(animState);
+          },
+          ANIMATION_TIMEOUT_MS);
+    }
+  }
+
   private readonly generatePlaintext = () => {
-    this.setState((state) => ({
-      isGenerated: true,
-      phraseParts: state.phraseParts.map((part) => ({
-        ...part,
-        plaintext: wb.dictionary[part.type][
-          this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits)
-          ],
-      })),
-    }));
+    if (isAnimationEnabled(this.state.urlSearchParams)) {
+      this.setState({
+        phraseGenState: PhraseGenState.ANIMATING,
+        phraseParts: this.state.phraseParts.map((part) => ({
+          ...part,
+          plaintext: undefined,
+        })),
+      });
+      this.animateOneWordAtATime();
+    } else {
+      this.setState((state) => ({
+        phraseGenState: PhraseGenState.GENERATED,
+        phraseParts: state.phraseParts.map((part) => {
+          // cryptographically secure random
+          const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
+
+          return {
+            ...part,
+            plaintext: {
+              isFinal: true,
+              text: wb.dictionary[part.type][randomIdx],
+            },
+          };
+        }),
+      }));
+    }
   }
 
   private readonly onEntropyChange = () => {
@@ -85,7 +188,7 @@ export class App extends PureComponent<IProps, IState> {
 
   private readonly reset = () => {
     this.setState((state) => ({
-      isGenerated: false,
+      phraseGenState: PhraseGenState.NOT_STARTED,
       phraseParts: [],
     }));
   }
@@ -99,9 +202,8 @@ export class App extends PureComponent<IProps, IState> {
 
   private readonly setPhraseParts = (types: wb.PartType[]) => {
     this.setState({
-      isGenerated: false,
+      phraseGenState: PhraseGenState.NOT_STARTED,
       phraseParts: types.map((type) => ({key: getUniqueId(), type})),
     });
   }
-
 }

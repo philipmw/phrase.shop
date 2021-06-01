@@ -114,6 +114,17 @@
             animation-name: phrase-fadein;
             animation-timing-function: ease-in;
         }
+        /* for explanation of `disambigN`, see `phraseAnimation.ts`. */
+        .part.temp.disambig0 {
+            animation-duration: 100ms;
+            animation-name: phrasepart-reveal0;
+            animation-timing-function: ease-in-out;
+        }
+        .part.temp.disambig1 {
+            animation-duration: 100ms;
+            animation-name: phrasepart-reveal1;
+            animation-timing-function: ease-in-out;
+        }
         @keyframes phrase-fadein {
             from {
                 color: #1a1a1a;
@@ -122,7 +133,57 @@
                 color: #e0e0e0;
             }
         }
+        @keyframes phrasepart-reveal0 { /* keep in sync with `...reveal1` */
+            from {
+                position: relative;
+                top: -0.5em;
+                color: #c0c0c0; /* approot background color */
+                font-size: 0.8em; /* slightly smaller */
+            }
+
+            50% {
+                position: relative;
+                color: #303030; /* regular color */
+                font-size: 1em; /* regular font size */
+            }
+
+            to {
+                position: relative;
+                top: 0.5em;
+                color: #c0c0c0; /* approot background color */
+                font-size: 0.8em; /* slightly smaller */
+            }
+        }
+        @keyframes phrasepart-reveal1 { /* keep in sync with `...reveal0` */
+            from {
+                position: relative;
+                top: -0.5em;
+                color: #c0c0c0; /* approot background color */
+                font-size: 0.8em; /* slightly smaller */
+            }
+
+            50% {
+                position: relative;
+                color: #303030; /* regular color */
+                font-size: 1em; /* regular font size */
+            }
+
+            to {
+                position: relative;
+                top: 0.5em;
+                color: #c0c0c0; /* approot background color */
+                font-size: 0.8em; /* slightly smaller */
+            }
+        }
         .part.plain { font-family: monospace; font-weight: bold; }
+        .part.temp {
+            /* copy of animation's `to` */
+            position: absolute;
+            top: 0.5em;
+            color: #c0c0c0; /* approot background color */
+            font-family: monospace;
+            font-size: 0.8em;
+        }
         .part.unset { font-style: italic; font-weight: lighter; }
         .part.type-english { }
         .part.type-usstate { color: red; }
@@ -165,6 +226,9 @@
             }
             .menu-item {
                 border: 1px solid black;
+            }
+            .part.temp {
+                color: #1a1a1a; /* approot background color */
             }
             .part.type-symbol { color: darkgrey; }
         }

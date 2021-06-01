@@ -6,6 +6,7 @@ import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Dice } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
 import { Entropy } from "./Entropy";
+import { PhraseGenState } from "./Phrase";
 
 configure({ adapter: new Adapter() });
 
@@ -21,7 +22,7 @@ describe("Entropy", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={0}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseIsGenerated={false}
+                                     phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
@@ -36,7 +37,7 @@ describe("Entropy", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseIsGenerated={false}
+                                     phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
@@ -47,11 +48,26 @@ describe("Entropy", () => {
     });
   });
 
+  describe("when phrase is being generated", () => {
+    const wrapper = shallow(<Entropy bitsAvailable={0}
+                                     bitsNeeded={10}
+                                     onEntropyChange={emptyOnEntropyChangeFn}
+                                     phraseGenState={PhraseGenState.ANIMATING}
+                                     setEntropySource={emptySetEntropySourceFn}
+                                     source={testSource}/>);
+
+    it("indicates progress", () => {
+      expect(wrapper.render()
+          .text())
+          .toMatch(/Consuming 10 bits of entropy to generate your passphrase/);
+    });
+  });
+
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseIsGenerated={true}
+                                     phraseGenState={PhraseGenState.GENERATED}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
@@ -67,7 +83,7 @@ describe("Entropy", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseIsGenerated={false}
+                                     phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={setEntropySourceFn}
                                      source={new ComputerEntropySource()}/>);
 
@@ -95,7 +111,7 @@ describe("Entropy", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseIsGenerated={false}
+                                     phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={setEntropySourceFn}
                                      source={new DiceEntropySource()}/>);
 

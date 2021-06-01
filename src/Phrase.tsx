@@ -4,12 +4,18 @@ import { PureComponent } from "preact/compat";
 import * as pp from "./PhrasePart";
 import * as wb from "./wordbanks";
 
-export interface IPartProps extends pp.IProps {
+export interface IPartProps extends pp.IPhraseProps {
   key: number;
 }
 
+export enum PhraseGenState {
+  NOT_STARTED,
+  ANIMATING,
+  GENERATED,
+}
+
 interface IProps {
-  isGenerated: boolean;
+  genState: PhraseGenState;
   parts: IPartProps[];
 }
 
@@ -32,10 +38,10 @@ export class Phrase extends PureComponent<IProps> {
       (acc, pprops) => ({
         max: acc.max + (pprops.plaintext === undefined
           ? wb.partTypeProps[pprops.type].maxLength
-          : pprops.plaintext.length),
+          : pprops.plaintext.text.length),
         min: acc.min + (pprops.plaintext === undefined
           ? wb.partTypeProps[pprops.type].minLength
-          : pprops.plaintext.length),
+          : pprops.plaintext.text.length),
       }),
       {max: 0, min: 0});
     const lengthText = len.min === len.max ? `${len.min}` : `${len.min}-${len.max}`;
@@ -43,13 +49,16 @@ export class Phrase extends PureComponent<IProps> {
     return <div>
       <p id="stats">
         {
-          this.props.isGenerated
-            ? `Thank you for your patronage. Your new passphrase is ${lengthText} characters long.`
-            : `This passphrase will be ${lengthText} characters long.`
+          this.props.genState === PhraseGenState.NOT_STARTED
+              ? `This passphrase will be ${lengthText} characters long.`
+              : (this.props.genState === PhraseGenState.ANIMATING
+              ? "Generating your perfect passphrase..."
+              : `Thank you for your patronage. Your new passphrase is ${lengthText} characters long.`)
         }
       </p>
       <div id="phrase">
-        {this.props.parts.map((part) => <span key={part.key}><pp.PhrasePart {...part}/></span>)}
+        {this.props.parts.map((part) => <span key={part.key}>
+          <pp.PhrasePart phraseGenState={this.props.genState} {...part}/></span>)}
       </div>
     </div>;
   }

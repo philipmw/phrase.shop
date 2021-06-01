@@ -3,6 +3,7 @@ import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
 import { Menu } from "./Menu";
+import { PhraseGenState } from "./Phrase";
 import * as wb from "./wordbanks";
 
 configure({ adapter: new Adapter() });
@@ -20,7 +21,7 @@ describe("Menu", () => {
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
-      isGenerated={false}
+      phraseGenState={PhraseGenState.NOT_STARTED}
       qtyOfPhraseParts={0}
       reset={resetFn}
     />);
@@ -57,7 +58,7 @@ describe("Menu", () => {
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
-      isGenerated={false}
+      phraseGenState={PhraseGenState.NOT_STARTED}
       qtyOfPhraseParts={1}
       reset={resetFn}
     />);
@@ -101,6 +102,44 @@ describe("Menu", () => {
     });
   });
 
+  describe("when phrase is animating", () => {
+    const wrapper = shallow(<Menu
+        addPhrasePart={addPhrasePartFn}
+        setPhraseParts={setPhrasePartsFn}
+        entropyBitsAvailable={0}
+        entropyBitsNeeded={0}
+        generatePlaintext={generatePlaintextFn}
+        phraseGenState={PhraseGenState.ANIMATING}
+        qtyOfPhraseParts={1}
+        reset={resetFn}
+    />);
+
+    it("does not have Add buttons", () => {
+      expect(wrapper.find("button.add"))
+          .toHaveLength(0);
+    });
+
+    it("has a disabled Start Over button", () => {
+      const buttonWrapper = wrapper.find("button#reset");
+      expect(buttonWrapper)
+          .toHaveLength(1);
+      expect(buttonWrapper
+          .render()
+          .attr("disabled"))
+          .toBeTruthy();
+    });
+
+    it("has a disabled Generate button", () => {
+      const buttonWrapper = wrapper.find("button#generate");
+      expect(buttonWrapper)
+          .toHaveLength(1);
+      expect(buttonWrapper
+          .render()
+          .attr("disabled"))
+          .toBeTruthy();
+    });
+  });
+
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Menu
       addPhrasePart={addPhrasePartFn}
@@ -108,7 +147,7 @@ describe("Menu", () => {
       entropyBitsAvailable={0}
       entropyBitsNeeded={0}
       generatePlaintext={generatePlaintextFn}
-      isGenerated={true}
+      phraseGenState={PhraseGenState.GENERATED}
       qtyOfPhraseParts={1}
       reset={resetFn}
     />);

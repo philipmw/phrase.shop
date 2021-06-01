@@ -2,14 +2,14 @@ import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
-import { Phrase } from "./Phrase";
+import { Phrase, PhraseGenState } from "./Phrase";
 import { PartType } from "./wordbanks";
 
 configure({ adapter: new Adapter() });
 
 describe("Phrase", () => {
   describe("when there are no parts", () => {
-    const wrapper = shallow(<Phrase isGenerated={false} parts={[]}/>);
+    const wrapper = shallow(<Phrase genState={PhraseGenState.NOT_STARTED} parts={[]}/>);
 
     it("renders a call to action", () => {
       expect(wrapper.find("div#phrase.empty"))
@@ -30,7 +30,7 @@ describe("Phrase", () => {
         type: PartType.digit,
       },
     ];
-    const wrapper = shallow(<Phrase isGenerated={false} parts={phraseParts}/>);
+    const wrapper = shallow(<Phrase genState={PhraseGenState.NOT_STARTED} parts={phraseParts}/>);
 
     it("renders stats", () => {
       expect(wrapper
@@ -48,6 +48,64 @@ describe("Phrase", () => {
       const phrasePartsWrapper = phraseWrapper.find("PhrasePart");
       expect(phrasePartsWrapper)
         .toHaveLength(phraseParts.length);
+
+      expect(phrasePartsWrapper
+          .at(0)
+          .render()
+          .text())
+          .toEqual("{word}");
+      expect(phrasePartsWrapper
+          .at(1)
+          .render()
+          .text())
+          .toEqual("{digit}");
+    });
+  });
+
+  describe("when animating", () => {
+    const phraseParts = [
+      {
+        key: 1,
+        plaintext: {
+          isFinal: false,
+          text: "hello",
+        },
+        type: PartType.word,
+      },
+      {
+        key: 2,
+        type: PartType.digit,
+      },
+    ];
+    const wrapper = shallow(<Phrase genState={PhraseGenState.ANIMATING} parts={phraseParts}/>);
+
+    it("renders stats", () => {
+      expect(wrapper
+          .find("#stats")
+          .render()
+          .text())
+          .toEqual("Generating your perfect passphrase...");
+    });
+
+    it("renders phrase parts", () => {
+      const phraseWrapper = wrapper.find("#phrase");
+      expect(phraseWrapper)
+          .toHaveLength(1);
+
+      const phrasePartsWrapper = phraseWrapper.find("PhrasePart");
+      expect(phrasePartsWrapper)
+          .toHaveLength(phraseParts.length);
+
+      expect(phrasePartsWrapper
+          .at(0)
+          .render()
+          .text())
+          .toEqual("hello");
+      expect(phrasePartsWrapper
+          .at(1)
+          .render()
+          .text())
+          .toEqual("");
     });
   });
 
@@ -55,16 +113,22 @@ describe("Phrase", () => {
     const phraseParts = [
       {
         key: 1,
-        plaintext: "hello",
+        plaintext: {
+          isFinal: true,
+          text: "hello",
+        },
         type: PartType.word,
       },
       {
         key: 2,
-        plaintext: "0",
+        plaintext: {
+          isFinal: true,
+          text: "0",
+        },
         type: PartType.digit,
       },
     ];
-    const wrapper = shallow(<Phrase isGenerated={true} parts={phraseParts}/>);
+    const wrapper = shallow(<Phrase genState={PhraseGenState.GENERATED} parts={phraseParts}/>);
 
     it("renders stats", () => {
       expect(wrapper
@@ -82,6 +146,17 @@ describe("Phrase", () => {
       const phrasePartsWrapper = phraseWrapper.find("PhrasePart");
       expect(phrasePartsWrapper)
         .toHaveLength(phraseParts.length);
+
+      expect(phrasePartsWrapper
+          .at(0)
+          .render()
+          .text())
+          .toEqual("hello");
+      expect(phrasePartsWrapper
+          .at(1)
+          .render()
+          .text())
+          .toEqual("0");
     });
   });
 });

@@ -4,11 +4,12 @@ import { PureComponent } from "preact/compat";
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Dice, DICE_SIDES_MAX, DICE_SIDES_MIN } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
+import { PhraseGenState } from "./Phrase";
 
 interface IProps {
   bitsAvailable: number;
   bitsNeeded: number;
-  phraseIsGenerated: boolean;
+  phraseGenState: PhraseGenState;
   source: IEntropySource;
   onEntropyChange(): void;
   setEntropySource(source: IEntropySource): void;
@@ -32,8 +33,12 @@ export class Entropy extends PureComponent<IProps, IState> {
     }
 
     const charge = <span id="charge">
-      { this.props.phraseIsGenerated ? "Regenerating" : "Generating" } this passphrase
-      will cost {this.props.bitsNeeded} bits of entropy.
+      { this.props.phraseGenState === PhraseGenState.NOT_STARTED
+          ? `Generating this passphrase will cost ${this.props.bitsNeeded} bits of entropy.`
+          : (this.props.phraseGenState === PhraseGenState.GENERATED
+              ? `Regenerating this passphrase will cost ${this.props.bitsNeeded} bits of entropy.`
+              : `Consuming ${this.props.bitsNeeded} bits of entropy to generate your passphrase...`)
+      }
     </span>;
 
     return <div id="entropy">
@@ -48,6 +53,7 @@ export class Entropy extends PureComponent<IProps, IState> {
                      this.props.setEntropySource(new ComputerEntropySource());
                    }}
                    checked={this.props.source instanceof ComputerEntropySource}
+                   disabled={this.props.phraseGenState === PhraseGenState.ANIMATING}
                    value="computer"/> 🖥 my computer will make randomness
           </label>
         </li>
@@ -60,6 +66,7 @@ export class Entropy extends PureComponent<IProps, IState> {
                      this.props.setEntropySource(new DiceEntropySource());
                    }}
                    checked={this.props.source instanceof DiceEntropySource}
+                   disabled={this.props.phraseGenState === PhraseGenState.ANIMATING}
                    value="dice"/> 🎲 I will roll my dice
           </label>
         </li>
@@ -67,6 +74,7 @@ export class Entropy extends PureComponent<IProps, IState> {
 
       {
         this.props.source instanceof DiceEntropySource
+            && this.props.phraseGenState !== PhraseGenState.ANIMATING
         ? <Dice bitsAvailable={this.props.bitsAvailable}
                 bitsNeeded={this.props.bitsNeeded}
                 diceSides={this.state.diceSides}

@@ -1,12 +1,13 @@
 import { h } from "preact";
 import { PureComponent } from "preact/compat";
 
+import { PhraseGenState } from "./Phrase";
 import { PartType, partTypeList, partTypeProps } from "./wordbanks";
 
 interface IProps {
   entropyBitsAvailable: number;
   entropyBitsNeeded: number;
-  isGenerated: boolean;
+  phraseGenState: PhraseGenState;
   qtyOfPhraseParts: number;
 
   addPhrasePart(type: PartType): void;
@@ -70,14 +71,18 @@ const menuData: MenuData = {
 
 export class Menu extends PureComponent<IProps> {
   public render() {
-    if (this.props.isGenerated) {
+    if (this.props.phraseGenState !== PhraseGenState.NOT_STARTED) {
       return <div id="main-actions">
         <button type="button"
                 id="reset"
+                disabled={
+                  this.props.phraseGenState === PhraseGenState.ANIMATING
+                }
                 onClick={() => { this.props.reset(); }}>⇠ start over</button>
         <button type="button"
                 id="generate"
                 disabled={
+                  this.props.phraseGenState === PhraseGenState.ANIMATING ||
                   this.props.qtyOfPhraseParts === 0 ||
                   this.props.entropyBitsAvailable < this.props.entropyBitsNeeded}
                 onClick={() => { this.props.generatePlaintext(); }}>

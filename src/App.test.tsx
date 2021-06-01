@@ -3,6 +3,7 @@ import Adapter from "enzyme-adapter-preact-pure";
 import { h } from "preact";
 
 import { App } from "./App";
+import { PhraseGenState } from "./Phrase";
 import * as wb from "./wordbanks";
 
 configure({ adapter: new Adapter() });
@@ -30,7 +31,35 @@ describe("App", () => {
       .toHaveLength(2);
   });
 
-  it("generates passphrases", () => {
+  it("generates passphrase if animation is disabled", () => {
+    const mockEntropySource: IEntropySource = {
+      bitsAvailable: jest.fn()
+          .mockImplementation(() => (-1)),
+      getBits: jest.fn()
+          .mockImplementation(() => (0)),
+    };
+    const wrapper = shallow(<App entropySource={mockEntropySource}/>);
+
+    wrapper.instance()
+        .addPhrasePart(wb.PartType.word);
+    expect(wrapper.state("phraseGenState"))
+        .toEqual(PhraseGenState.NOT_STARTED.valueOf());
+    expect(wrapper.state("phraseParts")[0].plaintext)
+        .toBeUndefined();
+
+    wrapper.instance()
+        .generatePlaintext();
+    expect(wrapper.state("phraseGenState"))
+        .toEqual(PhraseGenState.GENERATED.valueOf());
+    expect(wrapper.state("phraseParts")[0].plaintext)
+        .toBeDefined();
+    expect(wrapper.state("phraseParts")[0].plaintext.isFinal)
+        .toBeDefined();
+    expect(wrapper.state("phraseParts")[0].plaintext.text)
+        .toBeDefined();
+  });
+
+  it("starts animating passphrase generation if animation is enabled", () => {
     const mockEntropySource: IEntropySource = {
       bitsAvailable: jest.fn()
         .mockImplementation(() => (-1)),
@@ -38,20 +67,26 @@ describe("App", () => {
         .mockImplementation(() => (0)),
     };
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
+    // Enable feature flag
+    wrapper.setState({ urlSearchParams: new URLSearchParams("?animation=y")});
 
     wrapper.instance()
       .addPhrasePart(wb.PartType.word);
-    expect(wrapper.state("isGenerated"))
-      .toBeFalsy();
+    expect(wrapper.state("phraseGenState"))
+      .toEqual(PhraseGenState.NOT_STARTED.valueOf());
     expect(wrapper.state("phraseParts")[0].plaintext)
       .toBeUndefined();
 
     wrapper.instance()
       .generatePlaintext();
-    expect(wrapper.state("isGenerated"))
-      .toBeTruthy();
+    expect(wrapper.state("phraseGenState"))
+      .toEqual(PhraseGenState.ANIMATING.valueOf());
     expect(wrapper.state("phraseParts")[0].plaintext)
       .toBeDefined();
+    expect(wrapper.state("phraseParts")[0].plaintext.isFinal)
+        .toBeFalsy();
+    expect(wrapper.state("phraseParts")[0].plaintext.text)
+        .toBeDefined();
   });
 
   it("resets when asked", () => {
