@@ -6,6 +6,7 @@ describe("phraseAnimation", () => {
   describe(".animatePhraseCycle", () => {
     describe("while we are animating", () => {
       const ANIM_STATE = {
+        idxToReveal: 0,
         isFinished: false,
         onFinish: () => {
           // Nothing to check
@@ -58,24 +59,33 @@ describe("phraseAnimation", () => {
       );
     });
 
-    describe("once counter reaches limit", () => {
+    describe("once counter reaches a threshold", () => {
       const ANIM_STATE = {
+        idxToReveal: 0,
         isFinished: false,
-        phraseParts: [{
-          key: 0,
-          type: PartType.color,
-        }],
+        phraseParts: [
+          {
+            key: 0,
+            type: PartType.color,
+          },
+          {
+            key: 1,
+            type: PartType.color,
+          },
+        ],
         showingTempWordNum: 10,
       };
 
-      it("calls back with updated phrase parts having no animation", async () => {
+      it("reveals just first phrase part", async () => {
         let updatedPhraseParts = false;
 
         const onUpdatePhraseParts = (newParts: IPartProps[]) => {
           expect(newParts)
-              .toHaveLength(1);
+              .toHaveLength(2);
           expect(newParts[0].animation)
               .toBeUndefined();
+          expect(newParts[1].animation)
+              .toBeDefined();
           updatedPhraseParts = true;
         };
 
@@ -94,6 +104,35 @@ describe("phraseAnimation", () => {
                   .toBeTruthy();
             });
       });
+
+      it("updates reveal index in its own state", async () => (
+        Promise.resolve()
+            .then(() => {
+              const newAnimState = animatePhraseCycle({
+                ...ANIM_STATE,
+                onFinish: () => {
+                  // We don't care
+                },
+                onUpdatePhraseParts: () => {
+                  // We don't care
+                },
+              });
+              expect(newAnimState.idxToReveal)
+                  .toEqual(1);
+            })
+      ));
+    });
+
+    describe("once we've revealed all parts", () => {
+      const ANIM_STATE = {
+        idxToReveal: 0,
+        isFinished: false,
+        phraseParts: [{
+          key: 0,
+          type: PartType.color,
+        }],
+        showingTempWordNum: 11,
+      };
 
       it("calls back with finish status", async () => {
         let finishCalled = false;

@@ -18,7 +18,19 @@ export const getInsecureRandomBits = (bitsQty: number) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+/**
+ * On each animation cycle, we increment `showingTempWordNum` and re-schedule another cycle.
+ *
+ * For the first `MAX_TEMP_WORDS`, we keep `idxToReveal` at 0, so all phrase parts are cycling.
+ *
+ * After we've cycled through `MAX_TEMP_WORDS`, we increment `idxToReveal` on each cycle, thus
+ * revealing one phrase part at a time.
+ *
+ * Once `idxToReveal` has revealed all parts, the animation is finished.
+ * We call back to the App that we're finished, and stop scheduling ourselves.
+ */
 export interface IAnimationState {
+  idxToReveal: number;
   isFinished: boolean;
   phraseParts: IPartProps[];
   showingTempWordNum: number;
@@ -27,10 +39,11 @@ export interface IAnimationState {
 }
 
 export const animatePhraseCycle = (animState: IAnimationState): IAnimationState => {
-  if (animState.showingTempWordNum < MAX_TEMP_WORDS) {
-    // continue animation
-
-    const newPhraseParts = animState.phraseParts.map((part) => {
+  const newPhraseParts = animState.phraseParts.map((part, i) => {
+    if (animState.showingTempWordNum < MAX_TEMP_WORDS // we haven't started revealing
+        // or we are in the process of revealing, but not this part yet
+        || i > animState.idxToReveal) {
+      // continue animation
       const randomIdx = getInsecureRandomBits(wb.partTypeProps[part.type].entropyReqBits);
 
       return {
@@ -40,24 +53,33 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
           tempDisambig: animState.showingTempWordNum % DISAMBIG_MODULO,
         },
       };
-    });
+    }
 
-    animState.onUpdatePhraseParts(newPhraseParts);
+    // else we've started revealing
+    if (i === animState.idxToReveal) {
+      // finalize this phrase part
+      return {
+        ...part,
+        animation: undefined,
+      };
+    }
 
+    // else this phrase part has already been finalized; no change
+    return part;
+  });
+
+  animState.onUpdatePhraseParts(newPhraseParts);
+
+  if (animState.showingTempWordNum < MAX_TEMP_WORDS) {
+    // we have not started revealing
     return {
       ...animState,
       showingTempWordNum: animState.showingTempWordNum + 1,
     };
   }
-
-  // else we're finished
-  {
-    const newPhraseParts = animState.phraseParts.map((part) => ({
-      ...part,
-      animation: undefined,
-    }));
-
-    animState.onUpdatePhraseParts(newPhraseParts);
+  // else we've started revealing
+  if (animState.idxToReveal === animState.phraseParts.length - 1) {
+    // we just revealed the last phrase part; we are finished.
     animState.onFinish();
 
     return {
@@ -65,6 +87,13 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
       isFinished: true,
     };
   }
+
+  // else we are in the process of revealing
+  return {
+    ...animState,
+    idxToReveal: animState.idxToReveal + 1,
+    showingTempWordNum: animState.showingTempWordNum + 1,
+  };
 };
 
 const animatePhraseInWindow = (animState: IAnimationState): void => {
@@ -82,6 +111,7 @@ export const animatePhrase = (phraseParts: IPartProps[],
                               onUpdatePhraseParts: (pps: IPartProps[]) => void,
                               onFinish: () => void) => {
   animatePhraseInWindow({
+    idxToReveal: 0,
     isFinished: false,
     onFinish,
     onUpdatePhraseParts,
