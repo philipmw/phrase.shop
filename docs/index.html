@@ -110,7 +110,7 @@
         .part {
             display: inline-block;
             padding: 0 0.1em;
-            animation-duration: 200ms;
+            animation-duration: 100ms;
             animation-name: phrase-fadein;
             animation-timing-function: ease-in;
         }
@@ -127,21 +127,19 @@
         }
         @keyframes phrase-fadein {
             from {
-                color: #1a1a1a;
+                color: #b0b0b0;
             }
             to {
-                color: #e0e0e0;
+                color: #c0c0c0;
             }
         }
         @keyframes phrasepart-reveal0 { /* keep in sync with `...reveal1` */
             from {
                 color: #b0b0b0; /* slightly darker than approot background color */
             }
-
             50% {
-                color: #808080; /* middle between approot background and regular color */
+                color: #a0a0a0; /* middle between approot background and regular color */
             }
-
             to {
                 color: #b0b0b0; /* slightly darker than approot background color */
             }
@@ -150,11 +148,9 @@
             from {
                 color: #b0b0b0; /* slightly darker than approot background color */
             }
-
             50% {
-                color: #808080; /* middle between approot background and regular color */
+                color: #a0a0a0; /* middle between approot background and regular color */
             }
-
             to {
                 color: #b0b0b0; /* slightly darker than approot background color */
             }
@@ -209,8 +205,31 @@
             .menu-item {
                 border: 1px solid black;
             }
+            @keyframes phrasepart-reveal0 { /* keep in sync with `...reveal1` */
+                from {
+                    color: #202020; /* slightly lighter than approot background color */
+                }
+                50% {
+                    color: #505050; /* middle between approot background and regular color */
+                }
+                to {
+                    color: #202020; /* slightly lighter than approot background color */
+                }
+            }
+            @keyframes phrasepart-reveal1 { /* keep in sync with `...reveal0` */
+                from {
+                    color: #202020; /* slightly lighter than approot background color */
+                }
+                50% {
+                    color: #505050; /* middle between approot background and regular color */
+                }
+                to {
+                    color: #202020; /* slightly lighter than approot background color */
+                }
+            }
             .part.temp {
-                color: #1a1a1a; /* approot background color */
+                /* copy of animation's `to` */
+                color: #202020; /* slightly lighter than approot background color */
             }
             .part.type-symbol { color: darkgrey; }
         }

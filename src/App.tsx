@@ -6,13 +6,7 @@ import { Entropy } from "./Entropy";
 import { getUrlSearchParams, isAnimationEnabled } from "./featureflags";
 import { Menu } from "./Menu";
 import { IPartProps, Phrase, PhraseGenState } from "./Phrase";
-import {
-  ANIMATION_TIMEOUT_MS,
-  DISAMBIG_MODULO,
-  getInsecureRandomBits,
-  IAnimationState,
-  MAX_TEMP_WORDS,
-} from "./phraseAnimation";
+import { animatePhrase } from "./phraseAnimation";
 import * as wb from "./wordbanks";
 
 interface IProps {
@@ -75,179 +69,51 @@ export class App extends PureComponent<IProps, IState> {
     }));
   }
 
-  /**
-   * For ow, animation is too tightly coupled with this `App` component.
-   * Biggest problem is that animation needs to repeatedly read and write this component's state.
-   */
-
-  private readonly animateAllWords = (animStateStart?: IAnimationState) => {
-    let animState: IAnimationState = animStateStart !== undefined
-        ? animStateStart
-        : { phrasePartIdx: 0, showingTempWordNum: 0 };
-
-    this.setState((state) => ({
-      phraseParts: state.phraseParts.map((part, i) => {
-        if (i < animState.phrasePartIdx) {
-          // no change to this word because it's already been finalized
-          return part;
-        }
-
-        if (animState.showingTempWordNum >= MAX_TEMP_WORDS && i === animState.phrasePartIdx) {
-          // finalize this word
-          const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
-
-          return {
-            ...part,
-            plaintext: {
-              isFinal: true,
-              text: wb.dictionary[part.type][randomIdx],
-            },
-          };
-        }
-
-        {
-          // this word continues animating
-          const randomIdx = getInsecureRandomBits(wb.partTypeProps[part.type].entropyReqBits);
-
-          return {
-            ...part,
-            plaintext: {
-              isFinal: false,
-              tempDisambig: animState.showingTempWordNum % DISAMBIG_MODULO,
-              text: wb.dictionary[part.type][randomIdx],
-            },
-          };
-        }
-      }),
-    }));
-
-    if (animState.showingTempWordNum >= MAX_TEMP_WORDS) {
-      // advance to the next word
-      animState = {
-        phrasePartIdx: animState.phrasePartIdx + 1,
-        showingTempWordNum: 0,
-      };
-    } else {
-      animState = {
-        phrasePartIdx: animState.phrasePartIdx,
-        showingTempWordNum: animState.showingTempWordNum + 1,
-      };
-    }
-
-    if (animState.phrasePartIdx >= this.state.phraseParts.length) {
-      // finished
-      this.setState((state) => ({
-        phraseGenState: PhraseGenState.GENERATED,
-      }));
-    } else {
-      // not finished yet
-      window.setTimeout(
-          () => {
-            this.animateAllWords(animState);
-          },
-          ANIMATION_TIMEOUT_MS);
-    }
-  }
-
-  private readonly animateOneWordAtATime = (animStateStart?: IAnimationState) => {
-    let animState: IAnimationState = animStateStart !== undefined
-        ? animStateStart
-        : { phrasePartIdx: 0, showingTempWordNum: 0 };
-
-    if (animState.showingTempWordNum >= MAX_TEMP_WORDS) {
-      // finalize this word and advance to the next word
-      this.setState((state) => ({
-        phraseParts: state.phraseParts.map((part, i) => {
-          if (i === animState.phrasePartIdx) {
-            // cryptographically secure random
-            const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
-
-            return {
-              ...part,
-              plaintext: {
-                isFinal: true,
-                text: wb.dictionary[part.type][randomIdx],
-              },
-            };
-          }
-
-          return part;
-        }),
-      }));
-      animState = {
-        phrasePartIdx: animState.phrasePartIdx + 1,
-        showingTempWordNum: 0,
-      };
-    }
-
-    if (animState.phrasePartIdx < this.state.phraseParts.length) {
-      // select new random word
-      this.setState((state) => ({
-        phraseParts: state.phraseParts.map((part, i) => {
-          if (i === animState.phrasePartIdx) {
-            const randomIdx = getInsecureRandomBits(wb.partTypeProps[part.type].entropyReqBits);
-
-            return {
-              ...part,
-              plaintext: {
-                isFinal: false,
-                tempDisambig: animState.showingTempWordNum % DISAMBIG_MODULO,
-                text: wb.dictionary[part.type][randomIdx],
-              },
-            };
-          }
-
-          return part;
-        }),
-      }));
-      animState = {
-        phrasePartIdx: animState.phrasePartIdx,
-        showingTempWordNum: animState.showingTempWordNum + 1,
-      };
-    }
-
-    if (animState.phrasePartIdx >= this.state.phraseParts.length) {
-      // finished
-      this.setState((state) => ({
-        phraseGenState: PhraseGenState.GENERATED,
-      }));
-    } else {
-      // not finished yet
-      window.setTimeout(
-          () => {
-            this.animateOneWordAtATime(animState);
-          },
-          ANIMATION_TIMEOUT_MS);
-    }
-  }
-
   private readonly generatePlaintext = () => {
-    if (isAnimationEnabled(this.state.urlSearchParams)) {
-      this.setState({
-        phraseGenState: PhraseGenState.ANIMATING,
-        phraseParts: this.state.phraseParts.map((part) => ({
-          ...part,
-          plaintext: undefined,
-        })),
-      });
-      this.animateAllWords();
-    } else {
-      this.setState((state) => ({
-        phraseGenState: PhraseGenState.GENERATED,
-        phraseParts: state.phraseParts.map((part) => {
+    // first, generate the final secure plaintext, before considering animation
+    const phrasePartsWithPlaintext =
+        this.state.phraseParts.map((part) => {
           // cryptographically secure random
           const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
 
           return {
             ...part,
-            plaintext: {
-              isFinal: true,
-              text: wb.dictionary[part.type][randomIdx],
-            },
+            plaintext: wb.dictionary[part.type][randomIdx],
           };
-        }),
-      }));
+        });
+
+    // update component state, but this may happen asynchronously, hence don't rely on it later.
+    this.setState({
+      phraseParts: phrasePartsWithPlaintext,
+    });
+
+    if (isAnimationEnabled(this.state.urlSearchParams)) {
+      this.setState({
+        phraseGenState: PhraseGenState.ANIMATING,
+      });
+
+      animatePhrase(
+          phrasePartsWithPlaintext,
+          this.onAnimationUpdatePhraseParts,
+          this.onAnimationFinish,
+      );
+    } else {
+      this.setState({
+        phraseGenState: PhraseGenState.GENERATED,
+      });
     }
+  }
+
+  private readonly onAnimationFinish = () => {
+    this.setState({
+      phraseGenState: PhraseGenState.GENERATED,
+    });
+  }
+
+  private readonly onAnimationUpdatePhraseParts = (newParts: IPartProps[]) => {
+    this.setState({
+      phraseParts: newParts,
+    });
   }
 
   private readonly onEntropyChange = () => {

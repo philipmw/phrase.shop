@@ -5,6 +5,7 @@
     "no-implicit-dependencies": false,
     "no-unsafe-any": false,
     "typedef": false,
-    "no-magic-numbers": false
+    "no-magic-numbers": false,
+    "no-non-null-assertion": false
   }
 }

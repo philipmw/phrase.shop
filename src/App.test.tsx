@@ -53,10 +53,8 @@ describe("App", () => {
         .toEqual(PhraseGenState.GENERATED.valueOf());
     expect(wrapper.state("phraseParts")[0].plaintext)
         .toBeDefined();
-    expect(wrapper.state("phraseParts")[0].plaintext.isFinal)
-        .toBeDefined();
-    expect(wrapper.state("phraseParts")[0].plaintext.text)
-        .toBeDefined();
+    expect(wrapper.state("phraseParts")[0].animation)
+        .toBeUndefined();
   });
 
   it("starts animating passphrase generation if animation is enabled", () => {
@@ -83,10 +81,18 @@ describe("App", () => {
       .toEqual(PhraseGenState.ANIMATING.valueOf());
     expect(wrapper.state("phraseParts")[0].plaintext)
       .toBeDefined();
-    expect(wrapper.state("phraseParts")[0].plaintext.isFinal)
-        .toBeFalsy();
-    expect(wrapper.state("phraseParts")[0].plaintext.text)
+    expect(wrapper.state("phraseParts")[0].animation.plaintext)
         .toBeDefined();
+  });
+
+  it("finishes animation", () => {
+    const wrapper = shallow(<App/>);
+
+    wrapper.instance()
+        .onAnimationFinish();
+
+    expect(wrapper.state("phraseGenState"))
+        .toEqual(PhraseGenState.GENERATED.valueOf());
   });
 
   it("resets when asked", () => {

@@ -65,11 +65,11 @@ describe("Phrase", () => {
   describe("when animating", () => {
     const phraseParts = [
       {
-        key: 1,
-        plaintext: {
-          isFinal: false,
-          text: "hello",
+        animation: {
+          plaintext: "tempword",
         },
+        key: 1,
+        plaintext: "finalword",
         type: PartType.word,
       },
       {
@@ -100,12 +100,12 @@ describe("Phrase", () => {
           .at(0)
           .render()
           .text())
-          .toEqual("hello");
+          .toEqual("tempword");
       expect(phrasePartsWrapper
           .at(1)
           .render()
           .text())
-          .toEqual("");
+          .toEqual("{digit}");
     });
   });
 
@@ -113,18 +113,12 @@ describe("Phrase", () => {
     const phraseParts = [
       {
         key: 1,
-        plaintext: {
-          isFinal: true,
-          text: "hello",
-        },
+        plaintext: "hello",
         type: PartType.word,
       },
       {
         key: 2,
-        plaintext: {
-          isFinal: true,
-          text: "0",
-        },
+        plaintext: "0",
         type: PartType.digit,
       },
     ];

@@ -38,10 +38,10 @@ export class Phrase extends PureComponent<IProps> {
       (acc, pprops) => ({
         max: acc.max + (pprops.plaintext === undefined
           ? wb.partTypeProps[pprops.type].maxLength
-          : pprops.plaintext.text.length),
+          : pprops.plaintext.length),
         min: acc.min + (pprops.plaintext === undefined
           ? wb.partTypeProps[pprops.type].minLength
-          : pprops.plaintext.text.length),
+          : pprops.plaintext.length),
       }),
       {max: 0, min: 0});
     const lengthText = len.min === len.max ? `${len.min}` : `${len.min}-${len.max}`;
@@ -58,7 +58,7 @@ export class Phrase extends PureComponent<IProps> {
       </p>
       <div id="phrase">
         {this.props.parts.map((part) => <span key={part.key}>
-          <pp.PhrasePart phraseGenState={this.props.genState} {...part}/></span>)}
+          <pp.PhrasePart {...part}/></span>)}
       </div>
     </div>;
   }

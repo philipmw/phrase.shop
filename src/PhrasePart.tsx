@@ -1,37 +1,45 @@
 import { h, JSX } from "preact";
 import { PureComponent } from "preact/compat";
 
-import { PhraseGenState } from "./Phrase";
 import { PartType } from "./wordbanks";
 
-interface IPlaintext {
-  isFinal: boolean; // false for animation
+interface IAnimation {
+  plaintext: string;
   tempDisambig?: number;
-  text: string;
 }
 
 export interface IPhraseProps {
-  plaintext?: IPlaintext;
+  animation?: IAnimation;
+  plaintext?: string;
   type: PartType;
 }
 
-interface IProps extends IPhraseProps {
-  phraseGenState: PhraseGenState;
-}
-
-export class PhrasePart extends PureComponent<IProps> {
+/**
+ * Phrase part lifecycle:
+ *
+ * When customer selects this part in UI, it starts having just a `type`, with all other
+ * properties unset.
+ *
+ * Once customer clicks Generate, we create and set the `plaintext`.  If animation is
+ * disabled, we stop here.
+ *
+ * If animation is enabled, we also create and set `animation`, then update `animation`
+ * properties many times. Once the animation finishes, we unset `animation`, and then
+ * only `type` and `plaintext` remain set.
+ */
+export class PhrasePart extends PureComponent<IPhraseProps> {
   public render(): JSX.Element {
     const plaintextType = this.props.plaintext === undefined
         ? "unset"
-        : (this.props.plaintext.isFinal
+        : (this.props.animation === undefined
             ? "plain"
-            : `temp disambig${this.props.plaintext.tempDisambig}`);
+            : `temp disambig${this.props.animation.tempDisambig}`);
 
     return <span className={`part type-${PartType[this.props.type]} ${plaintextType}`}>
-      { this.props.plaintext !== undefined
-          ? this.props.plaintext.text
-          : (this.props.phraseGenState === PhraseGenState.ANIMATING
-              ? undefined // part-types jump around during animation, so turn them off
+      { this.props.animation !== undefined
+          ? this.props.animation.plaintext
+          : (this.props.plaintext !== undefined
+              ? this.props.plaintext
               : `{${PartType[this.props.type]}}`) }
     </span>;
   }
