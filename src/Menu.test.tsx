@@ -9,22 +9,33 @@ import * as wb from "./wordbanks";
 configure({ adapter: new Adapter() });
 
 describe("Menu", () => {
-  const addPhrasePartFn = jest.fn();
-  const setPhrasePartsFn = jest.fn();
-  const generatePlaintextFn = jest.fn();
-  const resetFn = jest.fn();
+  let addPhrasePartFn;
+  let setPhrasePartsFn;
+  let generatePlaintextFn;
+  let resetFn;
+
+  beforeEach(() => {
+    addPhrasePartFn = jest.fn();
+    setPhrasePartsFn = jest.fn();
+    generatePlaintextFn = jest.fn();
+    resetFn = jest.fn();
+  });
 
   describe("initial state", () => {
-    const wrapper = shallow(<Menu
-      addPhrasePart={addPhrasePartFn}
-      setPhraseParts={setPhrasePartsFn}
-      entropyBitsAvailable={0}
-      entropyBitsNeeded={0}
-      generatePlaintext={generatePlaintextFn}
-      phraseGenState={PhraseGenState.NOT_STARTED}
-      qtyOfPhraseParts={0}
-      reset={resetFn}
-    />);
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = shallow(<Menu
+          addPhrasePart={addPhrasePartFn}
+          setPhraseParts={setPhrasePartsFn}
+          entropyBitsAvailable={0}
+          entropyBitsNeeded={0}
+          generatePlaintext={generatePlaintextFn}
+          phraseGenState={PhraseGenState.NOT_STARTED}
+          qtyOfPhraseParts={0}
+          reset={resetFn}
+      />);
+    });
 
     it("has add buttons for each phrase type", () => {
       expect(wrapper.find("button.add"))
@@ -32,9 +43,8 @@ describe("Menu", () => {
     });
 
     it("has three phrase templates", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      expect(buttonWrapper)
-        .toHaveLength(3);
+      expect(wrapper.find("button.package"))
+          .toHaveLength(3);
     });
 
     it("has does not have a Start Over button", () => {
@@ -49,19 +59,62 @@ describe("Menu", () => {
       expect(addPhrasePartFn)
         .toHaveBeenCalled();
     });
+
+    describe("small package button", () => {
+      it("registers a small set of preconfigured phrase parts", () => {
+        const buttonWrapper = wrapper.find("button#package-small");
+        expect(buttonWrapper)
+            .toHaveLength(1);
+        buttonWrapper.simulate("click");
+        expect(setPhrasePartsFn)
+            .toHaveBeenCalled();
+        expect(setPhrasePartsFn.mock.calls[0][0])
+            .toHaveLength(4);
+      });
+    });
+
+    describe("medium package button", () => {
+      it("registers a small set of preconfigured phrase parts", () => {
+        const buttonWrapper = wrapper.find("button#package-medium");
+        expect(buttonWrapper)
+            .toHaveLength(1);
+        buttonWrapper.simulate("click");
+        expect(setPhrasePartsFn)
+            .toHaveBeenCalled();
+        expect(setPhrasePartsFn.mock.calls[0][0])
+            .toHaveLength(6);
+      });
+    });
+
+    describe("large package button", () => {
+      it("registers a small set of preconfigured phrase parts", () => {
+        const buttonWrapper = wrapper.find("button#package-large");
+        expect(buttonWrapper)
+            .toHaveLength(1);
+        buttonWrapper.simulate("click");
+        expect(setPhrasePartsFn)
+            .toHaveBeenCalled();
+        expect(setPhrasePartsFn.mock.calls[0][0])
+            .toHaveLength(8);
+      });
+    });
   });
 
   describe("when phrase exists but is not generated", () => {
-    const wrapper = shallow(<Menu
-      addPhrasePart={addPhrasePartFn}
-      setPhraseParts={setPhrasePartsFn}
-      entropyBitsAvailable={0}
-      entropyBitsNeeded={0}
-      generatePlaintext={generatePlaintextFn}
-      phraseGenState={PhraseGenState.NOT_STARTED}
-      qtyOfPhraseParts={1}
-      reset={resetFn}
-    />);
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = shallow(<Menu
+          addPhrasePart={addPhrasePartFn}
+          setPhraseParts={setPhrasePartsFn}
+          entropyBitsAvailable={0}
+          entropyBitsNeeded={0}
+          generatePlaintext={generatePlaintextFn}
+          phraseGenState={PhraseGenState.NOT_STARTED}
+          qtyOfPhraseParts={1}
+          reset={resetFn}
+      />);
+    });
 
     it("has an enabled Generate button", () => {
       const buttonWrapper = wrapper.find("button#generate");
@@ -141,16 +194,20 @@ describe("Menu", () => {
   });
 
   describe("when phrase is generated", () => {
-    const wrapper = shallow(<Menu
-      addPhrasePart={addPhrasePartFn}
-      setPhraseParts={setPhrasePartsFn}
-      entropyBitsAvailable={0}
-      entropyBitsNeeded={0}
-      generatePlaintext={generatePlaintextFn}
-      phraseGenState={PhraseGenState.GENERATED}
-      qtyOfPhraseParts={1}
-      reset={resetFn}
-    />);
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = shallow(<Menu
+          addPhrasePart={addPhrasePartFn}
+          setPhraseParts={setPhrasePartsFn}
+          entropyBitsAvailable={0}
+          entropyBitsNeeded={0}
+          generatePlaintext={generatePlaintextFn}
+          phraseGenState={PhraseGenState.GENERATED}
+          qtyOfPhraseParts={1}
+          reset={resetFn}
+      />);
+    });
 
     it("does not have Add buttons", () => {
       expect(wrapper.find("button.add"))

@@ -114,7 +114,8 @@ export class Menu extends PureComponent<IProps> {
 
     const phraseTemplateButtons = <span>
       <button type="button"
-              id="generate"
+              id="package-small"
+              class="package"
               onClick={() => { this.props.setPhraseParts([
                 // 26 bits of entropy
                 PartType.determiner,
@@ -125,7 +126,8 @@ export class Menu extends PureComponent<IProps> {
         <span className="callToAction">🍱 🔒 💪</span>
       </button>
       <button type="button"
-              id="generate"
+              id="package-medium"
+              class="package"
               onClick={() => { this.props.setPhraseParts([
                 // 40 bits of entropy (+54% over previous option)
                 PartType.determiner,
@@ -138,7 +140,8 @@ export class Menu extends PureComponent<IProps> {
         <span className="callToAction">🍱 🔒 💪💪</span>
       </button>
       <button type="button"
-              id="generate"
+              id="package-large"
+              class="package"
               onClick={() => { this.props.setPhraseParts([
                 // 49 bits of entropy (+23% over previous option)
                 PartType.determiner,
