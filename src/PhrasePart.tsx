@@ -5,7 +5,7 @@ import { PartType } from "./wordbanks";
 
 interface IAnimation {
   plaintext: string;
-  tempDisambig?: number;
+  tempDisambig: number;
 }
 
 export interface IPhraseProps {

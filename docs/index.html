@@ -116,12 +116,12 @@
         }
         /* for explanation of `disambigN`, see `phraseAnimation.ts`. */
         .part.temp.disambig0 {
-            animation-duration: 100ms;
+            animation-duration: 200ms;
             animation-name: phrasepart-reveal0;
             animation-timing-function: ease-in-out;
         }
         .part.temp.disambig1 {
-            animation-duration: 100ms;
+            animation-duration: 200ms;
             animation-name: phrasepart-reveal1;
             animation-timing-function: ease-in-out;
         }
@@ -135,30 +135,30 @@
         }
         @keyframes phrasepart-reveal0 { /* keep in sync with `...reveal1` */
             from {
-                color: #b0b0b0; /* slightly darker than approot background color */
+                color: #b8b8b8; /* slightly darker than approot background color */
             }
             50% {
-                color: #a0a0a0; /* middle between approot background and regular color */
+                color: #808080; /* middle between approot background and regular color */
             }
             to {
-                color: #b0b0b0; /* slightly darker than approot background color */
+                color: #b8b8b8; /* slightly darker than approot background color */
             }
         }
         @keyframes phrasepart-reveal1 { /* keep in sync with `...reveal0` */
             from {
-                color: #b0b0b0; /* slightly darker than approot background color */
+                color: #b8b8b8; /* slightly darker than approot background color */
             }
             50% {
-                color: #a0a0a0; /* middle between approot background and regular color */
+                color: #808080; /* middle between approot background and regular color */
             }
             to {
-                color: #b0b0b0; /* slightly darker than approot background color */
+                color: #b8b8b8; /* slightly darker than approot background color */
             }
         }
         .part.plain { font-family: monospace; font-weight: bold; }
         .part.temp {
             /* copy of animation's `to` */
-            color: #b0b0b0; /* slightly darker than approot background color */
+            color: #b8b8b8; /* slightly darker than approot background color */
 
             font-family: monospace;
         }
@@ -210,7 +210,7 @@
                     color: #202020; /* slightly lighter than approot background color */
                 }
                 50% {
-                    color: #505050; /* middle between approot background and regular color */
+                    color: #808080; /* middle between approot background and regular color */
                 }
                 to {
                     color: #202020; /* slightly lighter than approot background color */
@@ -221,7 +221,7 @@
                     color: #202020; /* slightly lighter than approot background color */
                 }
                 50% {
-                    color: #505050; /* middle between approot background and regular color */
+                    color: #808080; /* middle between approot background and regular color */
                 }
                 to {
                     color: #202020; /* slightly lighter than approot background color */

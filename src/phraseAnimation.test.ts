@@ -1,13 +1,13 @@
 import { IPartProps } from "./Phrase";
-import { animatePhraseCycle } from "./phraseAnimation";
+import { animatePhraseCycle, getCyclesBeforeFinalizing } from "./phraseAnimation";
 import { PartType } from "./wordbanks";
 
 describe("phraseAnimation", () => {
   describe(".animatePhraseCycle", () => {
     describe("while we are animating", () => {
       const ANIM_STATE = {
-        idxToReveal: 0,
         isFinished: false,
+        lastIdxAnimated: 0,
         onFinish: () => {
           // Nothing to check
         },
@@ -15,7 +15,7 @@ describe("phraseAnimation", () => {
           key: 0,
           type: PartType.color,
         }],
-        showingTempWordNum: 0,
+        seqNum: 0,
       };
 
       it("calls back with updated phrase parts having temporary word", async () => {
@@ -44,7 +44,7 @@ describe("phraseAnimation", () => {
             });
       });
 
-      it("increments counter in its own state", async () =>
+      it("increments sequence number", async () =>
           Promise.resolve()
             .then(() => {
               const newAnimState = animatePhraseCycle({
@@ -53,27 +53,36 @@ describe("phraseAnimation", () => {
                   // We don't care
                 },
               });
-              expect(newAnimState.showingTempWordNum)
+              expect(newAnimState.seqNum)
                   .toEqual(1);
             }),
       );
     });
 
     describe("once counter reaches a threshold", () => {
+      const SEQ_NUM = getCyclesBeforeFinalizing(2);
       const ANIM_STATE = {
-        idxToReveal: 0,
         isFinished: false,
+        lastIdxAnimated: 0,
         phraseParts: [
           {
+            animation: {
+              plaintext: "red",
+              tempDisambig: 0,
+            },
             key: 0,
             type: PartType.color,
           },
           {
+            animation: {
+              plaintext: "green",
+              tempDisambig: 0,
+            },
             key: 1,
             type: PartType.color,
           },
         ],
-        showingTempWordNum: 10,
+        seqNum: SEQ_NUM,
       };
 
       it("reveals just first phrase part", async () => {
@@ -105,7 +114,7 @@ describe("phraseAnimation", () => {
             });
       });
 
-      it("updates reveal index in its own state", async () => (
+      it("increments sequence number", async () => (
         Promise.resolve()
             .then(() => {
               const newAnimState = animatePhraseCycle({
@@ -117,21 +126,21 @@ describe("phraseAnimation", () => {
                   // We don't care
                 },
               });
-              expect(newAnimState.idxToReveal)
-                  .toEqual(1);
+              expect(newAnimState.seqNum)
+                  .toEqual(SEQ_NUM + 1);
             })
       ));
     });
 
     describe("once we've revealed all parts", () => {
       const ANIM_STATE = {
-        idxToReveal: 0,
         isFinished: false,
+        lastIdxAnimated: 0,
         phraseParts: [{
           key: 0,
           type: PartType.color,
         }],
-        showingTempWordNum: 11,
+        seqNum: getCyclesBeforeFinalizing(1) + 1,
       };
 
       it("calls back with finish status", async () => {

@@ -67,6 +67,7 @@ describe("Phrase", () => {
       {
         animation: {
           plaintext: "tempword",
+          tempDisambig: 0,
         },
         key: 1,
         plaintext: "finalword",
