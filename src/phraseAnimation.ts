@@ -11,10 +11,10 @@ export const ANIM_CYCLES_PER_WORD = 5;
 export const DISAMBIG_MODULO = 2;
 
 const getInsecureRandomIntBetween = (min: number, max: number): number =>
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     Math.floor(Math.random() * (max - min) + min);
 
 export const getInsecureRandomBits = (bitsQty: number) => {
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
   const min = 0;
   const max = Math.pow(BINARY_BASE, bitsQty);
 
