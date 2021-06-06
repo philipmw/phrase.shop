@@ -39,6 +39,8 @@ describe("App", () => {
           .mockImplementation(() => (0)),
     };
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
+    // Set disable-animation feature flag
+    wrapper.setState({ urlSearchParams: new URLSearchParams("?animation=n")});
 
     wrapper.instance()
         .addPhrasePart(wb.PartType.word);
@@ -65,8 +67,6 @@ describe("App", () => {
         .mockImplementation(() => (0)),
     };
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
-    // Enable feature flag
-    wrapper.setState({ urlSearchParams: new URLSearchParams("?animation=y")});
 
     wrapper.instance()
       .addPhrasePart(wb.PartType.word);

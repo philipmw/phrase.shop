@@ -3,7 +3,7 @@ import { PureComponent } from "preact/compat";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
-import { getUrlSearchParams, isAnimationEnabled } from "./featureflags";
+import { getUrlSearchParams, isAnimationDisabled } from "./featureflags";
 import { Menu } from "./Menu";
 import { IPartProps, Phrase, PhraseGenState } from "./Phrase";
 import { animatePhrase } from "./phraseAnimation";
@@ -87,7 +87,11 @@ export class App extends PureComponent<IProps, IState> {
       phraseParts: phrasePartsWithPlaintext,
     });
 
-    if (isAnimationEnabled(this.state.urlSearchParams)) {
+    if (isAnimationDisabled(this.state.urlSearchParams)) {
+      this.setState({
+        phraseGenState: PhraseGenState.GENERATED,
+      });
+    } else {
       this.setState({
         phraseGenState: PhraseGenState.ANIMATING,
       });
@@ -97,10 +101,6 @@ export class App extends PureComponent<IProps, IState> {
           this.onAnimationUpdatePhraseParts,
           this.onAnimationFinish,
       );
-    } else {
-      this.setState({
-        phraseGenState: PhraseGenState.GENERATED,
-      });
     }
   }
 
