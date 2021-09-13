@@ -13,7 +13,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
+    static: path.join(__dirname, 'docs'), //`docs` as a GitHub Pages requirement
     open: true,
   },
   resolve: {
