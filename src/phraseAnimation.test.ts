@@ -26,7 +26,7 @@ describe("phraseAnimation", () => {
               .toHaveLength(1);
           expect(newParts[0].animation)
               .toBeDefined();
-          expect(newParts[0].animation!.plaintext)
+          expect(newParts[0].animation?.plaintext)
               .toBeDefined();
           updatedPhraseParts = true;
         };

@@ -1,9 +1,9 @@
-import { h } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
 import { getUrlSearchParams, isAnimationDisabled } from "./featureflags";
+import { IEntropySource } from "./IEntropySource";
 import { Menu } from "./Menu";
 import { IPartProps, Phrase, PhraseGenState } from "./Phrase";
 import { animatePhrase } from "./phraseAnimation";
@@ -23,7 +23,7 @@ interface IState {
 
 const getUniqueId = () => Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
 
-export class App extends PureComponent<IProps, IState> {
+export class App extends Component<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
 
@@ -123,14 +123,14 @@ export class App extends PureComponent<IProps, IState> {
   }
 
   private readonly reset = () => {
-    this.setState((state) => ({
+    this.setState(() => ({
       phraseGenState: PhraseGenState.NOT_STARTED,
       phraseParts: [],
     }));
   }
 
   private readonly setEntropySource = (source: IEntropySource) => {
-    this.setState((state) => ({
+    this.setState(() => ({
       entropyBitsAvailable: source.bitsAvailable(),
       entropySource: source,
     }));

@@ -1,5 +1,4 @@
-import { h } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import { PhraseGenState } from "./Phrase";
 import { PartType, partTypeList, partTypeProps } from "./wordbanks";
@@ -69,7 +68,7 @@ const menuData: MenuData = {
   },
 };
 
-export class Menu extends PureComponent<IProps> {
+export class Menu extends Component<IProps> {
   public render() {
     if (this.props.phraseGenState !== PhraseGenState.NOT_STARTED) {
       return <div id="main-actions">

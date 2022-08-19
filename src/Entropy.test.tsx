@@ -1,11 +1,11 @@
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
-import { h } from "preact";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Dice } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
 import { Entropy } from "./Entropy";
+import { IEntropySource } from "./IEntropySource";
 import { PhraseGenState } from "./Phrase";
 
 configure({ adapter: new Adapter() });

@@ -1,6 +1,5 @@
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
-import { h } from "preact";
 
 import { Menu } from "./Menu";
 import { PhraseGenState } from "./Phrase";

@@ -1,3 +1,4 @@
+import { IEntropySource } from "./IEntropySource";
 import { q2 } from "./loadeddice";
 
 const ARRAY_SIZE = 100;

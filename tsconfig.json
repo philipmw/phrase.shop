@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "outDir": "./built",
-    "allowJs": true,
-    "noImplicitReturns": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "outDir": "./built",
     "strictNullChecks": true,
-    "jsx": "react",
-    "jsxFactory": "h"
+    "target": "es6"
   },
   "include": [
     "src/**/*.ts",

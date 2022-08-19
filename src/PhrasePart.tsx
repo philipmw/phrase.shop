@@ -1,5 +1,4 @@
-import { h, JSX } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import { PartType } from "./wordbanks";
 
@@ -27,8 +26,8 @@ export interface IPhraseProps {
  * properties many times. Once the animation finishes, we unset `animation`, and then
  * only `type` and `plaintext` remain set.
  */
-export class PhrasePart extends PureComponent<IPhraseProps> {
-  public render(): JSX.Element {
+export class PhrasePart extends Component<IPhraseProps> {
+  public render() {
     const plaintextType = this.props.plaintext === undefined
         ? "unset"
         : (this.props.animation === undefined

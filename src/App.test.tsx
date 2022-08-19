@@ -1,8 +1,8 @@
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
-import { h } from "preact";
 
 import { App } from "./App";
+import { IEntropySource } from "./IEntropySource";
 import { PhraseGenState } from "./Phrase";
 import * as wb from "./wordbanks";
 

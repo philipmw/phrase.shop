@@ -1,7 +1,7 @@
-import { h } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
+import { IEntropySource } from "./IEntropySource";
 import { Dice, DICE_SIDES_MAX, DICE_SIDES_MIN } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
 import { PhraseGenState } from "./Phrase";
@@ -19,7 +19,7 @@ interface IState {
   diceSides: number;
 }
 
-export class Entropy extends PureComponent<IProps, IState> {
+export class Entropy extends Component<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
     this.state = {
@@ -92,7 +92,7 @@ export class Entropy extends PureComponent<IProps, IState> {
     if (newSides < DICE_SIDES_MIN || newSides > DICE_SIDES_MAX) {
       return;
     }
-    this.setState((state) => ({
+    this.setState(() => ({
       diceSides: newSides,
     }));
   }

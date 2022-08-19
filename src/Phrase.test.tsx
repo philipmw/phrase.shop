@@ -1,6 +1,5 @@
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
-import { h } from "preact";
 
 import { Phrase, PhraseGenState } from "./Phrase";
 import { PartType } from "./wordbanks";

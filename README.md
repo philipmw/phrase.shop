@@ -109,8 +109,12 @@ Run linter and generate final artifacts:
 
     $ npm run build
 
-This produces the app bundle Javascript that's served to real customers.
+This produces the app bundle Javascript, in `./docs`, that's served to real customers.
 If any part of this process fails, please fix any issues before submitting a pull request.
+
+### why some things are the way they are
+
+* https://stackoverflow.com/a/64223627/1214939
 
 ### React/TS template
 

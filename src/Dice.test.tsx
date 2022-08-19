@@ -1,6 +1,5 @@
 import { configure, mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
-import { h } from "preact";
 
 import { Dice } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
@@ -93,7 +92,7 @@ describe("Dice", () => {
 
     const numField = wrapper.find("input#number-input");
     numField.getDOMNode().value = "16";
-    numField.simulate("input");
+    numField.simulate("change");
     expect(onDiceSidesChangeFn)
       .toHaveBeenCalledWith(16);
   });
@@ -112,7 +111,7 @@ describe("Dice", () => {
 
     const numField = wrapper.find("input#number-input");
     numField.getDOMNode().value = NaN;
-    numField.simulate("input");
+    numField.simulate("change");
     expect(onDiceSidesChangeFn)
       .not
       .toHaveBeenCalled();

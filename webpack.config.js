@@ -17,11 +17,12 @@ module.exports = {
     open: true,
   },
   resolve: {
+    // https://preactjs.com/guide/v10/getting-started
     alias: {
       "react": "preact/compat",
       "react-dom/test-utils": "preact/test-utils",
-      "react-dom": "preact/compat",
-      // Must be below test-utils
+      "react-dom": "preact/compat", // Must be below test-utils
+      "react/jsx-runtime": "preact/jsx-runtime",
     },
     extensions: [
       '.js', // needed for webpack-dev-server: https://github.com/webpack/webpack-dev-server/issues/720#issuecomment-268470989

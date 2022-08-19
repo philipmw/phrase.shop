@@ -1,3 +1,5 @@
+import { IEntropySource } from "./IEntropySource";
+
 const BINARY_BASE = 2;
 const MAX_BITS = 32;
 const BITS_ADVERTISED = 9999;

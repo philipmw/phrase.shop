@@ -1,5 +1,4 @@
-import { h } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import * as pp from "./PhrasePart";
 import * as wb from "./wordbanks";
@@ -19,7 +18,7 @@ interface IProps {
   parts: IPartProps[];
 }
 
-export class Phrase extends PureComponent<IProps> {
+export class Phrase extends Component<IProps> {
   public render() {
     if (this.props.parts.length === 0) {
       return this.renderEmpty();

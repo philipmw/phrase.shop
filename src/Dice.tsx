@@ -1,5 +1,4 @@
-import { h } from "preact";
-import { PureComponent } from "preact/compat";
+import { Component } from "preact";
 
 import { DiceEntropySource } from "./DiceEntropySource";
 
@@ -16,7 +15,7 @@ const DICE_FACES = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 export const DICE_SIDES_MIN = 2;
 export const DICE_SIDES_MAX = 100;
 
-export class Dice extends PureComponent<IProps> {
+export class Dice extends Component<IProps> {
   public render() {
     const a: number[] = new Array(this.props.diceSides);
     for (let i = 0; i < this.props.diceSides; i += 1) {
