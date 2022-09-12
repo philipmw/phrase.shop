@@ -15,8 +15,6 @@ export enum PartType {
   usstate = "usstate",
   color = "color",
   symbol = "symbol",
-  musicalnote = "musicalnote",
-  usairport = "usairport",
 }
 
 // This exists because iterating over an enum appears to be discouraged in TypeScript.
@@ -33,8 +31,6 @@ export const partTypeList: PartType[] = [
   PartType.symbol,
   PartType.color,
   PartType.usstate,
-  PartType.usairport,
-  PartType.musicalnote,
 ];
 
 type Dict = {
@@ -102,31 +98,6 @@ export const dictionary: Dict = {
     "blue", "fuchsia", "aqua", "white",
   ]),
   [PartType.symbol]: typedShuffle(["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "_", "+"]),
-  [PartType.musicalnote]: typedShuffle([
-    "A", "Ab", "A#",
-    "B", "Bb", "B#",
-    "C", "Cb", "C#",
-    "D", "Db", "D#",
-    "E", "Eb", "E#",
-    "F", "Fb", "F#",
-    "G", "Gb", "G#"]),
-  [PartType.usairport]: [
-    "ATL",
-    "LAX",
-    "ORD",
-    "DFW",
-    "DEN",
-    "JFK",
-    "SFO",
-    "SEA",
-    "LAS",
-    "MCO",
-    "CLT",
-    "EWR",
-    "PHX",
-    "IAH",
-    "MIA",
-    "BOS"],
 };
 
 interface IProps {
@@ -199,15 +170,5 @@ export const partTypeProps: Props = {
     entropyReqBits: 4,
     maxLength: 1,
     minLength: 1,
-  },
-  [PartType.musicalnote]: {
-    entropyReqBits: 4,
-    maxLength: 2,
-    minLength: 1,
-  },
-  [PartType.usairport]: {
-    entropyReqBits: 4,
-    maxLength: 3,
-    minLength: 3,
   },
 };

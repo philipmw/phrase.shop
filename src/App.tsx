@@ -2,12 +2,17 @@ import { Component } from "preact";
 
 import { ComputerEntropySource } from "./ComputerEntropySource";
 import { Entropy } from "./Entropy";
-import { getUrlSearchParams, isAnimationDisabled } from "./featureflags";
+import { getUrlSearchParams } from "./featureflags";
 import { IEntropySource } from "./IEntropySource";
 import { Menu } from "./Menu";
-import { IPartProps, Phrase, PhraseGenState } from "./Phrase";
+import { Phrase, PhraseGenState } from "./Phrase";
+import { PhrasePartUiProps } from "./PhrasePartUi";
 import { animatePhrase } from "./phraseAnimation";
 import * as wb from "./wordbanks";
+import {Sentence} from "./logic/Sentence";
+import {makeSentenceSimple} from "./logic/sentenceTemplates";
+import {mutatePhrasePartWithPlainValue} from "./logic/wordGenerator";
+import {makePhrasePartUiProps} from "./ui/phrasePartUiProps";
 
 interface IProps {
   entropySource?: IEntropySource;
@@ -17,11 +22,10 @@ interface IState {
   entropyBitsAvailable: number;
   entropySource: IEntropySource;
   phraseGenState: PhraseGenState;
-  phraseParts: IPartProps[];
+  sentence: Sentence;
+  phrasePartsUiProps: PhrasePartUiProps[];
   urlSearchParams: URLSearchParams;
 }
-
-const getUniqueId = () => Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
 
 export class App extends Component<IProps, IState> {
   public constructor(props: IProps) {
@@ -33,26 +37,26 @@ export class App extends Component<IProps, IState> {
       entropyBitsAvailable: entropySource.bitsAvailable(),
       entropySource,
       phraseGenState: PhraseGenState.NOT_STARTED,
-      phraseParts: [],
+      sentence: makeSentenceSimple(),
+      phrasePartsUiProps: makePhrasePartUiProps(makeSentenceSimple()),
       urlSearchParams: getUrlSearchParams(),
     };
+
+    this.generatePlaintext();
   }
 
   public render() {
-    const bitsOfEntropy = this.state.phraseParts.reduce(
-      (acc, pprops) => (acc + wb.partTypeProps[pprops.type].entropyReqBits), 0);
+    const bitsOfEntropy = this.state.sentence.getOrderedWords().reduce(
+      (acc, word) => (acc + wb.partTypeProps[word.getPartType()].entropyReqBits), 0);
 
     return <div>
       <Phrase genState={this.state.phraseGenState}
-              parts={this.state.phraseParts}/>
-      <Menu addPhrasePart={this.addPhrasePart}
-            setPhraseParts={this.setPhraseParts}
+              sentence={this.state.sentence}
+              ppUiProps={this.state.phrasePartsUiProps}/>
+      <Menu setSentence={this.setSentence}
             entropyBitsAvailable={this.state.entropySource.bitsAvailable()}
             entropyBitsNeeded={bitsOfEntropy}
-            generatePlaintext={this.generatePlaintext}
-            phraseGenState={this.state.phraseGenState}
-            qtyOfPhraseParts={this.state.phraseParts.length}
-            reset={this.reset}/>
+            phraseGenState={this.state.phraseGenState}/>
       <Entropy bitsAvailable={this.state.entropySource.bitsAvailable()}
                bitsNeeded={bitsOfEntropy}
                phraseGenState={this.state.phraseGenState}
@@ -62,70 +66,44 @@ export class App extends Component<IProps, IState> {
     </div>;
   }
 
-  private readonly addPhrasePart = (type: wb.PartType) => {
-    this.setState((state) => ({
-      phraseGenState: PhraseGenState.NOT_STARTED,
-      phraseParts: state.phraseParts.concat({key: getUniqueId(), type}),
-    }));
-  }
-
   private readonly generatePlaintext = () => {
     // first, generate the final secure plaintext, before considering animation
-    const phrasePartsWithPlaintext =
-        this.state.phraseParts.map((part) => {
-          // cryptographically secure random
-          const randomIdx = this.state.entropySource.getBits(wb.partTypeProps[part.type].entropyReqBits);
-
-          return {
-            ...part,
-            plaintext: wb.dictionary[part.type][randomIdx],
-          };
-        });
-
-    // update component state, but this may happen asynchronously, hence don't rely on it later.
-    this.setState({
-      phraseParts: phrasePartsWithPlaintext,
-    });
-
-    if (isAnimationDisabled(this.state.urlSearchParams)) {
-      this.setState({
-        phraseGenState: PhraseGenState.GENERATED,
-      });
-    } else {
-      this.setState({
-        phraseGenState: PhraseGenState.ANIMATING,
-      });
+    this.setState(prev => {
+      // Putting all the side effects here and praying to the React deities.
+      prev.sentence.generate(mutatePhrasePartWithPlainValue(prev.entropySource));
 
       animatePhrase(
-          phrasePartsWithPlaintext,
-          this.onAnimationUpdatePhraseParts,
-          this.onAnimationFinish,
+        prev.sentence,
+        prev.phrasePartsUiProps,
+        this.onAnimationUpdatePhraseParts,
+        this.onAnimationFinish,
       );
-    }
+
+      return {
+        phraseGenState: PhraseGenState.ANIMATING,
+      };
+    });
   }
 
   private readonly onAnimationFinish = () => {
     this.setState({
       phraseGenState: PhraseGenState.GENERATED,
+      phrasePartsUiProps: this.state.phrasePartsUiProps.map(prop => ({
+        ...prop,
+        animation: undefined,
+      })),
     });
   }
 
-  private readonly onAnimationUpdatePhraseParts = (newParts: IPartProps[]) => {
+  private readonly onAnimationUpdatePhraseParts = (newParts: PhrasePartUiProps[]) => {
     this.setState({
-      phraseParts: newParts,
+      phrasePartsUiProps: newParts,
     });
   }
 
   private readonly onEntropyChange = () => {
     this.setState((state) => ({
       entropyBitsAvailable: state.entropySource.bitsAvailable(),
-    }));
-  }
-
-  private readonly reset = () => {
-    this.setState(() => ({
-      phraseGenState: PhraseGenState.NOT_STARTED,
-      phraseParts: [],
     }));
   }
 
@@ -136,10 +114,13 @@ export class App extends Component<IProps, IState> {
     }));
   }
 
-  private readonly setPhraseParts = (types: wb.PartType[]) => {
-    this.setState({
+  private readonly setSentence = (sentence: Sentence) => {
+    const newPpUiProps = makePhrasePartUiProps(sentence);
+    this.setState(() => ({
       phraseGenState: PhraseGenState.NOT_STARTED,
-      phraseParts: types.map((type) => ({key: getUniqueId(), type})),
-    });
+      sentence,
+      phrasePartsUiProps: newPpUiProps,
+    }));
+    this.generatePlaintext();
   }
 }

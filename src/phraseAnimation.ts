@@ -1,5 +1,6 @@
-import { IPartProps } from "./Phrase";
 import * as wb from "./wordbanks";
+import {Sentence} from "./logic/Sentence";
+import {PhrasePartUiProps} from "./PhrasePartUi";
 
 const BINARY_BASE = 2;
 export const ANIMATION_TIMEOUT_MS = 50; // CSS animation is 200ms
@@ -36,25 +37,26 @@ export const getInsecureRandomBits = (bitsQty: number) => {
 export interface IAnimationState {
   isFinished: boolean;
   lastIdxAnimated: number;
-  phraseParts: IPartProps[];
+  sentence: Sentence,
+  ppUiProps: PhrasePartUiProps[];
   seqNum: number;
   onFinish(): void;
-  onUpdatePhraseParts(pps: IPartProps[]): void;
+  onUpdatePhraseParts(pps: PhrasePartUiProps[]): void;
 }
 
 export const getCyclesBeforeFinalizing = (phrasePartsQty: number): number =>
     phrasePartsQty * ANIM_CYCLES_PER_WORD;
 
 export const animatePhraseCycle = (animState: IAnimationState): IAnimationState => {
-  const cyclesBeforeFinalizing = getCyclesBeforeFinalizing(animState.phraseParts.length);
+  const cyclesBeforeFinalizing = getCyclesBeforeFinalizing(animState.sentence.getOrderedWords().length);
   const idxToFinalize: number | undefined = (animState.seqNum >= cyclesBeforeFinalizing)
       ? animState.seqNum - cyclesBeforeFinalizing
       : undefined;
   const idxToAnimate = getInsecureRandomIntBetween(
       idxToFinalize !== undefined ? idxToFinalize + 1 : 0,
-      animState.phraseParts.length);
+      animState.sentence.getOrderedWords().length);
 
-  const newPhraseParts = animState.phraseParts.map((part, i) => {
+  const newPpUiProps = animState.ppUiProps.map((part, i) => {
     if (idxToFinalize !== undefined) {
       // we are finalizing a part
       if (i === idxToFinalize) {
@@ -66,23 +68,23 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
     }
 
     if (i === idxToAnimate) {
-      return animatePhrasePart(part);
+      return animatePhrasePart(animState.ppUiProps[i], animState.sentence.getOrderedWords()[i].getPartType());
     }
 
     // else no change
     return part;
   });
 
-  animState.onUpdatePhraseParts(newPhraseParts);
+  animState.onUpdatePhraseParts(newPpUiProps);
 
-  if (idxToFinalize !== undefined && idxToFinalize >= animState.phraseParts.length - 1) {
+  if (idxToFinalize !== undefined && idxToFinalize >= animState.sentence.getOrderedWords().length - 1) {
     animState.onFinish();
 
     return {
       ...animState,
       isFinished: true,
       lastIdxAnimated: idxToAnimate,
-      phraseParts: newPhraseParts,
+      ppUiProps: newPpUiProps,
       seqNum: animState.seqNum + 1,
     };
   }
@@ -91,7 +93,7 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
   return {
     ...animState,
     lastIdxAnimated: idxToAnimate,
-    phraseParts: newPhraseParts,
+    ppUiProps: newPpUiProps,
     seqNum: animState.seqNum + 1,
   };
 };
@@ -107,20 +109,22 @@ const animatePhraseInWindow = (animState: IAnimationState): void => {
   }
 };
 
-const animatePhrasePart = (part: IPartProps): IPartProps => {
-  const randomIdx = getInsecureRandomBits(wb.partTypeProps[part.type].entropyReqBits);
+const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: wb.PartType): PhrasePartUiProps => {
+  const randomIdx = getInsecureRandomBits(wb.partTypeProps[partType].entropyReqBits);
 
   return {
-    ...part,
+    ...ppUiProps,
     animation: {
-      plaintext: wb.dictionary[part.type][randomIdx],
-      tempDisambig: part.animation !== undefined ? (part.animation.tempDisambig + 1) % DISAMBIG_MODULO : 0,
+      plaintext: wb.dictionary[partType][randomIdx],
+      tempDisambig: ppUiProps.animation !== undefined ? (ppUiProps.animation.tempDisambig + 1) % DISAMBIG_MODULO : 0,
     },
   };
 };
 
-const animatePhraseInit = (phraseParts: IPartProps[]) => {
-  const newPhraseParts = phraseParts.map(animatePhrasePart);
+const animatePhraseInit = (sentence: Sentence,
+                           phrasePartsUiProps: PhrasePartUiProps[]) => {
+  const newPhraseParts = phrasePartsUiProps.map((ppUiProps, idx) =>
+    animatePhrasePart(ppUiProps, sentence.getOrderedWords()[idx].getPartType()));
 
   // initialize all phrase parts
   return {
@@ -131,12 +135,15 @@ const animatePhraseInit = (phraseParts: IPartProps[]) => {
   };
 };
 
-export const animatePhrase = (phraseParts: IPartProps[],
-                              onUpdatePhraseParts: (pps: IPartProps[]) => void,
-                              onFinish: () => void) => {
+export function animatePhrase(sentence: Sentence,
+                              ppUiProps: PhrasePartUiProps[],
+                              onUpdatePhraseParts: (pps: PhrasePartUiProps[]) => void,
+                              onFinish: () => void): void {
   animatePhraseInWindow({
     onFinish,
     onUpdatePhraseParts,
-    ...animatePhraseInit(phraseParts),
+    sentence,
+    ppUiProps,
+    ...animatePhraseInit(sentence, ppUiProps),
   });
-};
+}

@@ -3,21 +3,15 @@ import Adapter from "enzyme-adapter-preact-pure";
 
 import { Menu } from "./Menu";
 import { PhraseGenState } from "./Phrase";
-import * as wb from "./wordbanks";
+import {makeSentenceHard, makeSentenceMedium, makeSentenceSimple} from "./logic/sentenceTemplates";
 
 configure({ adapter: new Adapter() });
 
 describe("Menu", () => {
-  let addPhrasePartFn;
-  let setPhrasePartsFn;
-  let generatePlaintextFn;
-  let resetFn;
+  let setSentenceFn;
 
   beforeEach(() => {
-    addPhrasePartFn = jest.fn();
-    setPhrasePartsFn = jest.fn();
-    generatePlaintextFn = jest.fn();
-    resetFn = jest.fn();
+    setSentenceFn = jest.fn();
   });
 
   describe("initial state", () => {
@@ -25,170 +19,83 @@ describe("Menu", () => {
 
     beforeEach(() => {
       wrapper = shallow(<Menu
-          addPhrasePart={addPhrasePartFn}
-          setPhraseParts={setPhrasePartsFn}
+          setSentence={setSentenceFn}
           entropyBitsAvailable={0}
           entropyBitsNeeded={0}
-          generatePlaintext={generatePlaintextFn}
           phraseGenState={PhraseGenState.NOT_STARTED}
-          qtyOfPhraseParts={0}
-          reset={resetFn}
       />);
     });
 
-    it("has add buttons for each phrase type", () => {
-      expect(wrapper.find("button.add"))
-        .toHaveLength(wb.partTypeList.length);
-    });
-
-    it("has three phrase templates", () => {
-      expect(wrapper.find("button.package"))
+    it("has three phrase templates enabled", () => {
+      const buttons = wrapper.find("button.template");
+      expect(buttons)
           .toHaveLength(3);
-    });
-
-    it("has does not have a Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      expect(buttonWrapper)
-        .toHaveLength(0);
-    });
-
-    it("adds a phrase part on clicking an Add button", () => {
-      const buttonWrapper = wrapper.find("button.add.word");
-      buttonWrapper.simulate("click");
-      expect(addPhrasePartFn)
-        .toHaveBeenCalled();
-    });
-
-    describe("small package button", () => {
-      it("registers a small set of preconfigured phrase parts", () => {
-        const buttonWrapper = wrapper.find("button#package-small");
-        expect(buttonWrapper)
-            .toHaveLength(1);
-        buttonWrapper.simulate("click");
-        expect(setPhrasePartsFn)
-            .toHaveBeenCalled();
-        expect(setPhrasePartsFn.mock.calls[0][0])
-            .toHaveLength(4);
+      buttons.forEach(buttonWrapper => {
+        expect(buttonWrapper
+          .render()
+          .attr("disabled"))
+          .toBeFalsy();
       });
     });
 
-    describe("medium package button", () => {
+    describe("small template button", () => {
       it("registers a small set of preconfigured phrase parts", () => {
-        const buttonWrapper = wrapper.find("button#package-medium");
+        const buttonWrapper = wrapper.find("button#template-small");
         expect(buttonWrapper)
             .toHaveLength(1);
         buttonWrapper.simulate("click");
-        expect(setPhrasePartsFn)
+        expect(setSentenceFn)
             .toHaveBeenCalled();
-        expect(setPhrasePartsFn.mock.calls[0][0])
-            .toHaveLength(6);
+        expect(setSentenceFn.mock.calls[0][0])
+            .toEqual(makeSentenceSimple());
       });
     });
 
-    describe("large package button", () => {
+    describe("medium template button", () => {
       it("registers a small set of preconfigured phrase parts", () => {
-        const buttonWrapper = wrapper.find("button#package-large");
+        const buttonWrapper = wrapper.find("button#template-medium");
         expect(buttonWrapper)
             .toHaveLength(1);
         buttonWrapper.simulate("click");
-        expect(setPhrasePartsFn)
+        expect(setSentenceFn)
             .toHaveBeenCalled();
-        expect(setPhrasePartsFn.mock.calls[0][0])
-            .toHaveLength(8);
+        expect(setSentenceFn.mock.calls[0][0])
+            .toEqual(makeSentenceMedium());
       });
     });
-  });
 
-  describe("when phrase exists but is not generated", () => {
-    let wrapper;
-
-    beforeEach(() => {
-      wrapper = shallow(<Menu
-          addPhrasePart={addPhrasePartFn}
-          setPhraseParts={setPhrasePartsFn}
-          entropyBitsAvailable={0}
-          entropyBitsNeeded={0}
-          generatePlaintext={generatePlaintextFn}
-          phraseGenState={PhraseGenState.NOT_STARTED}
-          qtyOfPhraseParts={1}
-          reset={resetFn}
-      />);
-    });
-
-    it("has an enabled Generate button", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      expect(buttonWrapper)
-        .toHaveLength(1);
-      expect(buttonWrapper
-        .render()
-        .text())
-        .toContain("generate");
-      expect(buttonWrapper
-        .render()
-        .attr("disabled"))
-        .toBeFalsy();
-    });
-
-    it("has an enabled Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      expect(buttonWrapper)
-        .toHaveLength(1);
-      expect(buttonWrapper
-        .render()
-        .attr("disabled"))
-        .toBeFalsy();
-    });
-
-    it("generates the phrase on clicking the Generate button", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      buttonWrapper.simulate("click");
-      expect(generatePlaintextFn)
-        .toHaveBeenCalled();
-    });
-
-    it("resets the phrase on clicking the Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      buttonWrapper.simulate("click");
-      expect(resetFn)
-        .toHaveBeenCalled();
+    describe("large template button", () => {
+      it("registers a small set of preconfigured phrase parts", () => {
+        const buttonWrapper = wrapper.find("button#template-large");
+        expect(buttonWrapper)
+            .toHaveLength(1);
+        buttonWrapper.simulate("click");
+        expect(setSentenceFn)
+            .toHaveBeenCalled();
+        expect(setSentenceFn.mock.calls[0][0])
+            .toEqual(makeSentenceHard());
+      });
     });
   });
 
   describe("when phrase is animating", () => {
     const wrapper = shallow(<Menu
-        addPhrasePart={addPhrasePartFn}
-        setPhraseParts={setPhrasePartsFn}
+        setSentence={setSentenceFn}
         entropyBitsAvailable={0}
         entropyBitsNeeded={0}
-        generatePlaintext={generatePlaintextFn}
         phraseGenState={PhraseGenState.ANIMATING}
-        qtyOfPhraseParts={1}
-        reset={resetFn}
     />);
 
-    it("does not have Add buttons", () => {
-      expect(wrapper.find("button.add"))
-          .toHaveLength(0);
-    });
-
-    it("has a disabled Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      expect(buttonWrapper)
-          .toHaveLength(1);
-      expect(buttonWrapper
+    it("has disabled phrase template buttons", () => {
+      const buttons = wrapper.find("button.template");
+      expect(buttons)
+        .toHaveLength(3);
+      buttons.forEach(buttonWrapper => {
+        expect(buttonWrapper
           .render()
           .attr("disabled"))
           .toBeTruthy();
-    });
-
-    it("has a disabled Generate button", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      expect(buttonWrapper)
-          .toHaveLength(1);
-      expect(buttonWrapper
-          .render()
-          .attr("disabled"))
-          .toBeTruthy();
+      });
     });
   });
 
@@ -197,50 +104,23 @@ describe("Menu", () => {
 
     beforeEach(() => {
       wrapper = shallow(<Menu
-          addPhrasePart={addPhrasePartFn}
-          setPhraseParts={setPhrasePartsFn}
+          setSentence={setSentenceFn}
           entropyBitsAvailable={0}
           entropyBitsNeeded={0}
-          generatePlaintext={generatePlaintextFn}
           phraseGenState={PhraseGenState.GENERATED}
-          qtyOfPhraseParts={1}
-          reset={resetFn}
       />);
     });
 
-    it("does not have Add buttons", () => {
-      expect(wrapper.find("button.add"))
-        .toHaveLength(0);
-    });
-
-    it("has an enabled Generate button", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      expect(buttonWrapper)
-        .toHaveLength(1);
-      expect(buttonWrapper
-        .render()
-        .attr("disabled"))
-        .toBeFalsy();
-    });
-
-    it("regenerates the phrase on clicking the Generate button", () => {
-      const buttonWrapper = wrapper.find("button#generate");
-      buttonWrapper.simulate("click");
-      expect(generatePlaintextFn)
-        .toHaveBeenCalled();
-    });
-
-    it("has a Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      expect(buttonWrapper)
-        .toHaveLength(1);
-    });
-
-    it("resets the phrase on clicking the Start Over button", () => {
-      const buttonWrapper = wrapper.find("button#reset");
-      buttonWrapper.simulate("click");
-      expect(resetFn)
-        .toHaveBeenCalled();
+    it("has three phrase templates enabled", () => {
+      const buttons = wrapper.find("button.template");
+      expect(buttons)
+        .toHaveLength(3);
+      buttons.forEach(buttonWrapper => {
+        expect(buttonWrapper
+          .render()
+          .attr("disabled"))
+          .toBeFalsy();
+      });
     });
   });
 });

@@ -1,11 +1,7 @@
 import { Component } from "preact";
 
-import * as pp from "./PhrasePart";
-import * as wb from "./wordbanks";
-
-export interface IPartProps extends pp.IPhraseProps {
-  key: number;
-}
+import {PhrasePartUi, PhrasePartUiProps} from "./PhrasePartUi";
+import {Sentence} from "./logic/Sentence";
 
 export enum PhraseGenState {
   NOT_STARTED,
@@ -15,50 +11,19 @@ export enum PhraseGenState {
 
 interface IProps {
   genState: PhraseGenState;
-  parts: IPartProps[];
+  sentence: Sentence;
+  ppUiProps: PhrasePartUiProps[]; // indexed by `senSetruct.order`
 }
 
 export class Phrase extends Component<IProps> {
   public render() {
-    if (this.props.parts.length === 0) {
-      return this.renderEmpty();
-    }
-
-    return this.renderPhrase();
-  }
-
-  private readonly renderEmpty = () => <div>
-      <p id="stats">Build your next passphrase:</p>
-      <div id="phrase" class="empty">* * *</div>
-    </div>
-
-  private renderPhrase() {
-    const len = this.props.parts.reduce(
-      (acc, pprops) => ({
-        max: acc.max + (pprops.plaintext === undefined
-          ? wb.partTypeProps[pprops.type].maxLength
-          : pprops.plaintext.length),
-        min: acc.min + (pprops.plaintext === undefined
-          ? wb.partTypeProps[pprops.type].minLength
-          : pprops.plaintext.length),
-      }),
-      {max: 0, min: 0});
-    const lengthText = len.min === len.max ? `${len.min}` : `${len.min}-${len.max}`;
-
-    return <div>
-      <p id="stats">
-        {
-          this.props.genState === PhraseGenState.NOT_STARTED
-              ? `This passphrase will be ${lengthText} characters long.`
-              : (this.props.genState === PhraseGenState.ANIMATING
-              ? "Generating your perfect passphrase..."
-              : `Thank you for your patronage. Your new passphrase is ${lengthText} characters long.`)
-        }
-      </p>
-      <div id="phrase">
-        {this.props.parts.map((part) => <span key={part.key}>
-          <pp.PhrasePart {...part}/></span>)}
-      </div>
+    const orderedPhraseParts = this.props.sentence.getOrderedWords();
+    return <div id="phrase">
+      {orderedPhraseParts.map((part, i) =>
+        <span key={this.props.ppUiProps[i].key}>
+          <PhrasePartUi phrasePart={part} ppUiProps={this.props.ppUiProps[i]}/>
+        </span>
+      )}
     </div>;
   }
 }

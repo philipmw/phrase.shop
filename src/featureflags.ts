@@ -3,3 +3,6 @@ export const getUrlSearchParams = (from?: string) =>
 
 export const isAnimationDisabled = (urlSearchParams: URLSearchParams) =>
   urlSearchParams.get("animation") === "n";
+
+// In tests:
+// wrapper.setState({ urlSearchParams: new URLSearchParams("?animation=n")});

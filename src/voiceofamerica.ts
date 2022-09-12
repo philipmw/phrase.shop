@@ -10,6 +10,10 @@ const IS_DETERMINER = 64;
 /**
  * These words are Voice Of America Special English.
  * See the `voa/` subdirectory for a script that generates the word bank.
+ *
+ * Rules of phrase.shop:
+ * 1. nouns must be singular
+ * 2. verbs must be plural ("people JOIN" rather than "person JOINS")
  */
 const VOA_MAP = {
   "a": IS_DETERMINER,
@@ -188,7 +192,7 @@ const VOA_MAP = {
   "bus": IS_NOUN | IS_VERB,
   "business": IS_NOUN,
   "busy": IS_ADJECTIVE | IS_VERB,
-  "but": IS_PREPOSITION | IS_ADVERB | IS_CONJUNCTION,
+  "but": IS_PREPOSITION | IS_CONJUNCTION,
   "buy": IS_VERB,
   "by": IS_PREPOSITION | IS_ADVERB | IS_ADJECTIVE,
   "cabinet": IS_NOUN,

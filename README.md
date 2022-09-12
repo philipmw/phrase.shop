@@ -2,7 +2,7 @@
 
 [**phrase.shop**](https://phrase.shop) is a web app to generate secure yet memorable passphrases.
 
-![](./screenshot-iPhoneX.png)
+![](./screenshot-iPhone11Pro.png)
 
 ## Purpose and inspiration
 
@@ -82,6 +82,44 @@ The workflow I propose:
    I'll review your contribution, and we'll either have a discussion, or I'll accept your change as-is.
 
 5. You'll see your contribution on https://phrase.shop!
+
+### UX flow
+
+```mermaid
+flowchart TB
+    init([App start])
+    generating[/Generating.../]
+    viewResult(View generated passphrase)
+
+    init-->generating
+    generating-- consume entropy -->viewResult
+    viewResult-- change/seed entropy -->viewResult
+    viewResult-- change complexity -->generating
+```
+
+### UI component architecture
+
+```mermaid
+classDiagram
+
+class App {
+  entropyBitsAvailable
+  entropySource
+  phraseParts
+}
+
+class PhrasePartUi {
+  type
+}
+
+class Sentence {
+  phraseParts
+  sequenceList
+  dependencyTree
+}
+
+App o-- PhrasePartUi
+```
 
 ### Running phrase.shop locally
 
