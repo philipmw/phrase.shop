@@ -1528,10 +1528,6 @@ const VOA_MAP = {
   "uterus": IS_NOUN,
 };
 
-export const allWords = () =>
-  Object.entries(VOA_MAP)
-    .map((kv) => kv[0]);
-
 export const nouns = () =>
   Object.entries(VOA_MAP)
     .filter((kv) => kv[1] & IS_NOUN)

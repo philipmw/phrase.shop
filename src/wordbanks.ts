@@ -1,9 +1,8 @@
 import shuffle from "fisher-yates";
 
-import { adjectives, adverbs, allWords, conjunctions, determiners, nouns, prepositions, verbs } from "./voiceofamerica";
+import { adjectives, adverbs, conjunctions, determiners, nouns, prepositions, verbs } from "./voiceofamerica";
 
 export enum PartType {
-  word = "word",
   noun = "noun",
   verb = "verb",
   adjective = "adjective",
@@ -19,7 +18,6 @@ export enum PartType {
 
 // This exists because iterating over an enum appears to be discouraged in TypeScript.
 export const partTypeList: PartType[] = [
-  PartType.word,
   PartType.noun,
   PartType.verb,
   PartType.adjective,
@@ -48,7 +46,6 @@ const takeRandomNBitsShortestItemsOf = (items: string[], bits: number) =>
     .slice(0, Math.pow(BINARY_BASE, bits));
 
 const BINARY_BASE = 2;
-const ENGLISH_ENTROPY_BITS = 10;
 const NOUN_ENTROPY_BITS = 10;
 const VERB_ENTROPY_BITS = 9;
 const ADJECTIVE_ENTROPY_BITS = 8;
@@ -56,7 +53,6 @@ const ADVERB_ENTROPY_BITS = 7;
 const PREPOSITION_ENTROPY_BITS = 5;
 const CONJUNCTION_ENTROPY_BITS = 4;
 const DETERMINER_ENTROPY_BITS = 5;
-const MIN_ALLOWED_ENGLISH_LENGTH = 4;
 
 /**
  * For most of these wordbanks, we want a whole number of entropy bits without permanently
@@ -64,12 +60,6 @@ const MIN_ALLOWED_ENGLISH_LENGTH = 4;
  * to reduce phrase length variance, and take the first 2^N entries.
  */
 export const dictionary: Dict = {
-  [PartType.word]:
-    takeRandomNBitsShortestItemsOf(
-      // eliminate the shortest words to reduce phrase length variance.
-      allWords()
-        .filter((a) => a.length >= MIN_ALLOWED_ENGLISH_LENGTH),
-      ENGLISH_ENTROPY_BITS),
   [PartType.noun]:
     takeRandomNBitsShortestItemsOf(nouns(), NOUN_ENTROPY_BITS),
   [PartType.verb]:
@@ -111,11 +101,6 @@ type Props = {
 };
 
 export const partTypeProps: Props = {
-  [PartType.word]: {
-    entropyReqBits: ENGLISH_ENTROPY_BITS,
-    maxLength: Math.max(...dictionary[PartType.word].map((entry) => entry.length)),
-    minLength: Math.min(...dictionary[PartType.word].map((entry) => entry.length)),
-  },
   [PartType.noun]: {
     entropyReqBits: NOUN_ENTROPY_BITS,
     maxLength: Math.max(...dictionary[PartType.noun].map((entry) => entry.length)),
