@@ -16,10 +16,10 @@
 
 While there are several passphrase generators online, this one has the following strengths:
 
-* You can make the phrase as complex as you like. You are not limited to five rolls of six-sided dice.
+* It aims to make phrases grammatically correct, not just words strung together.
+* You can make the phrase more or less complex. You are not limited to five rolls of six-sided dice.
 * It uses _Voice Of America's_ [*Learning English*](https://en.wikipedia.org/wiki/Learning_English_(version_of_English))
   vocabulary of core English words.
-* It uses multiple word banks, such as colors, US state abbreviations, US airport abbreviations, and musical notes, to help your memory.
 * If you don’t want to use your computer’s random number generator, you can roll physical
   dice and submit the rolls to the app to collect entropy.
   There’s a progress bar showing how much entropy you’ve collected, and you can generate the
@@ -112,9 +112,9 @@ class PhrasePartUi {
   type
 }
 
-class Sentence {
+class PhraseStruct {
   phraseParts
-  sequenceList
+  order
   dependencyTree
 }
 

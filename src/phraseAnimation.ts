@@ -1,5 +1,5 @@
 import * as wb from "./wordbanks";
-import {Sentence} from "./logic/Sentence";
+import {PhraseStruct} from "./logic/phrase";
 import {PhrasePartUiProps} from "./PhrasePartUi";
 
 const BINARY_BASE = 2;
@@ -37,7 +37,7 @@ export const getInsecureRandomBits = (bitsQty: number) => {
 export interface IAnimationState {
   isFinished: boolean;
   lastIdxAnimated: number;
-  sentence: Sentence,
+  phraseStruct: PhraseStruct,
   ppUiProps: PhrasePartUiProps[];
   seqNum: number;
   onFinish(): void;
@@ -48,13 +48,13 @@ export const getCyclesBeforeFinalizing = (phrasePartsQty: number): number =>
     phrasePartsQty * ANIM_CYCLES_PER_WORD;
 
 export const animatePhraseCycle = (animState: IAnimationState): IAnimationState => {
-  const cyclesBeforeFinalizing = getCyclesBeforeFinalizing(animState.sentence.getOrderedWords().length);
+  const cyclesBeforeFinalizing = getCyclesBeforeFinalizing(animState.phraseStruct.order.length);
   const idxToFinalize: number | undefined = (animState.seqNum >= cyclesBeforeFinalizing)
       ? animState.seqNum - cyclesBeforeFinalizing
       : undefined;
   const idxToAnimate = getInsecureRandomIntBetween(
       idxToFinalize !== undefined ? idxToFinalize + 1 : 0,
-      animState.sentence.getOrderedWords().length);
+      animState.phraseStruct.order.length);
 
   const newPpUiProps = animState.ppUiProps.map((part, i) => {
     if (idxToFinalize !== undefined) {
@@ -68,7 +68,7 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
     }
 
     if (i === idxToAnimate) {
-      return animatePhrasePart(animState.ppUiProps[i], animState.sentence.getOrderedWords()[i].getPartType());
+      return animatePhrasePart(animState.ppUiProps[i], animState.phraseStruct.order[i].getPartType());
     }
 
     // else no change
@@ -77,7 +77,7 @@ export const animatePhraseCycle = (animState: IAnimationState): IAnimationState 
 
   animState.onUpdatePhraseParts(newPpUiProps);
 
-  if (idxToFinalize !== undefined && idxToFinalize >= animState.sentence.getOrderedWords().length - 1) {
+  if (idxToFinalize !== undefined && idxToFinalize >= animState.phraseStruct.order.length - 1) {
     animState.onFinish();
 
     return {
@@ -121,10 +121,10 @@ const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: wb.PartType):
   };
 };
 
-const animatePhraseInit = (sentence: Sentence,
+const animatePhraseInit = (phraseStruct: PhraseStruct,
                            phrasePartsUiProps: PhrasePartUiProps[]) => {
   const newPhraseParts = phrasePartsUiProps.map((ppUiProps, idx) =>
-    animatePhrasePart(ppUiProps, sentence.getOrderedWords()[idx].getPartType()));
+    animatePhrasePart(ppUiProps, phraseStruct.order[idx].getPartType()));
 
   // initialize all phrase parts
   return {
@@ -135,15 +135,15 @@ const animatePhraseInit = (sentence: Sentence,
   };
 };
 
-export function animatePhrase(sentence: Sentence,
+export function animatePhrase(phraseStruct: PhraseStruct,
                               ppUiProps: PhrasePartUiProps[],
                               onUpdatePhraseParts: (pps: PhrasePartUiProps[]) => void,
                               onFinish: () => void): void {
   animatePhraseInWindow({
     onFinish,
     onUpdatePhraseParts,
-    sentence,
+    phraseStruct,
     ppUiProps,
-    ...animatePhraseInit(sentence, ppUiProps),
+    ...animatePhraseInit(phraseStruct, ppUiProps),
   });
 }

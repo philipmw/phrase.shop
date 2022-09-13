@@ -1,13 +1,13 @@
 import {PhrasePart} from "./PhrasePart";
-import {Sentence} from "./Sentence";
+import {PhraseStruct} from "./phrase";
 import * as wb from '../wordbanks';
 
-export function makeSentenceSimple(): Sentence {
+export function makePhraseSimple(): PhraseStruct {
   const digit = new PhrasePart(wb.PartType.digit);
   const adj = new PhrasePart(wb.PartType.adjective);
   const noun = new PhrasePart(wb.PartType.noun);
 
-  return new Sentence({
+  return {
     order: [digit, adj, noun],
     depTree: {
       leaves: [
@@ -20,17 +20,17 @@ export function makeSentenceSimple(): Sentence {
         }
       ],
     }
-  });
+  };
 }
 
-export function makeSentenceMedium(): Sentence {
+export function makePhraseMedium(): PhraseStruct {
   const digit = new PhrasePart(wb.PartType.digit);
   const adj = new PhrasePart(wb.PartType.adjective);
   const noun = new PhrasePart(wb.PartType.noun);
   const verb = new PhrasePart(wb.PartType.verb);
   const adverb = new PhrasePart(wb.PartType.adverb);
 
-  return new Sentence({
+  return {
     order: [digit, adj, noun, verb, adverb],
     depTree: {
       leaves: [
@@ -45,10 +45,10 @@ export function makeSentenceMedium(): Sentence {
         },
       ],
     },
-  });
+  };
 }
 
-export function makeSentenceHard(): Sentence {
+export function makePhraseHard(): PhraseStruct {
   const adj1 = new PhrasePart(wb.PartType.adjective);
   const noun1 = new PhrasePart(wb.PartType.noun);
   const verb1 = new PhrasePart(wb.PartType.verb);
@@ -58,7 +58,7 @@ export function makeSentenceHard(): Sentence {
   const noun2 = new PhrasePart(wb.PartType.noun);
   const verb2 = new PhrasePart(wb.PartType.verb);
 
-  return new Sentence({
+  return {
     order: [adj1, noun1, verb1, conj, digit, color, noun2, verb2],
     depTree: {
       leaves: [
@@ -76,6 +76,6 @@ export function makeSentenceHard(): Sentence {
         },
       ],
     },
-  });
+  };
 }
 

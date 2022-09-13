@@ -3,15 +3,15 @@ import Adapter from "enzyme-adapter-preact-pure";
 
 import { Menu } from "./Menu";
 import { PhraseGenState } from "./Phrase";
-import {makeSentenceHard, makeSentenceMedium, makeSentenceSimple} from "./logic/sentenceTemplates";
+import {makePhraseHard, makePhraseMedium, makePhraseSimple} from "./logic/phraseTemplates";
 
 configure({ adapter: new Adapter() });
 
 describe("Menu", () => {
-  let setSentenceFn;
+  let setPhraseStructFn;
 
   beforeEach(() => {
-    setSentenceFn = jest.fn();
+    setPhraseStructFn = jest.fn();
   });
 
   describe("initial state", () => {
@@ -19,7 +19,7 @@ describe("Menu", () => {
 
     beforeEach(() => {
       wrapper = shallow(<Menu
-          setSentence={setSentenceFn}
+          setPhraseStruct={setPhraseStructFn}
           entropyBitsAvailable={0}
           entropyBitsNeeded={0}
           phraseGenState={PhraseGenState.NOT_STARTED}
@@ -44,10 +44,10 @@ describe("Menu", () => {
         expect(buttonWrapper)
             .toHaveLength(1);
         buttonWrapper.simulate("click");
-        expect(setSentenceFn)
+        expect(setPhraseStructFn)
             .toHaveBeenCalled();
-        expect(setSentenceFn.mock.calls[0][0])
-            .toEqual(makeSentenceSimple());
+        expect(setPhraseStructFn.mock.calls[0][0])
+            .toEqual(makePhraseSimple());
       });
     });
 
@@ -57,10 +57,10 @@ describe("Menu", () => {
         expect(buttonWrapper)
             .toHaveLength(1);
         buttonWrapper.simulate("click");
-        expect(setSentenceFn)
+        expect(setPhraseStructFn)
             .toHaveBeenCalled();
-        expect(setSentenceFn.mock.calls[0][0])
-            .toEqual(makeSentenceMedium());
+        expect(setPhraseStructFn.mock.calls[0][0])
+            .toEqual(makePhraseMedium());
       });
     });
 
@@ -70,17 +70,17 @@ describe("Menu", () => {
         expect(buttonWrapper)
             .toHaveLength(1);
         buttonWrapper.simulate("click");
-        expect(setSentenceFn)
+        expect(setPhraseStructFn)
             .toHaveBeenCalled();
-        expect(setSentenceFn.mock.calls[0][0])
-            .toEqual(makeSentenceHard());
+        expect(setPhraseStructFn.mock.calls[0][0])
+            .toEqual(makePhraseHard());
       });
     });
   });
 
   describe("when phrase is animating", () => {
     const wrapper = shallow(<Menu
-        setSentence={setSentenceFn}
+        setPhraseStruct={setPhraseStructFn}
         entropyBitsAvailable={0}
         entropyBitsNeeded={0}
         phraseGenState={PhraseGenState.ANIMATING}
@@ -104,7 +104,7 @@ describe("Menu", () => {
 
     beforeEach(() => {
       wrapper = shallow(<Menu
-          setSentence={setSentenceFn}
+          setPhraseStruct={setPhraseStructFn}
           entropyBitsAvailable={0}
           entropyBitsNeeded={0}
           phraseGenState={PhraseGenState.GENERATED}

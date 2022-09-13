@@ -715,7 +715,7 @@ BRF:1
 BRH:0
 end_of_record
 TN:
-SF:src/logic/Sentence.ts
+SF:src/logic/phrase.ts
 FN:17,(anonymous_0)
 FN:21,(anonymous_1)
 FN:22,(anonymous_2)
@@ -909,7 +909,7 @@ BRF:19
 BRH:17
 end_of_record
 TN:
-SF:src/test/testSentenceTemplates.ts
+SF:src/test/testPhraseTemplates.ts
 FN:5,makeTestSentenceOfOneNoun
 FNF:1
 FNH:1

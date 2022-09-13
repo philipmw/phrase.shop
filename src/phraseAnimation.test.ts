@@ -1,11 +1,11 @@
 import {PhrasePartUiProps} from "./PhrasePartUi";
 import {animatePhraseCycle, getCyclesBeforeFinalizing} from "./phraseAnimation";
-import {makeSentenceSimple} from "./logic/sentenceTemplates";
+import {makePhraseSimple} from "./logic/phraseTemplates";
 import {makePhrasePartUiProps} from "./ui/phrasePartUiProps";
 
 describe("phraseAnimation", () => {
   describe(".animatePhraseCycle", () => {
-    const sentence = makeSentenceSimple();
+    const phraseStruct = makePhraseSimple();
 
     describe("while we are animating", () => {
       const ANIM_STATE = {
@@ -14,8 +14,8 @@ describe("phraseAnimation", () => {
         onFinish: () => {
           // Nothing to check
         },
-        ppUiProps: makePhrasePartUiProps(sentence),
-        sentence,
+        ppUiProps: makePhrasePartUiProps(phraseStruct),
+        phraseStruct,
         seqNum: 0,
       };
 
@@ -24,7 +24,7 @@ describe("phraseAnimation", () => {
 
         const onUpdatePhraseParts = (newParts: PhrasePartUiProps[]) => {
           expect(newParts)
-              .toHaveLength(sentence.getOrderedWords().length);
+              .toHaveLength(phraseStruct.order.length);
           const partsWithAnimationDefined = newParts.filter(np => np.animation);
           expect(partsWithAnimationDefined).toHaveLength(1);
           expect(partsWithAnimationDefined[0].animation?.plaintext)
@@ -61,7 +61,7 @@ describe("phraseAnimation", () => {
     });
 
     describe("once counter reaches a threshold", () => {
-      const SEQ_NUM = getCyclesBeforeFinalizing(sentence.getOrderedWords().length);
+      const SEQ_NUM = getCyclesBeforeFinalizing(phraseStruct.order.length);
       const ANIM_STATE = {
         isFinished: false,
         lastIdxAnimated: 0,
@@ -71,7 +71,7 @@ describe("phraseAnimation", () => {
           { key: 1, animation: { tempDisambig: 0, plaintext: "anim-2" } },
           { key: 2, animation: { tempDisambig: 0, plaintext: "anim-3" } },
         ],
-        sentence,
+        phraseStruct,
         seqNum: SEQ_NUM,
       };
 
@@ -80,7 +80,7 @@ describe("phraseAnimation", () => {
 
         const onUpdatePhraseParts = (newParts: PhrasePartUiProps[]) => {
           expect(newParts)
-              .toHaveLength(sentence.getOrderedWords().length);
+              .toHaveLength(phraseStruct.order.length);
           expect(newParts[0].animation)
               .toBeUndefined();
           expect(newParts[1].animation)
@@ -128,10 +128,10 @@ describe("phraseAnimation", () => {
       const ANIM_STATE = {
         isFinished: false,
         lastIdxAnimated: 0,
-        ppUiProps: makePhrasePartUiProps(sentence),
-        sentence,
-        seqNum: getCyclesBeforeFinalizing(sentence.getOrderedWords().length) // to start finalizing
-          + sentence.getOrderedWords().length - 1, // enough to have finalized each word
+        ppUiProps: makePhrasePartUiProps(phraseStruct),
+        phraseStruct,
+        seqNum: getCyclesBeforeFinalizing(phraseStruct.order.length) // to start finalizing
+          + phraseStruct.order.length - 1, // enough to have finalized each word
       };
 
       it("calls back with finish status", () => {

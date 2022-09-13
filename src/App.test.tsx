@@ -4,7 +4,7 @@ import Adapter from "enzyme-adapter-preact-pure";
 import { App } from "./App";
 import { IEntropySource } from "./IEntropySource";
 import { PhraseGenState } from "./Phrase";
-import {makeSentenceHard} from "./logic/sentenceTemplates";
+import {makePhraseHard} from "./logic/phraseTemplates";
 
 configure({ adapter: new Adapter() });
 
@@ -27,7 +27,7 @@ describe("App", () => {
       .toHaveLength(3);
 
     wrapper.instance()
-      .setSentence(makeSentenceHard());
+      .setPhraseStruct(makePhraseHard());
 
     expect(wrapper.state("phrasePartsUiProps"))
       .toHaveLength(8);

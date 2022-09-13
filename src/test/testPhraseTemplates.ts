@@ -1,10 +1,10 @@
 import * as wb from '../wordbanks';
 import {PhrasePart} from "../logic/PhrasePart";
-import {Sentence} from "../logic/Sentence";
+import {PhraseStruct} from "../logic/phrase";
 
-export function makeTestSentenceOfOneNoun(noun: string) {
+export function makeTestPhraseOfOneNoun(noun: string): PhraseStruct {
   const testNoun = new PhrasePart(wb.PartType.noun, noun);
-  return new Sentence({
+  return {
     order: [testNoun],
     depTree: {
       leaves: [
@@ -14,5 +14,5 @@ export function makeTestSentenceOfOneNoun(noun: string) {
         },
       ],
     },
-  });
+  };
 }
