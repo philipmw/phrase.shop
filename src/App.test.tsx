@@ -4,7 +4,7 @@ import Adapter from "enzyme-adapter-preact-pure";
 import { App } from "./App";
 import { IEntropySource } from "./IEntropySource";
 import { PhraseGenState } from "./Phrase";
-import {makePhraseHard} from "./logic/phraseTemplates";
+import {makePhraseHard, makePhraseMedium} from "./logic/phraseTemplates";
 
 configure({ adapter: new Adapter() });
 
@@ -14,23 +14,29 @@ describe("App", () => {
   beforeEach(() => {
     mockEntropySource = {
       bitsAvailable: jest.fn()
-        .mockImplementation(() => (-1)),
+        .mockImplementation(() => (40)), // enough for medium but not enough for hard
       getBits: jest.fn()
         .mockImplementation(() => (0)),
     };
   });
 
-  it("allows changing phrase template", () => {
+  it("allows changing phrase template, as long as we have enough entropy", () => {
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
 
     expect(wrapper.state("phrasePartsUiProps"))
       .toHaveLength(3);
 
     wrapper.instance()
-      .setPhraseStruct(makePhraseHard());
+      .setPhraseStruct(makePhraseMedium());
 
     expect(wrapper.state("phrasePartsUiProps"))
-      .toHaveLength(8);
+      .toHaveLength(5);
+
+    expect(() => wrapper.instance().setPhraseStruct(makePhraseHard()))
+      .toThrow("New phrase needs more entropy than we have available");
+
+    expect(wrapper.state("phrasePartsUiProps"))
+      .toHaveLength(5); // unchanged from medium
   });
 
   it("starts animating passphrase", () => {

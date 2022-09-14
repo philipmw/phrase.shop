@@ -8,8 +8,7 @@ import { Menu } from "./Menu";
 import { Phrase, PhraseGenState } from "./Phrase";
 import { PhrasePartUiProps } from "./PhrasePartUi";
 import { animatePhrase } from "./phraseAnimation";
-import * as wb from "./wordbanks";
-import {generatePhrasePlain, PhraseStruct} from "./logic/phrase";
+import {entropyNeededForPhrase, generatePhrasePlain, PhraseStruct} from "./logic/phrase";
 import {makePhraseSimple} from "./logic/phraseTemplates";
 import {mutatePhrasePartWithPlainValue} from "./logic/wordGenerator";
 import {makePhrasePartUiProps} from "./ui/phrasePartUiProps";
@@ -46,19 +45,14 @@ export class App extends Component<IProps, IState> {
   }
 
   public render() {
-    const bitsOfEntropy = this.state.phraseStruct.order.reduce(
-      (acc, word) => (acc + wb.partTypeProps[word.getPartType()].entropyReqBits), 0);
-
     return <div>
       <Phrase genState={this.state.phraseGenState}
               phraseStruct={this.state.phraseStruct}
               ppUiProps={this.state.phrasePartsUiProps}/>
       <Menu setPhraseStruct={this.setPhraseStruct}
             entropyBitsAvailable={this.state.entropySource.bitsAvailable()}
-            entropyBitsNeeded={bitsOfEntropy}
             phraseGenState={this.state.phraseGenState}/>
       <Entropy bitsAvailable={this.state.entropySource.bitsAvailable()}
-               bitsNeeded={bitsOfEntropy}
                phraseGenState={this.state.phraseGenState}
                onEntropyChange={this.onEntropyChange}
                setEntropySource={this.setEntropySource}
@@ -115,6 +109,12 @@ export class App extends Component<IProps, IState> {
   }
 
   private readonly setPhraseStruct = (phraseStruct: PhraseStruct) => {
+    // Verify that we have the entropy. The caller should have verified this already,
+    // so if this is false, throw an exception.
+    if (this.state.entropyBitsAvailable < entropyNeededForPhrase(phraseStruct)) {
+      throw new Error("New phrase needs more entropy than we have available");
+    }
+
     const newPpUiProps = makePhrasePartUiProps(phraseStruct);
     this.setState(() => ({
       phraseGenState: PhraseGenState.NOT_STARTED,

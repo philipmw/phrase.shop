@@ -8,7 +8,6 @@ import { PhraseGenState } from "./Phrase";
 
 interface IProps {
   bitsAvailable: number;
-  bitsNeeded: number;
   phraseGenState: PhraseGenState;
   source: IEntropySource;
   onEntropyChange(): void;
@@ -28,21 +27,8 @@ export class Entropy extends Component<IProps, IState> {
   }
 
   public render() {
-    if (this.props.bitsNeeded === 0) {
-      return <div></div>;
-    }
-
-    const charge = <span id="charge">
-      { this.props.phraseGenState === PhraseGenState.NOT_STARTED
-          ? `Generating this passphrase will cost ${this.props.bitsNeeded} bits of entropy.`
-          : (this.props.phraseGenState === PhraseGenState.GENERATED
-              ? `Regenerating this passphrase will cost ${this.props.bitsNeeded} bits of entropy.`
-              : `Consuming ${this.props.bitsNeeded} bits of entropy to generate your passphrase...`)
-      }
-    </span>;
-
     return <div id="entropy">
-      {charge}
+      Select the source of entropy for your next phrase. Longer phrases need more entropy.
       <ul>
         <li>
           <label>
@@ -54,7 +40,7 @@ export class Entropy extends Component<IProps, IState> {
                    }}
                    checked={this.props.source instanceof ComputerEntropySource}
                    disabled={this.props.phraseGenState === PhraseGenState.ANIMATING}
-                   value="computer"/> 🖥 my computer will make randomness
+                   value="computer"/> 🖥 use my computer's random number generator
           </label>
         </li>
         <li>
@@ -76,7 +62,6 @@ export class Entropy extends Component<IProps, IState> {
         this.props.source instanceof DiceEntropySource
             && this.props.phraseGenState !== PhraseGenState.ANIMATING
         ? <Dice bitsAvailable={this.props.bitsAvailable}
-                bitsNeeded={this.props.bitsNeeded}
                 diceSides={this.state.diceSides}
                 onDiceSidesChange={this.onDiceSidesChange}
                 onEntropyChange={() => {

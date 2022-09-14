@@ -14,14 +14,13 @@ describe("Menu", () => {
     setPhraseStructFn = jest.fn();
   });
 
-  describe("initial state", () => {
+  describe("initial state with lots of entropy", () => {
     let wrapper;
 
     beforeEach(() => {
       wrapper = shallow(<Menu
           setPhraseStruct={setPhraseStructFn}
-          entropyBitsAvailable={0}
-          entropyBitsNeeded={0}
+          entropyBitsAvailable={100}
           phraseGenState={PhraseGenState.NOT_STARTED}
       />);
     });
@@ -81,8 +80,7 @@ describe("Menu", () => {
   describe("when phrase is animating", () => {
     const wrapper = shallow(<Menu
         setPhraseStruct={setPhraseStructFn}
-        entropyBitsAvailable={0}
-        entropyBitsNeeded={0}
+        entropyBitsAvailable={100}
         phraseGenState={PhraseGenState.ANIMATING}
     />);
 
@@ -99,14 +97,13 @@ describe("Menu", () => {
     });
   });
 
-  describe("when phrase is generated", () => {
+  describe("when phrase is generated and we still have a lot of entropy", () => {
     let wrapper;
 
     beforeEach(() => {
       wrapper = shallow(<Menu
           setPhraseStruct={setPhraseStructFn}
-          entropyBitsAvailable={0}
-          entropyBitsNeeded={0}
+          entropyBitsAvailable={1000}
           phraseGenState={PhraseGenState.GENERATED}
       />);
     });
@@ -121,6 +118,30 @@ describe("Menu", () => {
           .attr("disabled"))
           .toBeFalsy();
       });
+    });
+  });
+
+  describe("when phrase is generated and we have just a little entropy", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      wrapper = shallow(<Menu
+        setPhraseStruct={setPhraseStructFn}
+        entropyBitsAvailable={30}
+        phraseGenState={PhraseGenState.GENERATED}
+      />);
+    });
+
+    it("has the first of three phrase templates enabled", () => {
+      const buttons = wrapper.find("button.template");
+      expect(buttons)
+        .toHaveLength(3);
+      // simple phrase template
+      expect(buttons.at(0).render().attr("disabled")).toBeFalsy();
+      // medium phrase template
+      expect(buttons.at(1).render().attr("disabled")).toBeTruthy();
+      // hard phrase template
+      expect(buttons.at(2).render().attr("disabled")).toBeTruthy();
     });
   });
 });

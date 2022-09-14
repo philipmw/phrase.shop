@@ -1,10 +1,11 @@
 import { Component } from "preact";
 
 import { DiceEntropySource } from "./DiceEntropySource";
+import {entropyNeededForPhrase} from "./logic/phrase";
+import {makePhraseHard, makePhraseSimple} from "./logic/phraseTemplates";
 
 interface IProps {
   bitsAvailable: number;
-  bitsNeeded: number;
   diceSides: number;
   source: DiceEntropySource;
   onDiceSidesChange(newSides: number): void;
@@ -24,10 +25,10 @@ export class Dice extends Component<IProps> {
 
     return <div id="dice-interaction">
       <p>
-        Entropy collected: { this.props.bitsAvailable } out of { this.props.bitsNeeded } bits
+        Entropy collected from your dice: { this.props.bitsAvailable } bits.
+        The shortest phrase needs { entropyNeededForPhrase(makePhraseSimple()) } bits,
+        while the longest needs { entropyNeededForPhrase(makePhraseHard()) } bits.
       </p>
-      <progress id="entropyBits" max={this.props.bitsNeeded} value={this.props.bitsAvailable.toFixed(2)}/>
-
       <div id="dice-sides">
         <p>
           How many sides do your dice have?&nbsp;
@@ -64,7 +65,7 @@ export class Dice extends Component<IProps> {
       <p>
         Roll your physical dice, then record the outcomes here.
         Not all your rolls may add entropy.
-        Keep rolling until you collect enough entropy for your phrase.</p>
+        Keep rolling until you collect enough entropy for your next phrase.</p>
 
       <div id="dice-roll-values">
         { a.map((i: number) =>

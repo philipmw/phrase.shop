@@ -1,6 +1,7 @@
 import {PartType} from '../wordbanks';
-import {generatePhrasePlain, PhraseStruct} from "./phrase";
+import {entropyNeededForPhrase, generatePhrasePlain, PhraseStruct} from "./phrase";
 import {PhrasePart} from "./PhrasePart";
+import {makePhraseSimple} from "./phraseTemplates";
 
 describe("phrase", () => {
   const testMutator = (word: PhrasePart, depWord?: PhrasePart) => {
@@ -35,4 +36,10 @@ describe("phrase", () => {
       expect(phrStruct.order[1].getPlaintext()).toBe("plain noun (dep: digit)");
     });
   })
+
+  describe("entropyNeededForPhrase()", () => {
+    it("returns expected value", () => {
+      expect(entropyNeededForPhrase(makePhraseSimple())).toBe(21);
+    });
+  });
 });

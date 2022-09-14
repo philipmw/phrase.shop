@@ -18,70 +18,41 @@ describe("Entropy", () => {
     getBits: () => { throw new Error("unsupported"); },
   };
 
-  describe("when no phrase parts", () => {
-    const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={0}
-                                     onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.NOT_STARTED}
-                                     setEntropySource={emptySetEntropySourceFn}
-                                     source={testSource}/>);
-
-    it("does not render anything", () => {
-      expect(wrapper.render()
-        .text())
-        .toEqual("");
-    });
-  });
-
-  describe("when phrase parts exist but phrase is not generated", () => {
-    const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={10}
-                                     onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.NOT_STARTED}
-                                     setEntropySource={emptySetEntropySourceFn}
-                                     source={testSource}/>);
-
-    it("says how much generating will cost", () => {
-      expect(wrapper.render()
-        .text())
-        .toMatch(/Generating this passphrase will cost 10 bits of entropy./);
-    });
-  });
-
   describe("when phrase is being generated", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseGenState={PhraseGenState.ANIMATING}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
-    it("indicates progress", () => {
-      expect(wrapper.render()
-          .text())
-          .toMatch(/Consuming 10 bits of entropy to generate your passphrase/);
+    it("disables selection of entropy source", () => {
+      const inputWrappers = wrapper.find("input");
+      expect(inputWrappers).toHaveLength(2);
+      inputWrappers.forEach(input =>
+        expect(input.render().attr("disabled")).toBeTruthy()
+      );
     });
   });
 
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseGenState={PhraseGenState.GENERATED}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
-    it("says how much regenerating will cost", () => {
-      expect(wrapper.render()
-        .text())
-        .toMatch(/Regenerating this passphrase will cost 10 bits of entropy./);
+    it("enables selection of entropy source", () => {
+      const inputWrappers = wrapper.find("input");
+      expect(inputWrappers).toHaveLength(2);
+      inputWrappers.forEach(input =>
+        expect(input.render().attr("disabled")).toBeFalsy()
+      );
     });
   });
 
   describe("when entropy source is Computer", () => {
     const setEntropySourceFn = jest.fn();
     const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={setEntropySourceFn}
@@ -109,7 +80,6 @@ describe("Entropy", () => {
   describe("when entropy source is Dice", () => {
     const setEntropySourceFn = jest.fn();
     const wrapper = shallow(<Entropy bitsAvailable={0}
-                                     bitsNeeded={10}
                                      onEntropyChange={emptyOnEntropyChangeFn}
                                      phraseGenState={PhraseGenState.NOT_STARTED}
                                      setEntropySource={setEntropySourceFn}

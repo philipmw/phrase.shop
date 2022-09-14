@@ -14,14 +14,13 @@ describe("Dice", () => {
     source.submitRoll(5, 8); // For a scoach of entropy
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={6}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
                                   source={source}/>);
 
     expect(wrapper.text())
-      .toMatch(/Entropy collected: 3 out of 5 bits/);
+      .toMatch(/Entropy collected from your dice: 3 bits/);
   });
 
   it("renders as many roll buttons as there are sides", () => {
@@ -30,7 +29,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={8}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
@@ -46,7 +44,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={8}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
@@ -64,7 +61,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={6}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
@@ -84,7 +80,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = mount(<Dice bitsAvailable={source.bitsAvailable()}
-                                bitsNeeded={5}
                                 diceSides={6}
                                 onDiceSidesChange={onDiceSidesChangeFn}
                                 onEntropyChange={onEntropyChangeFn}
@@ -103,7 +98,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = mount(<Dice bitsAvailable={source.bitsAvailable()}
-                                bitsNeeded={5}
                                 diceSides={6}
                                 onDiceSidesChange={onDiceSidesChangeFn}
                                 onEntropyChange={onEntropyChangeFn}
@@ -123,7 +117,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={6}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
@@ -141,7 +134,6 @@ describe("Dice", () => {
     const source = new DiceEntropySource();
 
     const wrapper = shallow(<Dice bitsAvailable={source.bitsAvailable()}
-                                  bitsNeeded={5}
                                   diceSides={6}
                                   onDiceSidesChange={onDiceSidesChangeFn}
                                   onEntropyChange={onEntropyChangeFn}
