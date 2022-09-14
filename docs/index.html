@@ -104,9 +104,6 @@
         .menu-item .detail p {
             margin: 0;
         }
-        progress {
-            width: 100%;
-        }
         .part {
             display: inline-block;
             padding: 0 0.1em;
@@ -162,24 +159,12 @@
 
             font-family: monospace;
         }
-        .part.unset { font-style: italic; font-weight: lighter; }
-        .part.type-english { }
-        .part.type-usstate { color: red; }
-        .part.type-color { color: #8080ff; }
+
+        .part.unset { font-style: italic; font-weight: lighter; } /* customer should never see this one anyway */
+
+        .part.type-color { color: #303080; }
         .part.type-digit { color: green; }
         .part.type-symbol { color: #803030; }
-        .part.type-musicalnote { background-color: lightyellow; color: black; }
-
-        /* start accordion: https://codeconvey.com/html-expand-collapse-text-without-javascript/ */
-        .accordion .accordion-content {
-            height: 0;
-            overflow: hidden;
-        }
-        .accordion > input[name="collapse"]:checked ~ .accordion-content {
-            margin-top: 1em;
-            height: auto;
-        }
-        /* end accordion */
 
         @media (prefers-color-scheme: dark) {
             a {
