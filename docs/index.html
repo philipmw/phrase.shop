@@ -162,7 +162,11 @@
 
         .part.unset { font-style: italic; font-weight: lighter; } /* customer should never see this one anyway */
 
+        .part.type-verb { color: #603030; }
+        .part.type-adjective { color: #307080; }
+        .part.type-adverb { color: #d080d0; }
         .part.type-color { color: #303080; }
+        .part.type-conjunction { color: #ff0000; } /* deep red to separate sub-phrases */
         .part.type-digit { color: green; }
         .part.type-symbol { color: #803030; }
 
@@ -216,6 +220,12 @@
                 /* copy of animation's `to` */
                 color: #202020; /* slightly lighter than approot background color */
             }
+
+            .part.type-verb { color: #ffb0b0; }
+            .part.type-adjective { color: #80d0ff; }
+            .part.type-adverb { color: #d080ff; }
+            .part.type-color { color: #d0d0ff; }
+            .part.type-conjunction { color: #ff0000; } /* deep red to separate sub-phrases */
             .part.type-symbol { color: darkgrey; }
         }
     </style>
