@@ -1,9 +1,24 @@
 import {PhrasePartUiProps} from "./PhrasePartUi";
-import {animatePhraseCycle, getCyclesBeforeFinalizing} from "./phraseAnimation";
+import {animatePhraseCycle, animatePhraseInit, getCyclesBeforeFinalizing} from "./phraseAnimation";
 import {makePhraseSimple} from "./logic/phraseTemplates";
 import {makePhrasePartUiProps} from "./ui/phrasePartUiProps";
 
 describe("phraseAnimation", () => {
+  describe(".animatePhraseInit", () => {
+    const phraseStruct = makePhraseSimple();
+    const ppUiProps = makePhrasePartUiProps(phraseStruct);
+
+    it("creates animation words for each phrase part", () => {
+      const result = animatePhraseInit(phraseStruct, ppUiProps);
+
+      expect(result.ppUiProps).toHaveLength(ppUiProps.length);
+
+      result.ppUiProps.forEach(pp => {
+        expect(pp.animation?.plaintext).toBeDefined();
+      });
+    });
+  });
+
   describe(".animatePhraseCycle", () => {
     const phraseStruct = makePhraseSimple();
 

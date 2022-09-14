@@ -121,19 +121,19 @@ const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: wb.PartType):
   };
 };
 
-const animatePhraseInit = (phraseStruct: PhraseStruct,
-                           phrasePartsUiProps: PhrasePartUiProps[]) => {
-  const newPhraseParts = phrasePartsUiProps.map((ppUiProps, idx) =>
+export function animatePhraseInit(phraseStruct: PhraseStruct,
+                                  phrasePartsUiProps: PhrasePartUiProps[]) {
+  const newPpUiProps = phrasePartsUiProps.map((ppUiProps, idx) =>
     animatePhrasePart(ppUiProps, phraseStruct.order[idx].getPartType()));
 
-  // initialize all phrase parts
+  // initialize all phrase part UI props
   return {
     isFinished: false,
     lastIdxAnimated: -1,
-    phraseParts: newPhraseParts,
+    ppUiProps: newPpUiProps,
     seqNum: 0,
   };
-};
+}
 
 export function animatePhrase(phraseStruct: PhraseStruct,
                               ppUiProps: PhrasePartUiProps[],
@@ -143,7 +143,6 @@ export function animatePhrase(phraseStruct: PhraseStruct,
     onFinish,
     onUpdatePhraseParts,
     phraseStruct,
-    ppUiProps,
     ...animatePhraseInit(phraseStruct, ppUiProps),
   });
 }
