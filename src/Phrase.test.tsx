@@ -25,6 +25,9 @@ describe("Phrase", () => {
       {
         key: 3,
       },
+      {
+        key: 4,
+      },
     ];
 
     const wrapper = shallow(
@@ -50,7 +53,7 @@ describe("Phrase", () => {
           .at(1)
           .render()
           .text())
-          .toEqual("{adjective}");
+          .toEqual("{digit}");
     });
   });
 

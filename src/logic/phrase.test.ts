@@ -39,7 +39,7 @@ describe("phrase", () => {
 
   describe("entropyNeededForPhrase()", () => {
     it("returns expected value", () => {
-      expect(entropyNeededForPhrase(makePhraseSimple())).toBe(21);
+      expect(entropyNeededForPhrase(makePhraseSimple())).toBe(25);
     });
   });
 });

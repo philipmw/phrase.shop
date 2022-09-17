@@ -14,7 +14,7 @@ describe("App", () => {
   beforeEach(() => {
     mockEntropySource = {
       bitsAvailable: jest.fn()
-        .mockImplementation(() => (40)), // enough for medium but not enough for hard
+        .mockImplementation(() => (41)), // enough for medium but not enough for hard
       getBits: jest.fn()
         .mockImplementation(() => (0)),
     };
@@ -24,19 +24,19 @@ describe("App", () => {
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
 
     expect(wrapper.state("phrasePartsUiProps"))
-      .toHaveLength(3);
+      .toHaveLength(4); // starting with easy
 
     wrapper.instance()
       .setPhraseStruct(makePhraseMedium());
 
     expect(wrapper.state("phrasePartsUiProps"))
-      .toHaveLength(5);
+      .toHaveLength(6); // now medium
 
     expect(() => wrapper.instance().setPhraseStruct(makePhraseHard()))
       .toThrow("New phrase needs more entropy than we have available");
 
     expect(wrapper.state("phrasePartsUiProps"))
-      .toHaveLength(5); // unchanged from medium
+      .toHaveLength(6); // unchanged from medium
   });
 
   it("starts animating passphrase", () => {
