@@ -10,11 +10,12 @@
     <link rel="apple-touch-icon" sizes="152x152" href="favicon-152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
     <style>
-        /* hide the page title on small screens */
-        @media only screen and (max-height: 47em) {
-            h1 {
-                display: none;
-            }
+        /* the only link is the "hosted on GitHub" at the bottom */
+        a {
+            color: #909090; /* same as #about text */
+        }
+        a:visited {
+            color: #909090; /* same as #about text */
         }
         body {
             background-color: #e0e0e0;
@@ -48,6 +49,10 @@
         button .callToAction {
             font-weight: bold;
         }
+        div#about {
+            color: #909090;
+            font-size: 10pt;
+        }
         div#app-root {
             background-color: #c0c0c0;
             padding: 1em;
@@ -71,11 +76,18 @@
             margin-top: 1em;
         }
         div#phrase {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
             font-size: 2em;
             padding: 0.5em;
             border: 1px solid black;
             border-radius: 5px;
-            min-height: 1em;
+            height: 5em; /* hardcoded best estimate to prevent bottom elements from jerking during animation */
+        }
+        div#phrase-inner {
+            width: 100%;
+            text-align: center;
         }
         div#phrase.empty {
             color: #f0f0f0;
@@ -171,12 +183,6 @@
         .part.type-symbol { color: #803030; }
 
         @media (prefers-color-scheme: dark) {
-            a {
-                color: lightyellow;
-            }
-            a:visited {
-                color: #e0e0e0;
-            }
             body {
                 background-color: #303030;
                 color: #e0e0e0;
@@ -228,6 +234,22 @@
             .part.type-conjunction { color: #ff0000; } /* deep red to separate sub-phrases */
             .part.type-symbol { color: darkgrey; }
         }
+
+        /* hide the page title on short screens */
+        @media only screen and (max-height: 47em) {
+            h1 {
+                display: none;
+            }
+        }
+
+        /* maximize space for phrase on narrow screens */
+        @media only screen and (max-width: 50em) {
+            div#phrase {
+                padding-left: 0.1em;
+                padding-right: 0.1em;
+            }
+        }
+
     </style>
 </head>
 <body>
