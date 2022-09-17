@@ -85,6 +85,7 @@ describe("phraseAnimation", () => {
           { key: 0, animation: { tempDisambig: 0, plaintext: "anim-1" } },
           { key: 1, animation: { tempDisambig: 0, plaintext: "anim-2" } },
           { key: 2, animation: { tempDisambig: 0, plaintext: "anim-3" } },
+          { key: 3, animation: { tempDisambig: 0, plaintext: "anim-4" } },
         ],
         phraseStruct,
         seqNum: SEQ_NUM,
