@@ -9,7 +9,7 @@ configure({ adapter: new Adapter() });
 
 describe("PhrasePartUi", () => {
   describe("when no plaintext", () => {
-    const phrasePart = new PhrasePart(PartType.noun);
+    const phrasePart = new PhrasePart(PartType.notcountNoun);
     const ppUiProps = { key: 0 };
 
     const wrapper = shallow(
@@ -17,7 +17,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-noun.unset"))
+      expect(wrapper.find("span.part.type-notcountNoun.unset"))
         .toHaveLength(1);
     });
 
@@ -25,12 +25,12 @@ describe("PhrasePartUi", () => {
       expect(wrapper
         .render()
         .text())
-        .toEqual("{noun}");
+        .toEqual("{notcountNoun}");
     });
   });
 
   describe("when animating", () => {
-    const phrasePart = new PhrasePart(PartType.noun, "finalword");
+    const phrasePart = new PhrasePart(PartType.notcountNoun, "finalword");
     const ppUiProps = { key: 0, animation: {plaintext: "tempword", tempDisambig: 0} };
 
     const wrapper = shallow(
@@ -38,7 +38,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-noun.temp.disambig0"))
+      expect(wrapper.find("span.part.type-notcountNoun.temp.disambig0"))
           .toHaveLength(1);
     });
 
@@ -56,7 +56,7 @@ describe("PhrasePartUi", () => {
   });
 
   describe("when final plaintext is available", () => {
-    const phrasePart = new PhrasePart(PartType.noun, "finalword");
+    const phrasePart = new PhrasePart(PartType.notcountNoun, "finalword");
     const ppUiProps = { key: 0 };
 
     const wrapper = shallow(
@@ -64,7 +64,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-noun.plain"))
+      expect(wrapper.find("span.part.type-notcountNoun.plain"))
         .toHaveLength(1);
     });
 

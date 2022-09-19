@@ -115,7 +115,7 @@ const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: wb.PartType):
   return {
     ...ppUiProps,
     animation: {
-      plaintext: wb.dictionary[partType][randomIdx],
+      plaintext: wb.indepDict[partType][randomIdx],
       tempDisambig: ppUiProps.animation !== undefined ? (ppUiProps.animation.tempDisambig + 1) % DISAMBIG_MODULO : 0,
     },
   };

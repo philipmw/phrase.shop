@@ -1,17 +1,25 @@
 import {PhrasePart, PhrasePartPlainValue} from "./PhrasePart";
 import * as wb from "../wordbanks";
 import {IEntropySource} from "../IEntropySource";
+import {getCountNoun} from "../wordbanks";
 
 function generateIndependentPlainValue(
   entropySource: IEntropySource,
   partType: wb.PartType
 ): PhrasePartPlainValue {
+  if (partType === wb.PartType.countNoun) {
+    // Internal error indicating we called this function in the wrong context.
+    // Customer should never see this error.
+    // This phrase type requires metadata, so we cannot generate it independently.
+    throw new Error("Not supported");
+  }
+
   const randomIdx = entropySource.getBits(wb.partTypeProps[partType].entropyReqBits);
 
   if (partType === wb.PartType.digit) {
     return randomIdx + 1;
   } else {
-    return wb.dictionary[partType][randomIdx];
+    return wb.indepDict[partType][randomIdx];
   }
 }
 
@@ -20,57 +28,15 @@ function generatePhrasePartQuantity(
   partType: wb.PartType,
   qty: number
 ): PhrasePartPlainValue {
-  if (partType === wb.PartType.noun) {
-    return generateNounQuantity(entropySource, qty);
+  if (partType === wb.PartType.countNoun) {
+    const randomIdx = entropySource.getBits(wb.partTypeProps[partType].entropyReqBits);
+    return getCountNoun(randomIdx, qty);
   }
   if (partType === wb.PartType.verb) {
     return generateVerbQuantity(entropySource, qty);
   }
 
   return generateIndependentPlainValue(entropySource, partType);
-}
-
-function generateNounQuantity(entropySource: IEntropySource, qty: number): PhrasePartPlainValue {
-  const singularNoun = generateIndependentPlainValue(entropySource, wb.PartType.noun) as string;
-
-  if (qty === 1) {
-    return singularNoun;
-  }
-
-  return pluralizeNoun(singularNoun);
-}
-
-const SIBILANTS = ["s", "se", "sh", "ge", "ch"];
-const VOICELESS_CONS = ["p", "t", "k", "f", "th"];
-const CONSONANTS = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "z"];
-
-export function pluralizeNoun(singular: string): string {
-  // https://en.wikipedia.org/wiki/English_plurals
-
-  if (SIBILANTS.some(s => singular.endsWith(s))) {
-    if (singular.endsWith("e")) {
-      return `${singular}s`;
-    }
-    return `${singular}es`;
-  }
-  if (VOICELESS_CONS.some(s => singular.endsWith(s))) {
-    return `${singular}s`;
-  }
-  if (CONSONANTS.some(c => singular.endsWith(`${c}o`))) {
-    return `${singular}es`;
-  }
-  if (CONSONANTS.some(c => singular.endsWith(`${c}y`))) {
-    return `${singular.slice(0, singular.length-1)}ies`;
-  }
-  if (singular.endsWith("quy")) {
-    return `${singular.slice(0, singular.length-3)}quies`;
-  }
-  if (singular.endsWith("i")) {
-    return `${singular}s`;
-  }
-
-  // screw it; did you see how long that Wikipedia article is?!
-  return `${singular}s`;
 }
 
 function generateVerbQuantity(entropySource: IEntropySource, qty: number): PhrasePartPlainValue {

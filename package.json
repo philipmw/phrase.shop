@@ -4,8 +4,7 @@
   "homepage": "https://github.com/philipmw/phrase.shop",
   "license": "MIT",
   "dependencies": {
-    "preact": "^10.10.4",
-    "fisher-yates": "1.0.3"
+    "preact": "^10.10.4"
   },
   "repository": {
     "type": "git",

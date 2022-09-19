@@ -10,7 +10,7 @@ describe("phrase", () => {
 
   describe("generatePhrasePlain()", () => {
     it("mutates phrase parts", () => {
-      const noun = new PhrasePart(PartType.noun);
+      const noun = new PhrasePart(PartType.countNoun);
       const digit = new PhrasePart(PartType.digit);
 
       const phrStruct: PhraseStruct = {
@@ -33,13 +33,13 @@ describe("phrase", () => {
       generatePhrasePlain(phrStruct, testMutator);
 
       expect(phrStruct.order[0].getPlaintext()).toBe("plain digit (dep: undefined)");
-      expect(phrStruct.order[1].getPlaintext()).toBe("plain noun (dep: digit)");
+      expect(phrStruct.order[1].getPlaintext()).toBe("plain countNoun (dep: digit)");
     });
   })
 
   describe("entropyNeededForPhrase()", () => {
     it("returns expected value", () => {
-      expect(entropyNeededForPhrase(makePhraseSimple())).toBe(25);
+      expect(entropyNeededForPhrase(makePhraseSimple())).toBe(24);
     });
   });
 });
