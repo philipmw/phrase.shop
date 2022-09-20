@@ -1,6 +1,5 @@
 import {
   adjectives,
-  adverbs,
   conjunctions,
   determiners,
   prepositions,
@@ -12,7 +11,7 @@ interface CountNoun {
   plural: string;
 }
 
-export const COUNT_NOUNS_ALL: CountNoun[] = [
+const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "accident", plural: "accidents"},
   {singular: "act", plural: "acts"},
   {singular: "activist", plural: "activists"},
@@ -893,7 +892,7 @@ export const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "uterus", plural: "uteruses"}
 ];
 
-export const NOTCOUNT_NOUNS_ALL = [
+const NOTCOUNT_NOUNS_ALL = [
   "aggression",
   "agriculture",
   "aid",
@@ -1005,6 +1004,106 @@ export const NOTCOUNT_NOUNS_ALL = [
   "yesterday",
 ];
 
+const ADVERBS = [
+  "afterward",
+  "again",
+  "almost",
+  "alone",
+  "along",
+  "already",
+  "also",
+  "always",
+  "away",
+  "back",
+  "badly",
+  "before",
+  "behind",
+  "below",
+  "best",
+  "better",
+  "by",
+  "clearly",
+  "deeply",
+  "differently",
+  "directly",
+  "down",
+  "early",
+  "easy",
+  "enough",
+  "especially",
+  "evenly",
+  "extra",
+  "fairly",
+  "falsely",
+  "far",
+  "finely",
+  "first",
+  "flatly",
+  "forward",
+  "freely",
+  "freshly",
+  "hard",
+  "here",
+  "high",
+  "home",
+  "instead",
+  "justly",
+  "lastly",
+  "late",
+  "left",
+  "less",
+  "lightly",
+  "little",
+  "lively",
+  "locally",
+  "long",
+  "low",
+  "more",
+  "near",
+  "never",
+  "nicely",
+  "north",
+  "now",
+  "nowhere",
+  "off",
+  "often",
+  "on",
+  "once",
+  "only",
+  "out",
+  "over",
+  "past",
+  "plenty",
+  "probably",
+  "quickly",
+  "right",
+  "second",
+  "short",
+  "some",
+  "soon",
+  "south",
+  "still",
+  "straight",
+  "strongly",
+  "surely",
+  "there",
+  "thickly",
+  "thinly",
+  "through",
+  "today",
+  "together",
+  "tomorrow",
+  "tonight",
+  "true",
+  "under",
+  "up",
+  "well",
+  "west",
+  "wide",
+  "worse",
+  "yesterday",
+];
+
 export enum PartType {
   countNoun = "countNoun",
   notcountNoun = "notcountNoun",
@@ -1053,7 +1152,7 @@ const COUNT_NOUN_ENTROPY_BITS = 9; // currently 878
 const NOTCOUNT_NOUN_ENTROPY_BITS = 6; // currently 109
 const VERB_ENTROPY_BITS = 9;
 const ADJECTIVE_ENTROPY_BITS = 8;
-const ADVERB_ENTROPY_BITS = 7;
+const ADVERB_ENTROPY_BITS = 6; // currently 97
 const PREPOSITION_ENTROPY_BITS = 5;
 const CONJUNCTION_ENTROPY_BITS = 4;
 const DETERMINER_ENTROPY_BITS = 5;
@@ -1095,7 +1194,7 @@ export const indepDict: Dict = {
   [PartType.adjective]:
     takeNBitsShortestItemsOf(adjectives(), ADJECTIVE_ENTROPY_BITS, (s) => s.length),
   [PartType.adverb]:
-    takeNBitsShortestItemsOf(adverbs(), ADVERB_ENTROPY_BITS, (s) => s.length),
+    takeNBitsShortestItemsOf(ADVERBS, ADVERB_ENTROPY_BITS, (s) => s.length),
   [PartType.preposition]:
     takeNBitsShortestItemsOf(prepositions(), PREPOSITION_ENTROPY_BITS, (s) => s.length),
   [PartType.conjunction]:

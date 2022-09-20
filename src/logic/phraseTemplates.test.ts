@@ -5,7 +5,7 @@ import {visitTreeWithDependencies} from "./tree";
 describe("phrase templates", () => {
   it("has expected entropy requirements", () => {
     expect(entropyNeededForPhrase(makePhraseSimple())).toBe(24);
-    expect(entropyNeededForPhrase(makePhraseMedium())).toBe(40);
+    expect(entropyNeededForPhrase(makePhraseMedium())).toBe(39);
     expect(entropyNeededForPhrase(makePhraseHard())).toBe(52);
   });
 
