@@ -1538,11 +1538,6 @@ export const adjectives = () =>
     .filter((kv) => kv[1] & IS_ADJECTIVE)
     .map((kv) => kv[0]);
 
-export const adverbs = () =>
-  Object.entries(VOA_MAP)
-    .filter((kv) => kv[1] & IS_ADVERB)
-    .map((kv) => kv[0]);
-
 export const prepositions = () =>
   Object.entries(VOA_MAP)
     .filter((kv) => kv[1] & IS_PREPOSITION)
