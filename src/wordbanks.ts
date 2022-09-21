@@ -1,6 +1,5 @@
 import {
   adjectives,
-  conjunctions,
   determiners,
   prepositions,
   verbs,
@@ -1104,6 +1103,32 @@ const ADVERBS = [
   "yesterday",
 ];
 
+const CONJUNCTIONS = [
+  // Words that are part of VoA, and considered conjunctions by the dictionary, but I exclude
+  // because I consider them poor conjunctions in test phrases:
+  //   both, either, for, how, neither, not, now, only, than, that
+  "after",
+  "although",
+  "and",
+  "as",
+  "because",
+  "before",
+  "but",
+  "except",
+  "however",
+  "if",
+  "once",
+  "or",
+  "since",
+  "so",
+  "unless",
+  "until",
+  "when",
+  "whereas",
+  "while",
+  "yet",
+];
+
 export enum PartType {
   countNoun = "countNoun",
   notcountNoun = "notcountNoun",
@@ -1154,7 +1179,7 @@ const VERB_ENTROPY_BITS = 9;
 const ADJECTIVE_ENTROPY_BITS = 8;
 const ADVERB_ENTROPY_BITS = 6; // currently 97
 const PREPOSITION_ENTROPY_BITS = 5;
-const CONJUNCTION_ENTROPY_BITS = 4;
+const CONJUNCTION_ENTROPY_BITS = 4; // currently 20
 const DETERMINER_ENTROPY_BITS = 5;
 
 /**
@@ -1198,7 +1223,7 @@ export const indepDict: Dict = {
   [PartType.preposition]:
     takeNBitsShortestItemsOf(prepositions(), PREPOSITION_ENTROPY_BITS, (s) => s.length),
   [PartType.conjunction]:
-    takeNBitsShortestItemsOf(conjunctions(), CONJUNCTION_ENTROPY_BITS, (s) => s.length),
+    takeNBitsShortestItemsOf(CONJUNCTIONS, CONJUNCTION_ENTROPY_BITS, (s) => s.length),
   [PartType.determiner]:
     takeNBitsShortestItemsOf(determiners(), DETERMINER_ENTROPY_BITS, (s) => s.length),
   [PartType.digit]: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],

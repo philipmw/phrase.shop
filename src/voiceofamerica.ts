@@ -1543,11 +1543,6 @@ export const prepositions = () =>
     .filter((kv) => kv[1] & IS_PREPOSITION)
     .map((kv) => kv[0]);
 
-export const conjunctions = () =>
-  Object.entries(VOA_MAP)
-    .filter((kv) => kv[1] & IS_CONJUNCTION)
-    .map((kv) => kv[0]);
-
 export const determiners = () =>
   Object.entries(VOA_MAP)
     .filter((kv) => kv[1] & IS_DETERMINER)
