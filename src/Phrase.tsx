@@ -29,9 +29,10 @@ export class Phrase extends Component<IProps> {
     return <div id="phrase">
       <div id="phrase-inner">
         {orderedPhraseParts.map((part, i) =>
-            <span key={this.props.ppUiProps[i].key}>
-          <PhrasePartUi phrasePart={part} ppUiProps={this.props.ppUiProps[i]}/>
-        </span>
+          <span key={this.props.ppUiProps[i].key}>
+            <PhrasePartUi phrasePart={part} ppUiProps={this.props.ppUiProps[i]}/>
+            <span class={"part space"}> </span>
+          </span>
         )}
       </div>
     </div>;

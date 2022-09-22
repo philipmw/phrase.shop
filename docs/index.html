@@ -88,6 +88,7 @@
         div#phrase-inner {
             width: 100%;
             text-align: center;
+            word-spacing: -60%;
         }
         div#phrase.empty {
             color: #f0f0f0;
@@ -99,8 +100,6 @@
             width: 3em;
         }
         .part {
-            display: inline-block;
-            padding: 0 0.1em;
             animation-duration: 100ms;
             animation-name: phrase-fadein;
             animation-timing-function: ease-in;
@@ -146,7 +145,7 @@
                 color: #b8b8b8; /* slightly darker than approot background color */
             }
         }
-        .part.plain { font-family: monospace; font-weight: bold; }
+        .part.plain, .part.space { font-family: monospace; font-weight: bold; }
         .part.temp {
             /* copy of animation's `to` */
             color: #b8b8b8; /* slightly darker than approot background color */
