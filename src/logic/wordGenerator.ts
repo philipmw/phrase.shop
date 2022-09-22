@@ -1,7 +1,7 @@
 import {PhrasePart, PhrasePartPlainValue} from "./PhrasePart";
 import * as wb from "../wordbanks";
 import {IEntropySource} from "../IEntropySource";
-import {getCountNoun} from "../wordbanks";
+import {getCountNoun, getVerb} from "../wordbanks";
 
 function generateIndependentPlainValue(
   entropySource: IEntropySource,
@@ -33,24 +33,11 @@ function generatePhrasePartQuantity(
     return getCountNoun(randomIdx, qty);
   }
   if (partType === wb.PartType.verb) {
-    return generateVerbQuantity(entropySource, qty);
+    const randomIdx = entropySource.getBits(wb.partTypeProps[partType].entropyReqBits);
+    return getVerb(randomIdx, qty);
   }
 
   return generateIndependentPlainValue(entropySource, partType);
-}
-
-function generateVerbQuantity(entropySource: IEntropySource, qty: number): PhrasePartPlainValue {
-  const pluralVerb = generateIndependentPlainValue(entropySource, wb.PartType.verb) as string;
-
-  if (qty !== 1) {
-    return pluralVerb;
-  }
-
-  // dumb heuristic
-  if (pluralVerb.endsWith("h") || pluralVerb.endsWith("s")) {
-    return `${pluralVerb}es`;
-  }
-  return `${pluralVerb}s`;
 }
 
 function generateDependentPlainValue(

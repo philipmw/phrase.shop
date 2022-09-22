@@ -48,7 +48,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(wb.PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("busys"); // FIXME: https://github.com/philipmw/phrase.shop/issues/30
+      expect(plainValue).toBe("buys");
     });
 
     it("generates a pluralized verb", () => {
@@ -56,7 +56,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(wb.PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("busy");
+      expect(plainValue).toBe("buy");
     });
   });
 
