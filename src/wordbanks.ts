@@ -9528,11 +9528,11 @@ function takeNBitsShortestItemsOf<T>(items: T[], bits: number, lenFn: (T) => num
 const COUNT_NOUN_ENTROPY_BITS = 9; // currently 878
 const NOTCOUNT_NOUN_ENTROPY_BITS = 6; // currently 109
 const VERB_ENTROPY_BITS = 9; // currently 722
-const ADJECTIVE_ENTROPY_BITS = 8;
+const ADJECTIVE_ENTROPY_BITS = 8; // currently 313
 const ADVERB_ENTROPY_BITS = 6; // currently 97
-const PREPOSITION_ENTROPY_BITS = 5;
+const PREPOSITION_ENTROPY_BITS = 5; // currently 41
 const CONJUNCTION_ENTROPY_BITS = 4; // currently 20
-const DETERMINER_ENTROPY_BITS = 5;
+const DETERMINER_ENTROPY_BITS = 5; // currently 34
 
 /**
  * For most of these wordbanks, we want a whole number of entropy bits.
