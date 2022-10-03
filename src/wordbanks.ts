@@ -1218,7 +1218,6 @@ const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "way", plural: "ways"},
   {singular: "weapon", plural: "weapons"},
   {singular: "week", plural: "weeks"},
-  {singular: "wheat", plural: "wheats"},
   {singular: "wheel", plural: "wheels"},
   {singular: "whole", plural: "wholes"},
   {singular: "wife", plural: "wives"},
@@ -1389,6 +1388,7 @@ const NOTCOUNT_NOUNS_ALL = [
   "weather",
   "welcome",
   "west",
+  "wheat",
   "worth",
   "yesterday",
 ];
