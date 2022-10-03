@@ -9201,7 +9201,7 @@ export const indepDict: Dict = {
   [PartType.determiner]:
     takeNBitsShortestItemsOf(determiners(), DETERMINER_ENTROPY_BITS, (s) => s.length),
   [PartType.digit]: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-  [PartType.symbol]: ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "_", "+"],
+  [PartType.symbol]: ["`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+"],
 };
 
 interface IProps {
