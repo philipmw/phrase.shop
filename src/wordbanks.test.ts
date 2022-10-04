@@ -5,15 +5,15 @@ type BitsDict = {
 };
 
 const BITS_EXPECTED: BitsDict = {
-  [PartType.adjective]: 8,
+  [PartType.adjective]: 9,
   [PartType.adverb]: 6,
-  [PartType.conjunction]: 4,
-  [PartType.countNoun]: 9,
+  [PartType.conjunction]: 5,
+  [PartType.countNoun]: 10,
   [PartType.digit]: 3,
   [PartType.preposition]: 5,
   [PartType.symbol]: 4,
-  [PartType.uncountNoun]: 6,
-  [PartType.verb]: 9,
+  [PartType.uncountNoun]: 7,
+  [PartType.verb]: 10,
 };
 
 describe("wordbanks", () => {

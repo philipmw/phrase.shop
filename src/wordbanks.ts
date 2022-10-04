@@ -8,6 +8,7 @@ import { ConjunctionBank } from "./logic/wordbanks/ConjunctionBank";
 import { DigitBank } from "./logic/wordbanks/DigitBank";
 import { SymbolBank } from "./logic/wordbanks/SymbolBank";
 import { IWordbank } from "./logic/IWordbank";
+import { Capitalizable } from "./logic/wordbanks/Capitalizable";
 
 export enum PartType {
   countNoun = "countNoun",
@@ -39,13 +40,13 @@ type WordbankDict = {
 };
 
 export const wordbanks: WordbankDict = {
-  [PartType.countNoun]: new CountNounBank(),
-  [PartType.uncountNoun]: new UncountNounBank(),
-  [PartType.verb]: new VerbBank(),
-  [PartType.adjective]: new AdjectiveBank(),
+  [PartType.countNoun]: new Capitalizable(new CountNounBank()),
+  [PartType.uncountNoun]: new Capitalizable(new UncountNounBank()),
+  [PartType.verb]: new Capitalizable(new VerbBank()),
+  [PartType.adjective]: new Capitalizable(new AdjectiveBank()),
   [PartType.adverb]: new AdverbBank(),
   [PartType.preposition]: new PrepositionBank(),
-  [PartType.conjunction]: new ConjunctionBank(),
+  [PartType.conjunction]: new Capitalizable(new ConjunctionBank()),
   [PartType.digit]: new DigitBank(),
   [PartType.symbol]: new SymbolBank(),
 };
