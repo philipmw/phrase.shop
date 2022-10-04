@@ -1,12 +1,12 @@
 import {PhrasePart} from "./PhrasePart";
 import {PhraseStruct} from "./phrase";
-import * as wb from '../wordbanks';
+import {PartType} from '../wordbanks';
 
 export function makePhraseSimple(): PhraseStruct {
-  const symbol = new PhrasePart(wb.PartType.symbol);
-  const digit = new PhrasePart(wb.PartType.digit);
-  const adj = new PhrasePart(wb.PartType.adjective);
-  const cnoun = new PhrasePart(wb.PartType.countNoun);
+  const symbol = new PhrasePart(PartType.symbol);
+  const digit = new PhrasePart(PartType.digit);
+  const adj = new PhrasePart(PartType.adjective);
+  const cnoun = new PhrasePart(PartType.countNoun);
 
   return {
     order: [symbol, digit, adj, cnoun],
@@ -26,12 +26,12 @@ export function makePhraseSimple(): PhraseStruct {
 }
 
 export function makePhraseMedium(): PhraseStruct {
-  const symbol = new PhrasePart(wb.PartType.symbol);
-  const digit = new PhrasePart(wb.PartType.digit);
-  const adj = new PhrasePart(wb.PartType.adjective);
-  const cnoun = new PhrasePart(wb.PartType.countNoun);
-  const verb = new PhrasePart(wb.PartType.verb);
-  const adverb = new PhrasePart(wb.PartType.adverb);
+  const symbol = new PhrasePart(PartType.symbol);
+  const digit = new PhrasePart(PartType.digit);
+  const adj = new PhrasePart(PartType.adjective);
+  const cnoun = new PhrasePart(PartType.countNoun);
+  const verb = new PhrasePart(PartType.verb);
+  const adverb = new PhrasePart(PartType.adverb);
 
   return {
     order: [symbol, digit, adj, cnoun, verb, adverb],
@@ -53,14 +53,14 @@ export function makePhraseMedium(): PhraseStruct {
 }
 
 export function makePhraseHard(): PhraseStruct {
-  const symbol = new PhrasePart(wb.PartType.symbol);
-  const adj1 = new PhrasePart(wb.PartType.adjective);
-  const noun1 = new PhrasePart(wb.PartType.notcountNoun);
-  const verb1 = new PhrasePart(wb.PartType.verb);
-  const conj = new PhrasePart(wb.PartType.conjunction);
-  const digit = new PhrasePart(wb.PartType.digit);
-  const cnoun2 = new PhrasePart(wb.PartType.countNoun);
-  const verb2 = new PhrasePart(wb.PartType.verb);
+  const symbol = new PhrasePart(PartType.symbol);
+  const adj1 = new PhrasePart(PartType.adjective);
+  const noun1 = new PhrasePart(PartType.uncountNoun);
+  const verb1 = new PhrasePart(PartType.verb);
+  const conj = new PhrasePart(PartType.conjunction);
+  const digit = new PhrasePart(PartType.digit);
+  const cnoun2 = new PhrasePart(PartType.countNoun);
+  const verb2 = new PhrasePart(PartType.verb);
 
   return {
     order: [symbol, adj1, noun1, verb1, conj, digit, cnoun2, verb2],

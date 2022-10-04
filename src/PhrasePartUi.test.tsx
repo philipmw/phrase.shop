@@ -9,7 +9,7 @@ configure({ adapter: new Adapter() });
 
 describe("PhrasePartUi", () => {
   describe("when no plaintext", () => {
-    const phrasePart = new PhrasePart(PartType.notcountNoun);
+    const phrasePart = new PhrasePart(PartType.uncountNoun);
     const ppUiProps = { key: 0 };
 
     const wrapper = shallow(
@@ -17,7 +17,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-notcountNoun.unset"))
+      expect(wrapper.find("span.part.type-uncountNoun.unset"))
         .toHaveLength(1);
     });
 
@@ -25,12 +25,12 @@ describe("PhrasePartUi", () => {
       expect(wrapper
         .render()
         .text())
-        .toEqual("{notcountNoun}");
+        .toEqual("{uncountNoun}");
     });
   });
 
   describe("when animating", () => {
-    const phrasePart = new PhrasePart(PartType.notcountNoun, "finalword");
+    const phrasePart = new PhrasePart(PartType.uncountNoun, "finalword");
     const ppUiProps = { key: 0, animation: {plaintext: "tempword", tempDisambig: 0} };
 
     const wrapper = shallow(
@@ -38,7 +38,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-notcountNoun.temp.disambig0"))
+      expect(wrapper.find("span.part.type-uncountNoun.temp.disambig0"))
           .toHaveLength(1);
     });
 
@@ -56,7 +56,7 @@ describe("PhrasePartUi", () => {
   });
 
   describe("when final plaintext is available", () => {
-    const phrasePart = new PhrasePart(PartType.notcountNoun, "finalword");
+    const phrasePart = new PhrasePart(PartType.uncountNoun, "finalword");
     const ppUiProps = { key: 0 };
 
     const wrapper = shallow(
@@ -64,7 +64,7 @@ describe("PhrasePartUi", () => {
                     ppUiProps={ppUiProps}/>);
 
     it("uses the right classes", () => {
-      expect(wrapper.find("span.part.type-notcountNoun.plain"))
+      expect(wrapper.find("span.part.type-uncountNoun.plain"))
         .toHaveLength(1);
     });
 

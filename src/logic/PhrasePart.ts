@@ -1,4 +1,4 @@
-import * as wb from '../wordbanks';
+import {PartType} from '../wordbanks';
 
 export type PhrasePartPlainValue = number | string | undefined;
 
@@ -7,15 +7,15 @@ export type PhrasePartPlainValue = number | string | undefined;
  * `order` and `depTree` structures to reference the same object.
  */
 export class PhrasePart {
-  private readonly part: wb.PartType;
+  private readonly part: PartType;
   private plainValue: PhrasePartPlainValue;
 
-  constructor(part: wb.PartType, plainValue?: PhrasePartPlainValue) {
+  constructor(part: PartType, plainValue?: PhrasePartPlainValue) {
     this.part = part;
     this.plainValue = plainValue;
   }
 
-  getPartType(): wb.PartType {
+  getPartType(): PartType {
     return this.part;
   }
 

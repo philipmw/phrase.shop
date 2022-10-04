@@ -1,4 +1,4 @@
-import * as wb from "./wordbanks";
+import {PartType, wordbanks} from "./wordbanks";
 import {PhraseStruct} from "./logic/phrase";
 import {PhrasePartUiProps} from "./PhrasePartUi";
 
@@ -109,13 +109,14 @@ const animatePhraseInWindow = (animState: IAnimationState): void => {
   }
 };
 
-const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: wb.PartType): PhrasePartUiProps => {
-  const randomIdx = getInsecureRandomBits(wb.partTypeProps[partType].entropyReqBits);
+const animatePhrasePart = (ppUiProps: PhrasePartUiProps, partType: PartType): PhrasePartUiProps => {
+  const wordbank = wordbanks[partType];
+  const randomIdx = getInsecureRandomBits(wordbank.bits());
 
   return {
     ...ppUiProps,
     animation: {
-      plaintext: wb.indepDict[partType][randomIdx],
+      plaintext: wordbank.getEntry(randomIdx),
       tempDisambig: ppUiProps.animation !== undefined ? (ppUiProps.animation.tempDisambig + 1) % DISAMBIG_MODULO : 0,
     },
   };

@@ -1,4 +1,4 @@
-import * as wb from "../wordbanks";
+import {wordbanks} from "../wordbanks";
 import {TreeRoot, visitTreeWithDependencies} from "./tree";
 import {PhrasePart} from "./PhrasePart";
 
@@ -17,5 +17,5 @@ export function generatePhrasePlain(phrStr: PhraseStruct, mutator: WordMutator):
 
 export function entropyNeededForPhrase(phrStr: PhraseStruct): number {
   return phrStr.order.reduce(
-    (acc, word) => (acc + wb.partTypeProps[word.getPartType()].entropyReqBits), 0);
+    (acc, word) => (acc + wordbanks[word.getPartType()].bits()), 0);
 }

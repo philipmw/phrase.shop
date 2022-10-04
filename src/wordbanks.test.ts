@@ -1,20 +1,25 @@
-import * as wb from "./wordbanks";
+import { PartType, partTypeList, wordbanks } from "./wordbanks";
 
-const BINARY_BASE = 2;
+type BitsDict = {
+  [key in PartType]: number;
+};
+
+const BITS_EXPECTED: BitsDict = {
+  [PartType.adjective]: 8,
+  [PartType.adverb]: 6,
+  [PartType.conjunction]: 4,
+  [PartType.countNoun]: 9,
+  [PartType.digit]: 3,
+  [PartType.preposition]: 5,
+  [PartType.symbol]: 4,
+  [PartType.uncountNoun]: 6,
+  [PartType.verb]: 9,
+};
 
 describe("wordbanks", () => {
-  wb.partTypeList.forEach((partType) => {
-    describe(`${partType} independent dictionary`, () => {
-      it("has at least as many entries as the advertised bits of entropy", () => {
-        expect(wb.indepDict[partType].length)
-          .toBeGreaterThanOrEqual(Math.pow(BINARY_BASE, wb.partTypeProps[partType].entropyReqBits));
-      });
-
-      it("has all unique entries", () => {
-        const wordList = wb.indepDict[partType];
-        const wordSet = new Set(wordList);
-        expect(wordList.length).toEqual(wordSet.size);
-      });
+  partTypeList.forEach(partType => {
+    it(`has expected number of bits for ${partType}`, () => {
+      expect(wordbanks[partType].bits()).toEqual(BITS_EXPECTED[partType]);
     });
   });
 });
