@@ -94,6 +94,7 @@ const UNCOUNT_NOUNS_ALL = [
   "remains",
   "research",
   "rice",
+  "riches",
   "senate",
   "sex",
   "soil",

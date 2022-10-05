@@ -593,7 +593,6 @@ const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "rest", plural: "rests"},
   {singular: "result", plural: "results"},
   {singular: "revolt", plural: "revolts"},
-  {singular: "rich", plural: "riches"},
   {singular: "ride", plural: "rides"},
   {singular: "right", plural: "rights"},
   {singular: "riot", plural: "riots"},
