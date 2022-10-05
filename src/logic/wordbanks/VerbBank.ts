@@ -7963,16 +7963,24 @@ const VERBS_ALL: Verb[] = [
   },
 ];
 
-const BITS = maxBitsForList(VERBS_ALL);
-const VERBS = takeNBitsBestItemsOf(VERBS_ALL, BITS, (v) => v.presentSimple.s);
+const LIST_BITS = maxBitsForList(VERBS_ALL);
+const VERBS = takeNBitsBestItemsOf(VERBS_ALL, LIST_BITS, (v) => v.presentSimple.s);
+const VERB_BITS = LIST_BITS + 1; // present + past
 
 export class VerbBank implements IWordbank {
   bits() {
-    return BITS;
+    return VERB_BITS;
   }
 
   getEntry(i: number, qty?: number) {
-    const substruct = VERBS[i].presentSimple;
-    return (qty && qty > 1) ? substruct.p : substruct.s;
+    // `i` has enough entropy to select both the verb and its form. We split `i` into these two parts.
+    const verb_i = Math.floor(i / 2);
+    const tenseIsPresent = i % 2 === 0;
+    const isPlural = qty && qty > 1;
+
+    const overallVerb = VERBS[verb_i];
+    const tenseVerb = tenseIsPresent ? overallVerb.presentSimple : overallVerb.pastSimple;
+
+    return isPlural ? tenseVerb.p : tenseVerb.s;
   }
 }

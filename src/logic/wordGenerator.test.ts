@@ -48,7 +48,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Bars");
+      expect(plainValue).toBe("Appeals");
     });
 
     it("generates a pluralized verb", () => {
@@ -56,7 +56,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Bar");
+      expect(plainValue).toBe("Appeal");
     });
   });
 

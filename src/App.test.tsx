@@ -14,7 +14,7 @@ describe("App", () => {
   beforeEach(() => {
     mockEntropySource = {
       bitsAvailable: jest.fn()
-        .mockImplementation(() => (42)), // enough for medium but not enough for hard
+        .mockImplementation(() => (43)), // enough for medium but not enough for hard
       getBits: jest.fn()
         .mockImplementation(() => (0)),
     };
