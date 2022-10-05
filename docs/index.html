@@ -90,7 +90,7 @@
             padding: 0.5em;
             border: 1px solid black;
             border-radius: 5px;
-            height: 5em; /* hardcoded best estimate to prevent bottom elements from jerking during animation */
+            height: 4em; /* hardcoded best estimate to prevent bottom elements from jerking during animation */
         }
         div#phrase-inner {
             width: 100%;
@@ -223,18 +223,21 @@
             .part.plain.type-symbol { color: darkgrey; }
         }
 
-        /* hide the page title on short screens */
-        @media only screen and (max-height: 47em) {
-            h1 {
+        @media only screen and (max-height: 47em) { /* on short screens */
+            h1 { /* hide the page title */
                 display: none;
             }
         }
 
-        /* maximize space for phrase on narrow screens */
-        @media only screen and (max-width: 50em) {
+
+        @media only screen and (max-width: 50em) { /* on narrow screens */
             div#phrase {
+                 /* decrease padding to fit more per line */
                 padding-left: 0.1em;
                 padding-right: 0.1em;
+
+                /* increase fixed height to ensure whole phrase fits */
+                height: 5em;
             }
         }
 
