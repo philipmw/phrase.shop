@@ -18,8 +18,21 @@ const BITS_EXPECTED: BitsDict = {
 
 describe("wordbanks", () => {
   partTypeList.forEach(partType => {
-    it(`has expected number of bits for ${partType}`, () => {
-      expect(wordbanks[partType].bits()).toEqual(BITS_EXPECTED[partType]);
+    describe(`for ${partType}`, () => {
+      const wordbank = wordbanks[partType];
+
+      it("supports expected number of bits", () => {
+        expect(wordbank.bits()).toEqual(BITS_EXPECTED[partType]);
+      });
+
+      it("has all unique entries", () => {
+        const words: string[] = [];
+        for (let i=0; i < Math.pow(2, wordbank.bits()); ++i) {
+          words.push(wordbank.getEntry(i));
+        }
+        const wordsSet = new Set(words);
+        expect(wordsSet.size).toBe(words.length);
+      });
     });
   });
 });
