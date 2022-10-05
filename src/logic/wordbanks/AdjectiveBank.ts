@@ -51,7 +51,7 @@ const ADJECTIVES_ALL = [
   "different", // VoA
   "difficult", // VoA
   "direct", // VoA
-  "dirt", // VoA
+  "dirty", // VoA
   "down", // VoA
   "dry", // VoA
   "early", // VoA
