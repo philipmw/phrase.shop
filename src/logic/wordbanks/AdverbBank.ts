@@ -64,7 +64,6 @@ const ADVERBS_ALL = [
   "nowhere",
   "off",
   "often",
-  "on",
   "once",
   "only",
   "out",
