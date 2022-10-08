@@ -32,7 +32,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Rub");
+      expect(plainValue).toBe("Pig");
     });
 
     it("generates a pluralized countable noun", () => {
@@ -40,7 +40,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Rubs");
+      expect(plainValue).toBe("Pigs");
     });
 
     it("generates singular verb", () => {
@@ -48,7 +48,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Appeals");
+      expect(plainValue).toBe("Answers");
     });
 
     it("generates a pluralized verb", () => {
@@ -56,7 +56,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Appeal");
+      expect(plainValue).toBe("Answer");
     });
   });
 
@@ -71,7 +71,7 @@ describe("wordGenerator", () => {
 
       uut(pp, depPp);
 
-      expect(pp.getPlainValue()).toBe("Rubs");
+      expect(pp.getPlainValue()).toBe("Pigs");
     })
   });
 });

@@ -2,16 +2,18 @@ import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
 import { IWordbank } from "../IWordbank";
 
 const UNCOUNT_NOUNS_ALL = [
+  "addition", // Fry
   "aggression", // VoA
   "agriculture", // VoA
   "aid", // VoA
-  "air", // VoA
+  "air", // VoA, Fry
   "alcohol", // VoA
   "ammunition", // VoA
   "anarchy", // VoA
   "anger", // VoA
   "archeology", // VoA
-  "arms", // VoA
+  "art", // Fry
+  "arms", // VoA, Fry (also present in countable in its other meaning)
   "ash", // VoA
   "ashes", // VoA
   "assist", // VoA

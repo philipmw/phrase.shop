@@ -2,16 +2,16 @@ import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
 import { IWordbank } from "../IWordbank";
 
 const PREPOSITIONS_ALL = [
-  "about", // VoA
-  "above", // VoA
-  "across", // VoA
+  "about", // VoA, Fry
+  "above", // VoA, Fry
+  "across", // VoA, Fry
   "after", // VoA
-  "against", // VoA
-  "along", // VoA
-  "among", // VoA
-  "around", // VoA
+  "against", // VoA, Fry
+  "along", // VoA, Fry
+  "among", // VoA, Fry
+  "around", // VoA, Fry
   "as", // VoA
-  "at", // VoA
+  "at", // VoA, Fry
   "before", // VoA
   "behind", // VoA
   "below", // VoA

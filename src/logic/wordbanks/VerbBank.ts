@@ -51,7 +51,7 @@ const VERBS_ALL: Verb[] = [
       p: "accused",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "act",
     presentSimple: {
       s: "acts",
@@ -62,7 +62,7 @@ const VERBS_ALL: Verb[] = [
       p: "acted",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "add",
     presentSimple: {
       s: "adds",
@@ -106,7 +106,7 @@ const VERBS_ALL: Verb[] = [
       p: "affected",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "age",
     presentSimple: {
       s: "ages",
@@ -117,7 +117,7 @@ const VERBS_ALL: Verb[] = [
       p: "aged",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "agree",
     presentSimple: {
       s: "agrees",
@@ -150,7 +150,7 @@ const VERBS_ALL: Verb[] = [
       p: "aimed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "air",
     presentSimple: {
       s: "airs",
@@ -159,6 +159,17 @@ const VERBS_ALL: Verb[] = [
     pastSimple: {
       s: "aired",
       p: "aired",
+    },
+  },
+  { // Fry
+    i: "allow",
+    presentSimple: {
+      s: "allows",
+      p: "allow",
+    },
+    pastSimple: {
+      s: "allowed",
+      p: "allowed",
     },
   },
   { // VoA
@@ -194,6 +205,17 @@ const VERBS_ALL: Verb[] = [
       p: "angered",
     },
   },
+  { // Fry
+    i: "angle",
+    presentSimple: {
+      s: "angles",
+      p: "angle",
+    },
+    pastSimple: {
+      s: "angled",
+      p: "angled",
+    },
+  },
   { // VoA
     i: "announce",
     presentSimple: {
@@ -205,7 +227,7 @@ const VERBS_ALL: Verb[] = [
       p: "announced",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "answer",
     presentSimple: {
       s: "answers",
@@ -238,7 +260,7 @@ const VERBS_ALL: Verb[] = [
       p: "appealed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "appear",
     presentSimple: {
       s: "appears",
@@ -293,7 +315,7 @@ const VERBS_ALL: Verb[] = [
       p: "arrested",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "arrive",
     presentSimple: {
       s: "arrives",
@@ -304,7 +326,7 @@ const VERBS_ALL: Verb[] = [
       p: "arrived",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "ask",
     presentSimple: {
       s: "asks",

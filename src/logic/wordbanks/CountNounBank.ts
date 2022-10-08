@@ -8,13 +8,15 @@ interface CountNoun {
 
 const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "accident", plural: "accidents"}, // VoA
-  {singular: "act", plural: "acts"}, // VoA
+  {singular: "act", plural: "acts"}, // VoA, Fry
+  {singular: "action", plural: "actions"}, // Fry
   {singular: "activist", plural: "activists"}, // VoA
   {singular: "actor", plural: "actors"}, // VoA
+  {singular: "adjective", plural: "adjectives"}, // Fry
   {singular: "administration", plural: "administrations"}, // VoA
   {singular: "admit", plural: "admits"}, // VoA
   {singular: "adult", plural: "adults"}, // VoA
-  {singular: "age", plural: "ages"}, // VoA
+  {singular: "age", plural: "ages"}, // VoA, Fry
   {singular: "agency", plural: "agencies"}, // VoA
   {singular: "aim", plural: "aims"}, // VoA
   {singular: "airplane", plural: "airplanes"}, // VoA
@@ -22,14 +24,17 @@ const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "album", plural: "albums"}, // VoA
   {singular: "ally", plural: "allies"}, // VoA
   {singular: "ambassador", plural: "ambassadors"}, // VoA
-  {singular: "amount", plural: "amounts"}, // VoA
+  {singular: "amount", plural: "amounts"}, // VoA, Fry
+  {singular: "angle", plural: "angles"}, // Fry
   {singular: "ancestor", plural: "ancestors"}, // VoA
-  {singular: "animal", plural: "animals"}, // VoA
+  {singular: "animal", plural: "animals"}, // VoA, Fry
   {singular: "anniversary", plural: "anniversaries"}, // VoA
-  {singular: "answer", plural: "answers"}, // VoA
+  {singular: "answer", plural: "answers"}, // VoA, Fry
   {singular: "appeal", plural: "appeals"}, // VoA
-  {singular: "area", plural: "areas"}, // VoA
-  {singular: "army", plural: "armies"}, // VoA
+  {singular: "apple", plural: "apples"}, // Fry
+  {singular: "area", plural: "areas"}, // VoA, Fry
+  {singular: "arm", plural: "arms"}, // Fry
+  {singular: "army", plural: "armies"}, // VoA, Fry
   {singular: "arrest", plural: "arrests"}, // VoA
   {singular: "art", plural: "arts"}, // VoA
   {singular: "artillery", plural: "artilleries"}, // VoA

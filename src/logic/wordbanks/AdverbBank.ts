@@ -2,15 +2,22 @@ import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
 import { IWordbank } from "../IWordbank";
 
 const ADVERBS_ALL = [
+  "about", // Fry
+  "above", // Fry
+  "across", // Fry
+  "actually", // Fry
+  "after", // Fry
   "afterward", // VoA
-  "again", // VoA
-  "almost", // VoA
-  "alone", // VoA
-  "along", // VoA
-  "already", // VoA
-  "also", // VoA
-  "always", // VoA
-  "away", // VoA
+  "again", // VoA, Fry
+  "ahead", // Fry
+  "almost", // VoA, Fry
+  "alone", // VoA, Fry
+  "along", // VoA, Fry
+  "already", // VoA, Fry
+  "also", // VoA, Fry
+  "always", // VoA, Fry
+  "around", // Fry
+  "away", // VoA, Fry
   "back", // VoA
   "badly", // VoA
   "before", // VoA

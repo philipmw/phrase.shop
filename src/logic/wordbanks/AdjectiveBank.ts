@@ -4,10 +4,15 @@ import { IWordbank } from "../IWordbank";
 const ADJECTIVES_ALL = [
   "able", // VoA
   "adult", // VoA
-  "afraid", // VoA
+  "afraid", // VoA, Fry
+  "after", // Fry
+  "ahead", // Fry
   "alive", // VoA
-  "alone", // VoA
+  "all", // Fry
+  "alone", // VoA, Fry
   "ancient", // VoA
+  "another", // Fry
+  "any", // Fry
   "awake", // VoA
   "baby", // VoA
   "back", // VoA

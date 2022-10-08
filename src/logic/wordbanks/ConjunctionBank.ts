@@ -2,10 +2,10 @@ import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
 import { IWordbank } from "../IWordbank";
 
 const CONJUNCTIONS_ALL = [
-  "after", // VoA
-  "although", // VoA
-  "and", // VoA
-  "as", // VoA
+  "after", // VoA, Fry
+  "although", // VoA, Fry
+  "and", // VoA, Fry
+  "as", // VoA, Fry
   "because", // VoA
   "before", // VoA
   "but", // VoA
