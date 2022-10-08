@@ -2,26 +2,26 @@ import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
 import { IWordbank } from "../IWordbank";
 
 const CONJUNCTIONS_ALL = [
-  "after",
-  "although",
-  "and",
-  "as",
-  "because",
-  "before",
-  "but",
-  "except",
-  "however",
-  "if",
-  "once",
-  "or",
-  "since",
-  "so",
-  "unless",
-  "until",
-  "when",
-  "whereas",
-  "while",
-  "yet",
+  "after", // VoA
+  "although", // VoA
+  "and", // VoA
+  "as", // VoA
+  "because", // VoA
+  "before", // VoA
+  "but", // VoA
+  "except", // VoA
+  "however", // VoA
+  "if", // VoA
+  "once", // VoA
+  "or", // VoA
+  "since", // VoA
+  "so", // VoA
+  "unless", // VoA
+  "until", // VoA
+  "when", // VoA
+  "whereas", // VoA
+  "while", // VoA
+  "yet", // VoA
 ];
 
 const BITS = maxBitsForList(CONJUNCTIONS_ALL);
