@@ -6,8 +6,8 @@ const CONJUNCTIONS_ALL = [
   "although", // VoA, Fry
   "and", // VoA, Fry
   "as", // VoA, Fry
-  "because", // VoA
-  "before", // VoA
+  "because", // VoA, Fry
+  "before", // VoA, Fry
   "but", // VoA
   "except", // VoA
   "however", // VoA

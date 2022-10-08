@@ -32,7 +32,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Pig");
+      expect(plainValue).toBe("Pan");
     });
 
     it("generates a pluralized countable noun", () => {
@@ -40,7 +40,7 @@ describe("wordGenerator", () => {
       const depPp = new PhrasePart(PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Pigs");
+      expect(plainValue).toBe("Pans");
     });
 
     it("generates singular verb", () => {
@@ -71,7 +71,7 @@ describe("wordGenerator", () => {
 
       uut(pp, depPp);
 
-      expect(pp.getPlainValue()).toBe("Pigs");
+      expect(pp.getPlainValue()).toBe("Pans");
     })
   });
 });

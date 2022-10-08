@@ -14,20 +14,27 @@ const ADJECTIVES_ALL = [
   "another", // Fry
   "any", // Fry
   "awake", // VoA
-  "baby", // VoA
-  "back", // VoA
-  "bad", // VoA
-  "best", // VoA
-  "better", // VoA
-  "big", // VoA
-  "black", // VoA
-  "blue", // VoA
-  "born", // VoA
-  "bottom", // VoA
+  "baby", // VoA, Fry
+  "back", // VoA, Fry
+  "bad", // VoA, Fry
+  "beautiful", // Fry
+  "best", // VoA, Fry
+  "better", // VoA, Fry
+  "big", // VoA, Fry
+  "black", // VoA, Fry
+  "blood", // Fry
+  "blue", // VoA, Fry
+  "born", // VoA, Fry
+  "bottom", // VoA, Fry
+  "bought", // Fry
   "brave", // VoA
   "brief", // VoA
-  "bright", // VoA
-  "brown", // VoA
+  "bright", // VoA, Fry
+  "broken", // Fry
+  "brown", // VoA, Fry
+  "built", // Fry
+  "burning", // Fry
+  "business", // Fry
   "busy", // VoA
   "calm", // VoA
   "careful", // VoA

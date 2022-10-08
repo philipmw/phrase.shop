@@ -22,8 +22,8 @@ const UNCOUNT_NOUNS_ALL = [
   "autumn", // VoA
   "biology", // VoA
   "blame", // VoA
-  "blood", // VoA
-  "bread", // VoA
+  "blood", // VoA, Fry
+  "bread", // VoA, Fry
   "calm", // VoA
   "capitalism", // VoA
   "cold", // VoA

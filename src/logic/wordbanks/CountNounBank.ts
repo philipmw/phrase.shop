@@ -45,53 +45,59 @@ const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "automobile", plural: "automobiles"}, // VoA
   {singular: "average", plural: "averages"}, // VoA
   {singular: "award", plural: "awards"}, // VoA
-  {singular: "baby", plural: "babies"}, // VoA
+  {singular: "baby", plural: "babies"}, // VoA, Fry
+  {singular: "back", plural: "backs"}, // Fry
   {singular: "balance", plural: "balances"}, // VoA
-  {singular: "ball", plural: "balls"}, // VoA
+  {singular: "ball", plural: "balls"}, // VoA, Fry
   {singular: "balloon", plural: "balloons"}, // VoA
   {singular: "ballot", plural: "ballots"}, // VoA
   {singular: "ban", plural: "bans"}, // VoA
-  {singular: "bank", plural: "banks"}, // VoA
+  {singular: "bank", plural: "banks"}, // VoA, Fry
   {singular: "bar", plural: "bars"}, // VoA
   {singular: "barrier", plural: "barriers"}, // VoA
-  {singular: "base", plural: "bases"}, // VoA
+  {singular: "base", plural: "bases"}, // VoA, Fry
   {singular: "battle", plural: "battles"}, // VoA
-  {singular: "beat", plural: "beats"}, // VoA
+  {singular: "bear", plural: "bears"}, // Fry
+  {singular: "beat", plural: "beats"}, // VoA, Fry
   {singular: "beauty", plural: "beauties"}, // VoA
-  {singular: "bed", plural: "beds"}, // VoA
-  {singular: "bell", plural: "bells"}, // VoA
-  {singular: "bill", plural: "bills"}, // VoA
-  {singular: "bird", plural: "birds"}, // VoA
-  {singular: "bite", plural: "bites"}, // VoA
+  {singular: "bed", plural: "beds"}, // VoA, Fry
+  {singular: "being", plural: "beings"}, // Fry
+  {singular: "bell", plural: "bells"}, // VoA, Fry
+  {singular: "bill", plural: "bills"}, // VoA, Fry
+  {singular: "bird", plural: "birds"}, // VoA, Fry
+  {singular: "bit", plural: "bits"}, // Fry
+  {singular: "bite", plural: "bites"}, // VoA, Fry
   {singular: "blanket", plural: "blankets"}, // VoA
-  {singular: "block", plural: "blocks"}, // VoA
-  {singular: "blow", plural: "blows"}, // VoA
-  {singular: "boat", plural: "boats"}, // VoA
-  {singular: "body", plural: "bodies"}, // VoA
+  {singular: "block", plural: "blocks"}, // VoA, Fry
+  {singular: "blow", plural: "blows"}, // VoA, Fry
+  {singular: "board", plural: "boards"}, // Fry
+  {singular: "boat", plural: "boats"}, // VoA, Fry
+  {singular: "body", plural: "bodies"}, // VoA, Fry
   {singular: "boil", plural: "boils"}, // VoA
   {singular: "bomb", plural: "bombs"}, // VoA
-  {singular: "bone", plural: "bones"}, // VoA
-  {singular: "book", plural: "books"}, // VoA
+  {singular: "bone", plural: "bones"}, // VoA, Fry
+  {singular: "book", plural: "books"}, // VoA, Fry
   {singular: "border", plural: "borders"}, // VoA
   {singular: "bottle", plural: "bottles"}, // VoA
   {singular: "bottom", plural: "bottoms"}, // VoA
-  {singular: "box", plural: "boxes"}, // VoA
-  {singular: "boy", plural: "boys"}, // VoA
+  {singular: "box", plural: "boxes"}, // VoA, Fry
+  {singular: "boy", plural: "boys"}, // VoA, Fry
   {singular: "boycott", plural: "boycotts"}, // VoA
   {singular: "brain", plural: "brains"}, // VoA
-  {singular: "break", plural: "breaks"}, // VoA
+  {singular: "branch", plural: "branches"}, // Fry
+  {singular: "break", plural: "breaks"}, // VoA, Fry
   {singular: "bridge", plural: "bridges"}, // VoA
   {singular: "brief", plural: "briefs"}, // VoA
   {singular: "broadcast", plural: "broadcasts"}, // VoA
-  {singular: "brother", plural: "brothers"}, // VoA
+  {singular: "brother", plural: "brothers"}, // VoA, Fry
   {singular: "budget", plural: "budgets"}, // VoA
   {singular: "build", plural: "builds"}, // VoA
-  {singular: "building", plural: "buildings"}, // VoA
+  {singular: "building", plural: "buildings"}, // VoA, Fry
   {singular: "bullet", plural: "bullets"}, // VoA
   {singular: "burn", plural: "burns"}, // VoA
   {singular: "burst", plural: "bursts"}, // VoA
   {singular: "bus", plural: "buses"}, // VoA
-  {singular: "business", plural: "businesses"}, // VoA
+  {singular: "business", plural: "businesses"}, // VoA, Fry
   {singular: "cabinet", plural: "cabinets"}, // VoA
   {singular: "call", plural: "calls"}, // VoA
   {singular: "camera", plural: "cameras"}, // VoA

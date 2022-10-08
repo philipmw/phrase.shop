@@ -18,13 +18,16 @@ const ADVERBS_ALL = [
   "always", // VoA, Fry
   "around", // Fry
   "away", // VoA, Fry
-  "back", // VoA
-  "badly", // VoA
-  "before", // VoA
-  "behind", // VoA
+  "back", // VoA, Fry
+  "badly", // VoA, Fry
+  "beautifully", // Fry
+  "before", // VoA, Fry
+  "behind", // VoA, Fry
   "below", // VoA
-  "best", // VoA
-  "better", // VoA
+  "best", // VoA, Fry
+  "better", // VoA, Fry
+  "big", // Fry
+  "brightly", // Fry
   "by", // VoA
   "clearly", // VoA
   "deeply", // VoA

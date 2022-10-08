@@ -447,7 +447,7 @@ const VERBS_ALL: Verb[] = [
       p: "banned",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "bank",
     presentSimple: {
       s: "banks",
@@ -502,7 +502,7 @@ const VERBS_ALL: Verb[] = [
       p: "were",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "beat",
     presentSimple: {
       s: "beats",
@@ -513,7 +513,7 @@ const VERBS_ALL: Verb[] = [
       p: "beat",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "become",
     presentSimple: {
       s: "becomes",
@@ -524,7 +524,7 @@ const VERBS_ALL: Verb[] = [
       p: "became",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "begin",
     presentSimple: {
       s: "begins",
@@ -535,7 +535,7 @@ const VERBS_ALL: Verb[] = [
       p: "began",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "believe",
     presentSimple: {
       s: "believes",
@@ -546,7 +546,7 @@ const VERBS_ALL: Verb[] = [
       p: "believed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "belong",
     presentSimple: {
       s: "belongs",
@@ -557,7 +557,7 @@ const VERBS_ALL: Verb[] = [
       p: "belonged",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "best",
     presentSimple: {
       s: "bests",
@@ -566,6 +566,17 @@ const VERBS_ALL: Verb[] = [
     pastSimple: {
       s: "bested",
       p: "bested",
+    },
+  },
+  { // VoA, Fry
+    i: "better",
+    presentSimple: {
+      s: "betters",
+      p: "better",
+    },
+    pastSimple: {
+      s: "bettered",
+      p: "bettered",
     },
   },
   { // VoA
@@ -579,7 +590,7 @@ const VERBS_ALL: Verb[] = [
       p: "betrayed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "bill",
     presentSimple: {
       s: "bills",
@@ -590,7 +601,7 @@ const VERBS_ALL: Verb[] = [
       p: "billed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "bite",
     presentSimple: {
       s: "bites",
@@ -634,7 +645,7 @@ const VERBS_ALL: Verb[] = [
       p: "blinded",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "block",
     presentSimple: {
       s: "blocks",
@@ -645,7 +656,7 @@ const VERBS_ALL: Verb[] = [
       p: "blocked",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "blow",
     presentSimple: {
       s: "blows",
@@ -654,6 +665,17 @@ const VERBS_ALL: Verb[] = [
     pastSimple: {
       s: "blew",
       p: "blew",
+    },
+  },
+  { // Fry
+    i: "board",
+    presentSimple: {
+      s: "boards",
+      p: "board",
+    },
+    pastSimple: {
+      s: "boarded",
+      p: "boarded",
     },
   },
   { // VoA
@@ -755,7 +777,7 @@ const VERBS_ALL: Verb[] = [
       p: "braved",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "break",
     presentSimple: {
       s: "breaks",
@@ -799,7 +821,7 @@ const VERBS_ALL: Verb[] = [
       p: "briefed",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "bring",
     presentSimple: {
       s: "brings",
@@ -832,7 +854,7 @@ const VERBS_ALL: Verb[] = [
       p: "browned",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "build",
     presentSimple: {
       s: "builds",
@@ -887,7 +909,7 @@ const VERBS_ALL: Verb[] = [
       p: "bused",
     },
   },
-  { // VoA
+  { // VoA, Fry
     i: "buy",
     presentSimple: {
       s: "buys",

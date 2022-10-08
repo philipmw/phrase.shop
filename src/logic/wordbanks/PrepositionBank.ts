@@ -13,11 +13,12 @@ const PREPOSITIONS_ALL = [
   "as", // VoA
   "at", // VoA, Fry
   "before", // VoA
-  "behind", // VoA
-  "below", // VoA
-  "between", // VoA
-  "but", // VoA
-  "by", // VoA
+  "behind", // VoA, Fry
+  "below", // VoA, Fry
+  "beside", // Fry
+  "between", // VoA, Fry
+  "but", // VoA, Fry
+  "by", // VoA, Fry
   "down", // VoA
   "during", // VoA
   "except", // VoA
