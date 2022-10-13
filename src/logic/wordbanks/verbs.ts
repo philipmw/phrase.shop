@@ -6574,8 +6574,8 @@ export const VERBS_ALL_MAP: VerbsMap = {
       p: "tear",
     },
     pastSimple: {
-      s: "teared",
-      p: "teared",
+      s: "tore",
+      p: "tore",
     },
   },
   "telephone": { // VoA
