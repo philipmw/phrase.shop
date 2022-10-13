@@ -43,20 +43,20 @@ describe("wordGenerator", () => {
       expect(plainValue).toBe("Pans");
     });
 
-    it("generates singular verb", () => {
-      const pp = new PhrasePart(PartType.verb);
+    it("generates a singular transitive verb", () => {
+      const pp = new PhrasePart(PartType.transitiveVerb);
       const depPp = new PhrasePart(PartType.digit, 1);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Answers");
+      expect(plainValue).toBe("Eats");
     });
 
-    it("generates a pluralized verb", () => {
-      const pp = new PhrasePart(PartType.verb);
+    it("generates a pluralized intransitive verb", () => {
+      const pp = new PhrasePart(PartType.intransitiveVerb);
       const depPp = new PhrasePart(PartType.digit, 6);
       const plainValue = generatePlainValueForPhrasePart(mockEntropy, pp, depPp);
 
-      expect(plainValue).toBe("Answer");
+      expect(plainValue).toBe("Eat");
     });
   });
 

@@ -1,10 +1,5 @@
 // https://en.wikipedia.org/wiki/Uses_of_English_verb_forms#Tenses,_aspects_and_moods
-import { maxBitsForList, takeNBitsBestItemsOf } from "./utils";
-import { IWordbank } from "../IWordbank";
-
 interface Verb {
-  i: string; // infinitive
-
   // https://en.wikipedia.org/wiki/Grammatical_aspect#English
   // All verbs must be conjugated for count nouns.
   presentSimple: {
@@ -17,9 +12,12 @@ interface Verb {
   },
 }
 
-const VERBS_ALL: Verb[] = [
-  { // VoA
-    i: "able",
+type VerbsMap = {
+  [key: string]: Verb;
+};
+
+export const VERBS_ALL_MAP: VerbsMap = {
+  "able": { // VoA
     presentSimple: {
       s: "is able",
       p: "are able",
@@ -29,8 +27,7 @@ const VERBS_ALL: Verb[] = [
       p: "were able",
     },
   },
-  { // VoA
-    i: "accept",
+  "accept": { // VoA
     presentSimple: {
       s: "accepts",
       p: "accept",
@@ -40,8 +37,7 @@ const VERBS_ALL: Verb[] = [
       p: "accepted",
     },
   },
-  { // VoA
-    i: "accuse",
+  "accuse": { // VoA
     presentSimple: {
       s: "accuses",
       p: "accuse",
@@ -51,8 +47,7 @@ const VERBS_ALL: Verb[] = [
       p: "accused",
     },
   },
-  { // VoA, Fry
-    i: "act",
+  "act": { // VoA, Fry
     presentSimple: {
       s: "acts",
       p: "act",
@@ -62,8 +57,7 @@ const VERBS_ALL: Verb[] = [
       p: "acted",
     },
   },
-  { // VoA, Fry
-    i: "add",
+  "add": { // VoA, Fry
     presentSimple: {
       s: "adds",
       p: "add",
@@ -73,8 +67,7 @@ const VERBS_ALL: Verb[] = [
       p: "added",
     },
   },
-  { // VoA
-    i: "admit",
+  "admit": { // VoA
     presentSimple: {
       s: "admits",
       p: "admit",
@@ -84,8 +77,7 @@ const VERBS_ALL: Verb[] = [
       p: "admitted",
     },
   },
-  { // VoA
-    i: "advise",
+  "advise": { // VoA
     presentSimple: {
       s: "advises",
       p: "advise",
@@ -95,8 +87,7 @@ const VERBS_ALL: Verb[] = [
       p: "advised",
     },
   },
-  { // VoA
-    i: "affect",
+  "affect": { // VoA
     presentSimple: {
       s: "affects",
       p: "affect",
@@ -106,8 +97,7 @@ const VERBS_ALL: Verb[] = [
       p: "affected",
     },
   },
-  { // VoA, Fry
-    i: "age",
+  "age": { // VoA, Fry
     presentSimple: {
       s: "ages",
       p: "age",
@@ -117,8 +107,7 @@ const VERBS_ALL: Verb[] = [
       p: "aged",
     },
   },
-  { // VoA, Fry
-    i: "agree",
+  "agree": { // VoA, Fry
     presentSimple: {
       s: "agrees",
       p: "agree",
@@ -128,8 +117,7 @@ const VERBS_ALL: Verb[] = [
       p: "agreed",
     },
   },
-  { // VoA
-    i: "aid",
+  "aid": { // VoA
     presentSimple: {
       s: "aids",
       p: "aid",
@@ -139,8 +127,7 @@ const VERBS_ALL: Verb[] = [
       p: "aided",
     },
   },
-  { // VoA
-    i: "aim",
+  "aim": { // VoA
     presentSimple: {
       s: "aims",
       p: "aim",
@@ -150,8 +137,7 @@ const VERBS_ALL: Verb[] = [
       p: "aimed",
     },
   },
-  { // VoA, Fry
-    i: "air",
+  "air": { // VoA, Fry
     presentSimple: {
       s: "airs",
       p: "air",
@@ -161,8 +147,7 @@ const VERBS_ALL: Verb[] = [
       p: "aired",
     },
   },
-  { // Fry
-    i: "allow",
+  "allow": { // Fry
     presentSimple: {
       s: "allows",
       p: "allow",
@@ -172,8 +157,7 @@ const VERBS_ALL: Verb[] = [
       p: "allowed",
     },
   },
-  { // VoA
-    i: "ally",
+  "ally": { // VoA
     presentSimple: {
       s: "allies",
       p: "ally",
@@ -183,8 +167,7 @@ const VERBS_ALL: Verb[] = [
       p: "allied",
     },
   },
-  { // VoA
-    i: "amend",
+  "amend": { // VoA
     presentSimple: {
       s: "amends",
       p: "amend",
@@ -194,8 +177,7 @@ const VERBS_ALL: Verb[] = [
       p: "amended",
     },
   },
-  { // VoA
-    i: "anger",
+  "anger": { // VoA
     presentSimple: {
       s: "angers",
       p: "anger",
@@ -205,8 +187,7 @@ const VERBS_ALL: Verb[] = [
       p: "angered",
     },
   },
-  { // Fry
-    i: "angle",
+  "angle": { // Fry
     presentSimple: {
       s: "angles",
       p: "angle",
@@ -216,8 +197,7 @@ const VERBS_ALL: Verb[] = [
       p: "angled",
     },
   },
-  { // VoA
-    i: "announce",
+  "announce": { // VoA
     presentSimple: {
       s: "announces",
       p: "announce",
@@ -227,8 +207,7 @@ const VERBS_ALL: Verb[] = [
       p: "announced",
     },
   },
-  { // VoA, Fry
-    i: "answer",
+  "answer": { // VoA, Fry
     presentSimple: {
       s: "answers",
       p: "answer",
@@ -238,8 +217,7 @@ const VERBS_ALL: Verb[] = [
       p: "answered",
     },
   },
-  { // VoA
-    i: "apologize",
+  "apologize": { // VoA
     presentSimple: {
       s: "apologizes",
       p: "apologize",
@@ -249,8 +227,7 @@ const VERBS_ALL: Verb[] = [
       p: "apologized",
     },
   },
-  { // VoA
-    i: "appeal",
+  "appeal": { // VoA
     presentSimple: {
       s: "appeals",
       p: "appeal",
@@ -260,8 +237,7 @@ const VERBS_ALL: Verb[] = [
       p: "appealed",
     },
   },
-  { // VoA, Fry
-    i: "appear",
+  "appear": { // VoA, Fry
     presentSimple: {
       s: "appears",
       p: "appear",
@@ -271,8 +247,7 @@ const VERBS_ALL: Verb[] = [
       p: "appeared",
     },
   },
-  { // VoA
-    i: "appoint",
+  "appoint": { // VoA
     presentSimple: {
       s: "appoints",
       p: "appoint",
@@ -282,8 +257,7 @@ const VERBS_ALL: Verb[] = [
       p: "appointed",
     },
   },
-  { // VoA
-    i: "approve",
+  "approve": { // VoA
     presentSimple: {
       s: "approves",
       p: "approve",
@@ -293,8 +267,7 @@ const VERBS_ALL: Verb[] = [
       p: "approved",
     },
   },
-  { // VoA
-    i: "argue",
+  "argue": { // VoA
     presentSimple: {
       s: "argues",
       p: "argue",
@@ -304,8 +277,7 @@ const VERBS_ALL: Verb[] = [
       p: "argued",
     },
   },
-  { // VoA
-    i: "arrest",
+  "arrest": { // VoA
     presentSimple: {
       s: "arrests",
       p: "arrest",
@@ -315,8 +287,7 @@ const VERBS_ALL: Verb[] = [
       p: "arrested",
     },
   },
-  { // VoA, Fry
-    i: "arrive",
+  "arrive": { // VoA, Fry
     presentSimple: {
       s: "arrives",
       p: "arrive",
@@ -326,8 +297,7 @@ const VERBS_ALL: Verb[] = [
       p: "arrived",
     },
   },
-  { // VoA, Fry
-    i: "ask",
+  "ask": { // VoA, Fry
     presentSimple: {
       s: "asks",
       p: "ask",
@@ -337,8 +307,7 @@ const VERBS_ALL: Verb[] = [
       p: "asked",
     },
   },
-  { // VoA
-    i: "assist",
+  "assist": { // VoA
     presentSimple: {
       s: "assists",
       p: "assist",
@@ -348,8 +317,7 @@ const VERBS_ALL: Verb[] = [
       p: "assisted",
     },
   },
-  { // VoA
-    i: "attach",
+  "attach": { // VoA
     presentSimple: {
       s: "attaches",
       p: "attach",
@@ -359,8 +327,7 @@ const VERBS_ALL: Verb[] = [
       p: "attached",
     },
   },
-  { // VoA
-    i: "attack",
+  "attack": { // VoA
     presentSimple: {
       s: "attacks",
       p: "attack",
@@ -370,8 +337,7 @@ const VERBS_ALL: Verb[] = [
       p: "attacked",
     },
   },
-  { // VoA
-    i: "attempt",
+  "attempt": { // VoA
     presentSimple: {
       s: "attempts",
       p: "attempt",
@@ -381,8 +347,7 @@ const VERBS_ALL: Verb[] = [
       p: "attempted",
     },
   },
-  { // VoA
-    i: "attend",
+  "attend": { // VoA
     presentSimple: {
       s: "attends",
       p: "attend",
@@ -392,8 +357,7 @@ const VERBS_ALL: Verb[] = [
       p: "attended",
     },
   },
-  { // VoA
-    i: "average",
+  "average": { // VoA
     presentSimple: {
       s: "averages",
       p: "average",
@@ -403,8 +367,7 @@ const VERBS_ALL: Verb[] = [
       p: "averaged",
     },
   },
-  { // VoA
-    i: "avoid",
+  "avoid": { // VoA
     presentSimple: {
       s: "avoids",
       p: "avoid",
@@ -414,8 +377,7 @@ const VERBS_ALL: Verb[] = [
       p: "avoided",
     },
   },
-  { // VoA
-    i: "award",
+  "award": { // VoA
     presentSimple: {
       s: "awards",
       p: "award",
@@ -425,8 +387,7 @@ const VERBS_ALL: Verb[] = [
       p: "awarded",
     },
   },
-  { // VoA
-    i: "balance",
+  "balance": { // VoA
     presentSimple: {
       s: "balances",
       p: "balance",
@@ -436,8 +397,7 @@ const VERBS_ALL: Verb[] = [
       p: "balanced",
     },
   },
-  { // VoA
-    i: "ban",
+  "ban": { // VoA
     presentSimple: {
       s: "bans",
       p: "ban",
@@ -447,8 +407,7 @@ const VERBS_ALL: Verb[] = [
       p: "banned",
     },
   },
-  { // VoA, Fry
-    i: "bank",
+  "bank": { // VoA, Fry
     presentSimple: {
       s: "banks",
       p: "bank",
@@ -458,8 +417,7 @@ const VERBS_ALL: Verb[] = [
       p: "banked",
     },
   },
-  { // VoA
-    i: "bar",
+  "bar": { // VoA
     presentSimple: {
       s: "bars",
       p: "bar",
@@ -469,8 +427,7 @@ const VERBS_ALL: Verb[] = [
       p: "barred",
     },
   },
-  { // VoA
-    i: "base",
+  "base": { // VoA
     presentSimple: {
       s: "bases",
       p: "base",
@@ -480,8 +437,7 @@ const VERBS_ALL: Verb[] = [
       p: "based",
     },
   },
-  { // VoA
-    i: "battle",
+  "battle": { // VoA
     presentSimple: {
       s: "battles",
       p: "battle",
@@ -491,8 +447,7 @@ const VERBS_ALL: Verb[] = [
       p: "battled",
     },
   },
-  { // VoA
-    i: "be",
+  "be": { // VoA
     presentSimple: {
       s: "is",
       p: "are",
@@ -502,8 +457,7 @@ const VERBS_ALL: Verb[] = [
       p: "were",
     },
   },
-  { // VoA, Fry
-    i: "beat",
+  "beat": { // VoA, Fry
     presentSimple: {
       s: "beats",
       p: "beat",
@@ -513,8 +467,7 @@ const VERBS_ALL: Verb[] = [
       p: "beat",
     },
   },
-  { // VoA, Fry
-    i: "become",
+  "become": { // VoA, Fry
     presentSimple: {
       s: "becomes",
       p: "become",
@@ -524,8 +477,7 @@ const VERBS_ALL: Verb[] = [
       p: "became",
     },
   },
-  { // VoA, Fry
-    i: "begin",
+  "begin": { // VoA, Fry
     presentSimple: {
       s: "begins",
       p: "begin",
@@ -535,8 +487,7 @@ const VERBS_ALL: Verb[] = [
       p: "began",
     },
   },
-  { // VoA, Fry
-    i: "believe",
+  "believe": { // VoA, Fry
     presentSimple: {
       s: "believes",
       p: "believe",
@@ -546,8 +497,7 @@ const VERBS_ALL: Verb[] = [
       p: "believed",
     },
   },
-  { // VoA, Fry
-    i: "belong",
+  "belong": { // VoA, Fry
     presentSimple: {
       s: "belongs",
       p: "belong",
@@ -557,8 +507,7 @@ const VERBS_ALL: Verb[] = [
       p: "belonged",
     },
   },
-  { // VoA, Fry
-    i: "best",
+  "best": { // VoA, Fry
     presentSimple: {
       s: "bests",
       p: "best",
@@ -568,8 +517,7 @@ const VERBS_ALL: Verb[] = [
       p: "bested",
     },
   },
-  { // VoA, Fry
-    i: "better",
+  "better": { // VoA, Fry
     presentSimple: {
       s: "betters",
       p: "better",
@@ -579,8 +527,7 @@ const VERBS_ALL: Verb[] = [
       p: "bettered",
     },
   },
-  { // VoA
-    i: "betray",
+  "betray": { // VoA
     presentSimple: {
       s: "betrays",
       p: "betray",
@@ -590,8 +537,7 @@ const VERBS_ALL: Verb[] = [
       p: "betrayed",
     },
   },
-  { // VoA, Fry
-    i: "bill",
+  "bill": { // VoA, Fry
     presentSimple: {
       s: "bills",
       p: "bill",
@@ -601,8 +547,7 @@ const VERBS_ALL: Verb[] = [
       p: "billed",
     },
   },
-  { // VoA, Fry
-    i: "bite",
+  "bite": { // VoA, Fry
     presentSimple: {
       s: "bites",
       p: "bite",
@@ -612,8 +557,7 @@ const VERBS_ALL: Verb[] = [
       p: "bit",
     },
   },
-  { // VoA
-    i: "blame",
+  "blame": { // VoA
     presentSimple: {
       s: "blames",
       p: "blame",
@@ -623,8 +567,7 @@ const VERBS_ALL: Verb[] = [
       p: "blamed",
     },
   },
-  { // VoA
-    i: "bleed",
+  "bleed": { // VoA
     presentSimple: {
       s: "bleeds",
       p: "bleed",
@@ -634,8 +577,7 @@ const VERBS_ALL: Verb[] = [
       p: "bled",
     },
   },
-  { // VoA
-    i: "blind",
+  "blind": { // VoA
     presentSimple: {
       s: "blinds",
       p: "blind",
@@ -645,8 +587,7 @@ const VERBS_ALL: Verb[] = [
       p: "blinded",
     },
   },
-  { // VoA, Fry
-    i: "block",
+  "block": { // VoA, Fry
     presentSimple: {
       s: "blocks",
       p: "block",
@@ -656,8 +597,7 @@ const VERBS_ALL: Verb[] = [
       p: "blocked",
     },
   },
-  { // VoA, Fry
-    i: "blow",
+  "blow": { // VoA, Fry
     presentSimple: {
       s: "blows",
       p: "blow",
@@ -667,8 +607,7 @@ const VERBS_ALL: Verb[] = [
       p: "blew",
     },
   },
-  { // Fry
-    i: "board",
+  "board": { // Fry
     presentSimple: {
       s: "boards",
       p: "board",
@@ -678,8 +617,7 @@ const VERBS_ALL: Verb[] = [
       p: "boarded",
     },
   },
-  { // VoA
-    i: "boil",
+  "boil": { // VoA
     presentSimple: {
       s: "boils",
       p: "boil",
@@ -689,8 +627,7 @@ const VERBS_ALL: Verb[] = [
       p: "boiled",
     },
   },
-  { // VoA
-    i: "bomb",
+  "bomb": { // VoA
     presentSimple: {
       s: "bombs",
       p: "bomb",
@@ -700,8 +637,7 @@ const VERBS_ALL: Verb[] = [
       p: "bombed",
     },
   },
-  { // VoA
-    i: "book",
+  "book": { // VoA
     presentSimple: {
       s: "books",
       p: "book",
@@ -711,8 +647,7 @@ const VERBS_ALL: Verb[] = [
       p: "booked",
     },
   },
-  { // VoA
-    i: "border",
+  "border": { // VoA
     presentSimple: {
       s: "borders",
       p: "border",
@@ -722,8 +657,7 @@ const VERBS_ALL: Verb[] = [
       p: "bordered",
     },
   },
-  { // VoA
-    i: "borrow",
+  "borrow": { // VoA
     presentSimple: {
       s: "borrows",
       p: "borrow",
@@ -733,8 +667,7 @@ const VERBS_ALL: Verb[] = [
       p: "borrowed",
     },
   },
-  { // VoA
-    i: "bottle",
+  "bottle": { // VoA
     presentSimple: {
       s: "bottles",
       p: "bottle",
@@ -744,8 +677,7 @@ const VERBS_ALL: Verb[] = [
       p: "bottled",
     },
   },
-  { // VoA
-    i: "box",
+  "box": { // VoA
     presentSimple: {
       s: "boxes",
       p: "box",
@@ -755,8 +687,7 @@ const VERBS_ALL: Verb[] = [
       p: "boxed",
     },
   },
-  { // VoA
-    i: "boycott",
+  "boycott": { // VoA
     presentSimple: {
       s: "boycotts",
       p: "boycott",
@@ -766,8 +697,7 @@ const VERBS_ALL: Verb[] = [
       p: "boycotted",
     },
   },
-  { // VoA
-    i: "brave",
+  "brave": { // VoA
     presentSimple: {
       s: "braves",
       p: "brave",
@@ -777,8 +707,7 @@ const VERBS_ALL: Verb[] = [
       p: "braved",
     },
   },
-  { // VoA, Fry
-    i: "break",
+  "break": { // VoA, Fry
     presentSimple: {
       s: "breaks",
       p: "break",
@@ -788,8 +717,7 @@ const VERBS_ALL: Verb[] = [
       p: "broke",
     },
   },
-  { // VoA
-    i: "breathe",
+  "breathe": { // VoA
     presentSimple: {
       s: "breathes",
       p: "breathe",
@@ -799,8 +727,7 @@ const VERBS_ALL: Verb[] = [
       p: "breathed",
     },
   },
-  { // VoA
-    i: "bridge",
+  "bridge": { // VoA
     presentSimple: {
       s: "bridges",
       p: "bridge",
@@ -810,8 +737,7 @@ const VERBS_ALL: Verb[] = [
       p: "bridged",
     },
   },
-  { // VoA
-    i: "brief",
+  "brief": { // VoA
     presentSimple: {
       s: "briefs",
       p: "brief",
@@ -821,8 +747,7 @@ const VERBS_ALL: Verb[] = [
       p: "briefed",
     },
   },
-  { // VoA, Fry
-    i: "bring",
+  "bring": { // VoA, Fry
     presentSimple: {
       s: "brings",
       p: "bring",
@@ -832,8 +757,7 @@ const VERBS_ALL: Verb[] = [
       p: "brought",
     },
   },
-  { // VoA
-    i: "broadcast",
+  "broadcast": { // VoA
     presentSimple: {
       s: "broadcasts",
       p: "broadcast",
@@ -843,8 +767,7 @@ const VERBS_ALL: Verb[] = [
       p: "broadcast",
     },
   },
-  { // VoA
-    i: "brown",
+  "brown": { // VoA
     presentSimple: {
       s: "browns",
       p: "brown",
@@ -854,8 +777,7 @@ const VERBS_ALL: Verb[] = [
       p: "browned",
     },
   },
-  { // VoA, Fry
-    i: "build",
+  "build": { // VoA, Fry
     presentSimple: {
       s: "builds",
       p: "build",
@@ -865,8 +787,7 @@ const VERBS_ALL: Verb[] = [
       p: "built",
     },
   },
-  { // VoA
-    i: "burn",
+  "burn": { // VoA
     presentSimple: {
       s: "burns",
       p: "burn",
@@ -876,8 +797,7 @@ const VERBS_ALL: Verb[] = [
       p: "burned",
     },
   },
-  { // VoA
-    i: "burst",
+  "burst": { // VoA
     presentSimple: {
       s: "bursts",
       p: "burst",
@@ -887,8 +807,7 @@ const VERBS_ALL: Verb[] = [
       p: "burst",
     },
   },
-  { // VoA
-    i: "bury",
+  "bury": { // VoA
     presentSimple: {
       s: "buries",
       p: "bury",
@@ -898,8 +817,7 @@ const VERBS_ALL: Verb[] = [
       p: "buried",
     },
   },
-  { // VoA
-    i: "bus",
+  "bus": { // VoA
     presentSimple: {
       s: "buses",
       p: "bus",
@@ -909,8 +827,7 @@ const VERBS_ALL: Verb[] = [
       p: "bused",
     },
   },
-  { // VoA, Fry
-    i: "buy",
+  "buy": { // VoA, Fry
     presentSimple: {
       s: "buys",
       p: "buy",
@@ -920,8 +837,7 @@ const VERBS_ALL: Verb[] = [
       p: "bought",
     },
   },
-  { // VoA
-    i: "call",
+  "call": { // VoA
     presentSimple: {
       s: "calls",
       p: "call",
@@ -931,8 +847,7 @@ const VERBS_ALL: Verb[] = [
       p: "called",
     },
   },
-  { // VoA
-    i: "calm",
+  "calm": { // VoA
     presentSimple: {
       s: "calms",
       p: "calm",
@@ -942,8 +857,7 @@ const VERBS_ALL: Verb[] = [
       p: "calmed",
     },
   },
-  { // VoA
-    i: "camp",
+  "camp": { // VoA
     presentSimple: {
       s: "camps",
       p: "camp",
@@ -953,8 +867,7 @@ const VERBS_ALL: Verb[] = [
       p: "camped",
     },
   },
-  { // VoA
-    i: "campaign",
+  "campaign": { // VoA
     presentSimple: {
       s: "campaigns",
       p: "campaign",
@@ -964,8 +877,7 @@ const VERBS_ALL: Verb[] = [
       p: "campaigned",
     },
   },
-  { // VoA
-    i: "cancel",
+  "cancel": { // VoA
     presentSimple: {
       s: "cancels",
       p: "cancel",
@@ -975,8 +887,7 @@ const VERBS_ALL: Verb[] = [
       p: "canceled",
     },
   },
-  { // VoA
-    i: "capture",
+  "capture": { // VoA
     presentSimple: {
       s: "captures",
       p: "capture",
@@ -986,8 +897,7 @@ const VERBS_ALL: Verb[] = [
       p: "captured",
     },
   },
-  { // VoA
-    i: "care",
+  "care": { // VoA
     presentSimple: {
       s: "cares",
       p: "care",
@@ -997,8 +907,7 @@ const VERBS_ALL: Verb[] = [
       p: "cared",
     },
   },
-  { // VoA
-    i: "carry",
+  "carry": { // VoA
     presentSimple: {
       s: "carries",
       p: "carry",
@@ -1008,8 +917,7 @@ const VERBS_ALL: Verb[] = [
       p: "carried",
     },
   },
-  { // VoA
-    i: "catch",
+  "catch": { // VoA
     presentSimple: {
       s: "catches",
       p: "catch",
@@ -1019,8 +927,7 @@ const VERBS_ALL: Verb[] = [
       p: "caught",
     },
   },
-  { // VoA
-    i: "cause",
+  "cause": { // VoA
     presentSimple: {
       s: "causes",
       p: "cause",
@@ -1030,8 +937,7 @@ const VERBS_ALL: Verb[] = [
       p: "caused",
     },
   },
-  { // VoA
-    i: "celebrate",
+  "celebrate": { // VoA
     presentSimple: {
       s: "celebrates",
       p: "celebrate",
@@ -1041,8 +947,7 @@ const VERBS_ALL: Verb[] = [
       p: "celebrated",
     },
   },
-  { // VoA
-    i: "center",
+  "center": { // VoA
     presentSimple: {
       s: "centers",
       p: "center",
@@ -1052,8 +957,7 @@ const VERBS_ALL: Verb[] = [
       p: "centered",
     },
   },
-  { // VoA
-    i: "chance",
+  "chance": { // VoA
     presentSimple: {
       s: "chances",
       p: "chance",
@@ -1063,8 +967,7 @@ const VERBS_ALL: Verb[] = [
       p: "chanced",
     },
   },
-  { // VoA
-    i: "change",
+  "change": { // VoA
     presentSimple: {
       s: "changes",
       p: "change",
@@ -1074,8 +977,7 @@ const VERBS_ALL: Verb[] = [
       p: "changed",
     },
   },
-  { // VoA
-    i: "charge",
+  "charge": { // VoA
     presentSimple: {
       s: "charges",
       p: "charge",
@@ -1085,8 +987,7 @@ const VERBS_ALL: Verb[] = [
       p: "charged",
     },
   },
-  { // VoA
-    i: "chase",
+  "chase": { // VoA
     presentSimple: {
       s: "chases",
       p: "chase",
@@ -1096,8 +997,7 @@ const VERBS_ALL: Verb[] = [
       p: "chased",
     },
   },
-  { // VoA
-    i: "cheat",
+  "cheat": { // VoA
     presentSimple: {
       s: "cheats",
       p: "cheat",
@@ -1107,8 +1007,7 @@ const VERBS_ALL: Verb[] = [
       p: "cheated",
     },
   },
-  { // VoA
-    i: "cheer",
+  "cheer": { // VoA
     presentSimple: {
       s: "cheers",
       p: "cheer",
@@ -1118,8 +1017,7 @@ const VERBS_ALL: Verb[] = [
       p: "cheered",
     },
   },
-  { // VoA
-    i: "choose",
+  "choose": { // VoA
     presentSimple: {
       s: "chooses",
       p: "choose",
@@ -1129,8 +1027,7 @@ const VERBS_ALL: Verb[] = [
       p: "chose",
     },
   },
-  { // VoA
-    i: "circle",
+  "circle": { // VoA
     presentSimple: {
       s: "circles",
       p: "circle",
@@ -1140,8 +1037,7 @@ const VERBS_ALL: Verb[] = [
       p: "circled",
     },
   },
-  { // VoA
-    i: "claim",
+  "claim": { // VoA
     presentSimple: {
       s: "claims",
       p: "claim",
@@ -1151,8 +1047,7 @@ const VERBS_ALL: Verb[] = [
       p: "claimed",
     },
   },
-  { // VoA
-    i: "clash",
+  "clash": { // VoA
     presentSimple: {
       s: "clashes",
       p: "clash",
@@ -1162,8 +1057,7 @@ const VERBS_ALL: Verb[] = [
       p: "clashed",
     },
   },
-  { // VoA
-    i: "clean",
+  "clean": { // VoA
     presentSimple: {
       s: "cleans",
       p: "clean",
@@ -1173,8 +1067,7 @@ const VERBS_ALL: Verb[] = [
       p: "cleaned",
     },
   },
-  { // VoA
-    i: "clear",
+  "clear": { // VoA
     presentSimple: {
       s: "clears",
       p: "clear",
@@ -1184,8 +1077,7 @@ const VERBS_ALL: Verb[] = [
       p: "cleared",
     },
   },
-  { // VoA
-    i: "climb",
+  "climb": { // VoA
     presentSimple: {
       s: "climbs",
       p: "climb",
@@ -1195,8 +1087,7 @@ const VERBS_ALL: Verb[] = [
       p: "climbed",
     },
   },
-  { // VoA
-    i: "close",
+  "close": { // VoA
     presentSimple: {
       s: "closes",
       p: "close",
@@ -1206,8 +1097,7 @@ const VERBS_ALL: Verb[] = [
       p: "closed",
     },
   },
-  { // VoA
-    i: "coast",
+  "coast": { // VoA
     presentSimple: {
       s: "coasts",
       p: "coast",
@@ -1217,8 +1107,7 @@ const VERBS_ALL: Verb[] = [
       p: "coasted",
     },
   },
-  { // VoA
-    i: "collect",
+  "collect": { // VoA
     presentSimple: {
       s: "collects",
       p: "collect",
@@ -1228,8 +1117,7 @@ const VERBS_ALL: Verb[] = [
       p: "collected",
     },
   },
-  { // VoA
-    i: "color",
+  "color": { // VoA
     presentSimple: {
       s: "colors",
       p: "color",
@@ -1239,8 +1127,7 @@ const VERBS_ALL: Verb[] = [
       p: "colored",
     },
   },
-  { // VoA
-    i: "combine",
+  "combine": { // VoA
     presentSimple: {
       s: "combines",
       p: "combine",
@@ -1250,8 +1137,7 @@ const VERBS_ALL: Verb[] = [
       p: "combined",
     },
   },
-  { // VoA
-    i: "come",
+  "come": { // VoA
     presentSimple: {
       s: "comes",
       p: "come",
@@ -1261,8 +1147,7 @@ const VERBS_ALL: Verb[] = [
       p: "came",
     },
   },
-  { // VoA
-    i: "command",
+  "command": { // VoA
     presentSimple: {
       s: "commands",
       p: "command",
@@ -1272,8 +1157,7 @@ const VERBS_ALL: Verb[] = [
       p: "commanded",
     },
   },
-  { // VoA
-    i: "comment",
+  "comment": { // VoA
     presentSimple: {
       s: "comments",
       p: "comment",
@@ -1283,8 +1167,7 @@ const VERBS_ALL: Verb[] = [
       p: "commented",
     },
   },
-  { // VoA
-    i: "communicate",
+  "communicate": { // VoA
     presentSimple: {
       s: "communicates",
       p: "communicate",
@@ -1294,8 +1177,7 @@ const VERBS_ALL: Verb[] = [
       p: "communicated",
     },
   },
-  { // VoA
-    i: "compare",
+  "compare": { // VoA
     presentSimple: {
       s: "compares",
       p: "compare",
@@ -1305,8 +1187,7 @@ const VERBS_ALL: Verb[] = [
       p: "compared",
     },
   },
-  { // VoA
-    i: "compete",
+  "compete": { // VoA
     presentSimple: {
       s: "competes",
       p: "compete",
@@ -1316,8 +1197,7 @@ const VERBS_ALL: Verb[] = [
       p: "competed",
     },
   },
-  { // VoA
-    i: "complete",
+  "complete": { // VoA
     presentSimple: {
       s: "completes",
       p: "complete",
@@ -1327,8 +1207,7 @@ const VERBS_ALL: Verb[] = [
       p: "completed",
     },
   },
-  { // VoA
-    i: "compromise",
+  "compromise": { // VoA
     presentSimple: {
       s: "compromises",
       p: "compromise",
@@ -1338,8 +1217,7 @@ const VERBS_ALL: Verb[] = [
       p: "compromised",
     },
   },
-  { // VoA
-    i: "concern",
+  "concern": { // VoA
     presentSimple: {
       s: "concerns",
       p: "concern",
@@ -1349,8 +1227,7 @@ const VERBS_ALL: Verb[] = [
       p: "concerned",
     },
   },
-  { // VoA
-    i: "condemn",
+  "condemn": { // VoA
     presentSimple: {
       s: "condemns",
       p: "condemn",
@@ -1360,8 +1237,7 @@ const VERBS_ALL: Verb[] = [
       p: "condemned",
     },
   },
-  { // VoA
-    i: "condition",
+  "condition": { // VoA
     presentSimple: {
       s: "conditions",
       p: "condition",
@@ -1371,8 +1247,7 @@ const VERBS_ALL: Verb[] = [
       p: "conditioned",
     },
   },
-  { // VoA
-    i: "confirm",
+  "confirm": { // VoA
     presentSimple: {
       s: "confirms",
       p: "confirm",
@@ -1382,8 +1257,7 @@ const VERBS_ALL: Verb[] = [
       p: "confirmed",
     },
   },
-  { // VoA
-    i: "congratulate",
+  "congratulate": { // VoA
     presentSimple: {
       s: "congratulates",
       p: "congratulate",
@@ -1393,8 +1267,7 @@ const VERBS_ALL: Verb[] = [
       p: "congratulated",
     },
   },
-  { // VoA
-    i: "connect",
+  "connect": { // VoA
     presentSimple: {
       s: "connects",
       p: "connect",
@@ -1404,8 +1277,7 @@ const VERBS_ALL: Verb[] = [
       p: "connected",
     },
   },
-  { // VoA
-    i: "consider",
+  "consider": { // VoA
     presentSimple: {
       s: "considers",
       p: "consider",
@@ -1415,8 +1287,7 @@ const VERBS_ALL: Verb[] = [
       p: "considered",
     },
   },
-  { // VoA
-    i: "contain",
+  "contain": { // VoA
     presentSimple: {
       s: "contains",
       p: "contain",
@@ -1426,8 +1297,7 @@ const VERBS_ALL: Verb[] = [
       p: "contained",
     },
   },
-  { // VoA
-    i: "continue",
+  "continue": { // VoA
     presentSimple: {
       s: "continues",
       p: "continue",
@@ -1437,8 +1307,7 @@ const VERBS_ALL: Verb[] = [
       p: "continued",
     },
   },
-  { // VoA
-    i: "control",
+  "control": { // VoA
     presentSimple: {
       s: "controls",
       p: "control",
@@ -1448,8 +1317,7 @@ const VERBS_ALL: Verb[] = [
       p: "controlled",
     },
   },
-  { // VoA
-    i: "cook",
+  "cook": { // VoA
     presentSimple: {
       s: "cooks",
       p: "cook",
@@ -1459,8 +1327,7 @@ const VERBS_ALL: Verb[] = [
       p: "cooked",
     },
   },
-  { // VoA
-    i: "cool",
+  "cool": { // VoA
     presentSimple: {
       s: "cools",
       p: "cool",
@@ -1470,8 +1337,7 @@ const VERBS_ALL: Verb[] = [
       p: "cooled",
     },
   },
-  { // VoA
-    i: "cooperate",
+  "cooperate": { // VoA
     presentSimple: {
       s: "cooperates",
       p: "cooperate",
@@ -1481,8 +1347,7 @@ const VERBS_ALL: Verb[] = [
       p: "cooperated",
     },
   },
-  { // VoA
-    i: "copy",
+  "copy": { // VoA
     presentSimple: {
       s: "copies",
       p: "copy",
@@ -1492,8 +1357,7 @@ const VERBS_ALL: Verb[] = [
       p: "copied",
     },
   },
-  { // VoA
-    i: "correct",
+  "correct": { // VoA
     presentSimple: {
       s: "corrects",
       p: "correct",
@@ -1503,8 +1367,7 @@ const VERBS_ALL: Verb[] = [
       p: "corrected",
     },
   },
-  { // VoA
-    i: "cost",
+  "cost": { // VoA
     presentSimple: {
       s: "costs",
       p: "cost",
@@ -1514,8 +1377,7 @@ const VERBS_ALL: Verb[] = [
       p: "cost",
     },
   },
-  { // VoA
-    i: "count",
+  "count": { // VoA
     presentSimple: {
       s: "counts",
       p: "count",
@@ -1525,8 +1387,7 @@ const VERBS_ALL: Verb[] = [
       p: "counted",
     },
   },
-  { // VoA
-    i: "court",
+  "court": { // VoA
     presentSimple: {
       s: "courts",
       p: "court",
@@ -1536,8 +1397,7 @@ const VERBS_ALL: Verb[] = [
       p: "courted",
     },
   },
-  { // VoA
-    i: "cover",
+  "cover": { // VoA
     presentSimple: {
       s: "covers",
       p: "cover",
@@ -1547,8 +1407,7 @@ const VERBS_ALL: Verb[] = [
       p: "covered",
     },
   },
-  { // VoA
-    i: "crash",
+  "crash": { // VoA
     presentSimple: {
       s: "crashes",
       p: "crash",
@@ -1558,8 +1417,7 @@ const VERBS_ALL: Verb[] = [
       p: "crashed",
     },
   },
-  { // VoA
-    i: "create",
+  "create": { // VoA
     presentSimple: {
       s: "creates",
       p: "create",
@@ -1569,8 +1427,7 @@ const VERBS_ALL: Verb[] = [
       p: "created",
     },
   },
-  { // VoA
-    i: "credit",
+  "credit": { // VoA
     presentSimple: {
       s: "credits",
       p: "credit",
@@ -1580,8 +1437,7 @@ const VERBS_ALL: Verb[] = [
       p: "credited",
     },
   },
-  { // VoA
-    i: "crew",
+  "crew": { // VoA
     presentSimple: {
       s: "crews",
       p: "crew",
@@ -1591,8 +1447,7 @@ const VERBS_ALL: Verb[] = [
       p: "crewed",
     },
   },
-  { // VoA
-    i: "criticize",
+  "criticize": { // VoA
     presentSimple: {
       s: "criticizes",
       p: "criticize",
@@ -1602,8 +1457,7 @@ const VERBS_ALL: Verb[] = [
       p: "criticized",
     },
   },
-  { // VoA
-    i: "cross",
+  "cross": { // VoA
     presentSimple: {
       s: "crosses",
       p: "cross",
@@ -1613,8 +1467,7 @@ const VERBS_ALL: Verb[] = [
       p: "crossed",
     },
   },
-  { // VoA
-    i: "crowd",
+  "crowd": { // VoA
     presentSimple: {
       s: "crowds",
       p: "crowd",
@@ -1624,8 +1477,7 @@ const VERBS_ALL: Verb[] = [
       p: "crowded",
     },
   },
-  { // VoA
-    i: "crush",
+  "crush": { // VoA
     presentSimple: {
       s: "crushes",
       p: "crush",
@@ -1635,8 +1487,7 @@ const VERBS_ALL: Verb[] = [
       p: "crushed",
     },
   },
-  { // VoA
-    i: "cry",
+  "cry": { // VoA
     presentSimple: {
       s: "cries",
       p: "cry",
@@ -1646,8 +1497,7 @@ const VERBS_ALL: Verb[] = [
       p: "cried",
     },
   },
-  { // VoA
-    i: "culture",
+  "culture": { // VoA
     presentSimple: {
       s: "cultures",
       p: "culture",
@@ -1657,8 +1507,7 @@ const VERBS_ALL: Verb[] = [
       p: "cultured",
     },
   },
-  { // VoA
-    i: "cure",
+  "cure": { // VoA
     presentSimple: {
       s: "cures",
       p: "cure",
@@ -1668,8 +1517,7 @@ const VERBS_ALL: Verb[] = [
       p: "cured",
     },
   },
-  { // VoA
-    i: "cut",
+  "cut": { // VoA
     presentSimple: {
       s: "cuts",
       p: "cut",
@@ -1679,8 +1527,7 @@ const VERBS_ALL: Verb[] = [
       p: "cut",
     },
   },
-  { // VoA
-    i: "dam",
+  "dam": { // VoA
     presentSimple: {
       s: "dams",
       p: "dam",
@@ -1690,8 +1537,7 @@ const VERBS_ALL: Verb[] = [
       p: "dammed",
     },
   },
-  { // VoA
-    i: "damage",
+  "damage": { // VoA
     presentSimple: {
       s: "damages",
       p: "damage",
@@ -1701,8 +1547,7 @@ const VERBS_ALL: Verb[] = [
       p: "damaged",
     },
   },
-  { // VoA
-    i: "dance",
+  "dance": { // VoA
     presentSimple: {
       s: "dances",
       p: "dance",
@@ -1712,8 +1557,7 @@ const VERBS_ALL: Verb[] = [
       p: "danced",
     },
   },
-  { // VoA
-    i: "date",
+  "date": { // VoA
     presentSimple: {
       s: "dates",
       p: "date",
@@ -1723,8 +1567,7 @@ const VERBS_ALL: Verb[] = [
       p: "dated",
     },
   },
-  { // VoA
-    i: "deal",
+  "deal": { // VoA
     presentSimple: {
       s: "deals",
       p: "deal",
@@ -1734,8 +1577,7 @@ const VERBS_ALL: Verb[] = [
       p: "dealt",
     },
   },
-  { // VoA
-    i: "debate",
+  "debate": { // VoA
     presentSimple: {
       s: "debates",
       p: "debate",
@@ -1745,8 +1587,7 @@ const VERBS_ALL: Verb[] = [
       p: "debated",
     },
   },
-  { // VoA
-    i: "decide",
+  "decide": { // VoA
     presentSimple: {
       s: "decides",
       p: "decide",
@@ -1756,8 +1597,7 @@ const VERBS_ALL: Verb[] = [
       p: "decided",
     },
   },
-  { // VoA
-    i: "declare",
+  "declare": { // VoA
     presentSimple: {
       s: "declares",
       p: "declare",
@@ -1767,8 +1607,7 @@ const VERBS_ALL: Verb[] = [
       p: "declared",
     },
   },
-  { // VoA
-    i: "decrease",
+  "decrease": { // VoA
     presentSimple: {
       s: "decreases",
       p: "decrease",
@@ -1778,8 +1617,7 @@ const VERBS_ALL: Verb[] = [
       p: "decreased",
     },
   },
-  { // VoA
-    i: "defeat",
+  "defeat": { // VoA
     presentSimple: {
       s: "defeats",
       p: "defeat",
@@ -1789,8 +1627,7 @@ const VERBS_ALL: Verb[] = [
       p: "defeated",
     },
   },
-  { // VoA
-    i: "defend",
+  "defend": { // VoA
     presentSimple: {
       s: "defends",
       p: "defend",
@@ -1800,8 +1637,7 @@ const VERBS_ALL: Verb[] = [
       p: "defended",
     },
   },
-  { // VoA
-    i: "define",
+  "define": { // VoA
     presentSimple: {
       s: "defines",
       p: "define",
@@ -1811,8 +1647,7 @@ const VERBS_ALL: Verb[] = [
       p: "defined",
     },
   },
-  { // VoA
-    i: "delay",
+  "delay": { // VoA
     presentSimple: {
       s: "delays",
       p: "delay",
@@ -1822,8 +1657,7 @@ const VERBS_ALL: Verb[] = [
       p: "delayed",
     },
   },
-  { // VoA
-    i: "delegate",
+  "delegate": { // VoA
     presentSimple: {
       s: "delegates",
       p: "delegate",
@@ -1833,8 +1667,7 @@ const VERBS_ALL: Verb[] = [
       p: "delegated",
     },
   },
-  { // VoA
-    i: "demand",
+  "demand": { // VoA
     presentSimple: {
       s: "demands",
       p: "demand",
@@ -1844,8 +1677,7 @@ const VERBS_ALL: Verb[] = [
       p: "demanded",
     },
   },
-  { // VoA
-    i: "demonstrate",
+  "demonstrate": { // VoA
     presentSimple: {
       s: "demonstrates",
       p: "demonstrate",
@@ -1855,8 +1687,7 @@ const VERBS_ALL: Verb[] = [
       p: "demonstrated",
     },
   },
-  { // VoA
-    i: "denounce",
+  "denounce": { // VoA
     presentSimple: {
       s: "denounces",
       p: "denounce",
@@ -1866,8 +1697,7 @@ const VERBS_ALL: Verb[] = [
       p: "denounced",
     },
   },
-  { // VoA
-    i: "deny",
+  "deny": { // VoA
     presentSimple: {
       s: "denies",
       p: "deny",
@@ -1877,8 +1707,7 @@ const VERBS_ALL: Verb[] = [
       p: "denied",
     },
   },
-  { // VoA
-    i: "depend",
+  "depend": { // VoA
     presentSimple: {
       s: "depends",
       p: "depend",
@@ -1888,8 +1717,7 @@ const VERBS_ALL: Verb[] = [
       p: "depended",
     },
   },
-  { // VoA
-    i: "deplore",
+  "deplore": { // VoA
     presentSimple: {
       s: "deplores",
       p: "deplore",
@@ -1899,8 +1727,7 @@ const VERBS_ALL: Verb[] = [
       p: "deplored",
     },
   },
-  { // VoA
-    i: "deploy",
+  "deploy": { // VoA
     presentSimple: {
       s: "deploys",
       p: "deploy",
@@ -1910,8 +1737,7 @@ const VERBS_ALL: Verb[] = [
       p: "deployed",
     },
   },
-  { // VoA
-    i: "describe",
+  "describe": { // VoA
     presentSimple: {
       s: "describes",
       p: "describe",
@@ -1921,8 +1747,7 @@ const VERBS_ALL: Verb[] = [
       p: "described",
     },
   },
-  { // VoA
-    i: "design",
+  "design": { // VoA
     presentSimple: {
       s: "designs",
       p: "design",
@@ -1932,8 +1757,7 @@ const VERBS_ALL: Verb[] = [
       p: "designed",
     },
   },
-  { // VoA
-    i: "desire",
+  "desire": { // VoA
     presentSimple: {
       s: "desires",
       p: "desire",
@@ -1943,8 +1767,7 @@ const VERBS_ALL: Verb[] = [
       p: "desired",
     },
   },
-  { // VoA
-    i: "destroy",
+  "destroy": { // VoA
     presentSimple: {
       s: "destroys",
       p: "destroy",
@@ -1954,8 +1777,7 @@ const VERBS_ALL: Verb[] = [
       p: "destroyed",
     },
   },
-  { // VoA
-    i: "detail",
+  "detail": { // VoA
     presentSimple: {
       s: "details",
       p: "detail",
@@ -1965,8 +1787,7 @@ const VERBS_ALL: Verb[] = [
       p: "detailed",
     },
   },
-  { // VoA
-    i: "develop",
+  "develop": { // VoA
     presentSimple: {
       s: "develops",
       p: "develop",
@@ -1976,8 +1797,7 @@ const VERBS_ALL: Verb[] = [
       p: "developed",
     },
   },
-  { // VoA
-    i: "die",
+  "die": { // VoA
     presentSimple: {
       s: "dies",
       p: "die",
@@ -1987,8 +1807,7 @@ const VERBS_ALL: Verb[] = [
       p: "died",
     },
   },
-  { // VoA
-    i: "diet",
+  "diet": { // VoA
     presentSimple: {
       s: "diets",
       p: "diet",
@@ -1998,8 +1817,7 @@ const VERBS_ALL: Verb[] = [
       p: "dieted",
     },
   },
-  { // VoA
-    i: "dig",
+  "dig": { // VoA
     presentSimple: {
       s: "digs",
       p: "dig",
@@ -2009,8 +1827,7 @@ const VERBS_ALL: Verb[] = [
       p: "dug",
     },
   },
-  { // VoA
-    i: "direct",
+  "direct": { // VoA
     presentSimple: {
       s: "directs",
       p: "direct",
@@ -2020,8 +1837,7 @@ const VERBS_ALL: Verb[] = [
       p: "directed",
     },
   },
-  { // VoA
-    i: "disappear",
+  "disappear": { // VoA
     presentSimple: {
       s: "disappears",
       p: "disappear",
@@ -2031,8 +1847,7 @@ const VERBS_ALL: Verb[] = [
       p: "disappeared",
     },
   },
-  { // VoA
-    i: "disarm",
+  "disarm": { // VoA
     presentSimple: {
       s: "disarms",
       p: "disarm",
@@ -2042,8 +1857,7 @@ const VERBS_ALL: Verb[] = [
       p: "disarmed",
     },
   },
-  { // VoA
-    i: "discover",
+  "discover": { // VoA
     presentSimple: {
       s: "discovers",
       p: "discover",
@@ -2053,8 +1867,7 @@ const VERBS_ALL: Verb[] = [
       p: "discovered",
     },
   },
-  { // VoA
-    i: "discuss",
+  "discuss": { // VoA
     presentSimple: {
       s: "discusses",
       p: "discuss",
@@ -2064,8 +1877,7 @@ const VERBS_ALL: Verb[] = [
       p: "discussed",
     },
   },
-  { // VoA
-    i: "dismiss",
+  "dismiss": { // VoA
     presentSimple: {
       s: "dismisses",
       p: "dismiss",
@@ -2075,8 +1887,7 @@ const VERBS_ALL: Verb[] = [
       p: "dismissed",
     },
   },
-  { // VoA
-    i: "dispute",
+  "dispute": { // VoA
     presentSimple: {
       s: "disputes",
       p: "dispute",
@@ -2086,8 +1897,7 @@ const VERBS_ALL: Verb[] = [
       p: "disputed",
     },
   },
-  { // VoA
-    i: "distance",
+  "distance": { // VoA
     presentSimple: {
       s: "distances",
       p: "distance",
@@ -2097,8 +1907,7 @@ const VERBS_ALL: Verb[] = [
       p: "distanced",
     },
   },
-  { // VoA
-    i: "dive",
+  "dive": { // VoA
     presentSimple: {
       s: "dives",
       p: "dive",
@@ -2108,8 +1917,7 @@ const VERBS_ALL: Verb[] = [
       p: "dove",
     },
   },
-  { // VoA
-    i: "divide",
+  "divide": { // VoA
     presentSimple: {
       s: "divides",
       p: "divide",
@@ -2119,8 +1927,7 @@ const VERBS_ALL: Verb[] = [
       p: "divided",
     },
   },
-  { // VoA
-    i: "do",
+  "do": { // VoA
     presentSimple: {
       s: "does",
       p: "do",
@@ -2130,8 +1937,7 @@ const VERBS_ALL: Verb[] = [
       p: "did",
     },
   },
-  { // VoA
-    i: "document",
+  "document": { // VoA
     presentSimple: {
       s: "documents",
       p: "document",
@@ -2141,8 +1947,7 @@ const VERBS_ALL: Verb[] = [
       p: "documented",
     },
   },
-  { // VoA
-    i: "dream",
+  "dream": { // VoA
     presentSimple: {
       s: "dreams",
       p: "dream",
@@ -2152,8 +1957,7 @@ const VERBS_ALL: Verb[] = [
       p: "dreamed",
     },
   },
-  { // VoA
-    i: "drink",
+  "drink": { // VoA
     presentSimple: {
       s: "drinks",
       p: "drink",
@@ -2163,8 +1967,7 @@ const VERBS_ALL: Verb[] = [
       p: "drank",
     },
   },
-  { // VoA
-    i: "drive",
+  "drive": { // VoA
     presentSimple: {
       s: "drives",
       p: "drive",
@@ -2174,8 +1977,7 @@ const VERBS_ALL: Verb[] = [
       p: "drove",
     },
   },
-  { // VoA
-    i: "drop",
+  "drop": { // VoA
     presentSimple: {
       s: "drops",
       p: "drop",
@@ -2185,8 +1987,7 @@ const VERBS_ALL: Verb[] = [
       p: "dropped",
     },
   },
-  { // VoA
-    i: "drown",
+  "drown": { // VoA
     presentSimple: {
       s: "drowns",
       p: "drown",
@@ -2196,8 +1997,7 @@ const VERBS_ALL: Verb[] = [
       p: "drowned",
     },
   },
-  { // VoA
-    i: "drug",
+  "drug": { // VoA
     presentSimple: {
       s: "drugs",
       p: "drug",
@@ -2207,8 +2007,7 @@ const VERBS_ALL: Verb[] = [
       p: "drugged",
     },
   },
-  { // VoA
-    i: "dry",
+  "dry": { // VoA
     presentSimple: {
       s: "dries",
       p: "dry",
@@ -2218,8 +2017,7 @@ const VERBS_ALL: Verb[] = [
       p: "dried",
     },
   },
-  { // VoA
-    i: "dust",
+  "dust": { // VoA
     presentSimple: {
       s: "dusts",
       p: "dust",
@@ -2229,8 +2027,7 @@ const VERBS_ALL: Verb[] = [
       p: "dusted",
     },
   },
-  { // VoA
-    i: "earn",
+  "earn": { // VoA
     presentSimple: {
       s: "earns",
       p: "earn",
@@ -2240,8 +2037,7 @@ const VERBS_ALL: Verb[] = [
       p: "earned",
     },
   },
-  { // VoA
-    i: "ease",
+  "ease": { // VoA
     presentSimple: {
       s: "eases",
       p: "ease",
@@ -2251,8 +2047,7 @@ const VERBS_ALL: Verb[] = [
       p: "eased",
     },
   },
-  { // VoA
-    i: "eat",
+  "eat": { // VoA
     presentSimple: {
       s: "eats",
       p: "eat",
@@ -2262,8 +2057,7 @@ const VERBS_ALL: Verb[] = [
       p: "ate",
     },
   },
-  { // VoA
-    i: "edge",
+  "edge": { // VoA
     presentSimple: {
       s: "edges",
       p: "edge",
@@ -2273,8 +2067,7 @@ const VERBS_ALL: Verb[] = [
       p: "edged",
     },
   },
-  { // VoA
-    i: "effect",
+  "effect": { // VoA
     presentSimple: {
       s: "effects",
       p: "effect",
@@ -2284,8 +2077,7 @@ const VERBS_ALL: Verb[] = [
       p: "effected",
     },
   },
-  { // VoA
-    i: "elect",
+  "elect": { // VoA
     presentSimple: {
       s: "elects",
       p: "elect",
@@ -2295,8 +2087,7 @@ const VERBS_ALL: Verb[] = [
       p: "elected",
     },
   },
-  { // VoA
-    i: "employ",
+  "employ": { // VoA
     presentSimple: {
       s: "employs",
       p: "employ",
@@ -2306,8 +2097,7 @@ const VERBS_ALL: Verb[] = [
       p: "employed",
     },
   },
-  { // VoA
-    i: "empty",
+  "empty": { // VoA
     presentSimple: {
       s: "empties",
       p: "empty",
@@ -2317,8 +2107,7 @@ const VERBS_ALL: Verb[] = [
       p: "emptied",
     },
   },
-  { // VoA
-    i: "end",
+  "end": { // VoA
     presentSimple: {
       s: "ends",
       p: "end",
@@ -2328,8 +2117,7 @@ const VERBS_ALL: Verb[] = [
       p: "ended",
     },
   },
-  { // VoA
-    i: "enforce",
+  "enforce": { // VoA
     presentSimple: {
       s: "enforces",
       p: "enforce",
@@ -2339,8 +2127,7 @@ const VERBS_ALL: Verb[] = [
       p: "enforced",
     },
   },
-  { // VoA
-    i: "engineer",
+  "engineer": { // VoA
     presentSimple: {
       s: "engineers",
       p: "engineer",
@@ -2350,8 +2137,7 @@ const VERBS_ALL: Verb[] = [
       p: "engineered",
     },
   },
-  { // VoA
-    i: "enjoy",
+  "enjoy": { // VoA
     presentSimple: {
       s: "enjoys",
       p: "enjoy",
@@ -2361,8 +2147,7 @@ const VERBS_ALL: Verb[] = [
       p: "enjoyed",
     },
   },
-  { // VoA
-    i: "enter",
+  "enter": { // VoA
     presentSimple: {
       s: "enters",
       p: "enter",
@@ -2372,8 +2157,7 @@ const VERBS_ALL: Verb[] = [
       p: "entered",
     },
   },
-  { // VoA
-    i: "equal",
+  "equal": { // VoA
     presentSimple: {
       s: "equals",
       p: "equal",
@@ -2383,8 +2167,7 @@ const VERBS_ALL: Verb[] = [
       p: "equaled",
     },
   },
-  { // VoA
-    i: "escape",
+  "escape": { // VoA
     presentSimple: {
       s: "escapes",
       p: "escape",
@@ -2394,8 +2177,7 @@ const VERBS_ALL: Verb[] = [
       p: "escaped",
     },
   },
-  { // VoA
-    i: "establish",
+  "establish": { // VoA
     presentSimple: {
       s: "establishes",
       p: "establish",
@@ -2405,8 +2187,7 @@ const VERBS_ALL: Verb[] = [
       p: "established",
     },
   },
-  { // VoA
-    i: "estimate",
+  "estimate": { // VoA
     presentSimple: {
       s: "estimates",
       p: "estimate",
@@ -2416,8 +2197,7 @@ const VERBS_ALL: Verb[] = [
       p: "estimated",
     },
   },
-  { // VoA
-    i: "evaporate",
+  "evaporate": { // VoA
     presentSimple: {
       s: "evaporates",
       p: "evaporate",
@@ -2427,8 +2207,7 @@ const VERBS_ALL: Verb[] = [
       p: "evaporated",
     },
   },
-  { // VoA
-    i: "even",
+  "even": { // VoA
     presentSimple: {
       s: "evens",
       p: "even",
@@ -2438,8 +2217,7 @@ const VERBS_ALL: Verb[] = [
       p: "evened",
     },
   },
-  { // VoA
-    i: "exact",
+  "exact": { // VoA
     presentSimple: {
       s: "exacts",
       p: "exact",
@@ -2449,8 +2227,7 @@ const VERBS_ALL: Verb[] = [
       p: "exacted",
     },
   },
-  { // VoA
-    i: "examine",
+  "examine": { // VoA
     presentSimple: {
       s: "examines",
       p: "examine",
@@ -2460,8 +2237,7 @@ const VERBS_ALL: Verb[] = [
       p: "examined",
     },
   },
-  { // VoA
-    i: "except",
+  "except": { // VoA
     presentSimple: {
       s: "excepts",
       p: "except",
@@ -2471,8 +2247,7 @@ const VERBS_ALL: Verb[] = [
       p: "excepted",
     },
   },
-  { // VoA
-    i: "exchange",
+  "exchange": { // VoA
     presentSimple: {
       s: "exchanges",
       p: "exchange",
@@ -2482,8 +2257,7 @@ const VERBS_ALL: Verb[] = [
       p: "exchanged",
     },
   },
-  { // VoA
-    i: "excuse",
+  "excuse": { // VoA
     presentSimple: {
       s: "excuses",
       p: "excuse",
@@ -2493,8 +2267,7 @@ const VERBS_ALL: Verb[] = [
       p: "excused",
     },
   },
-  { // VoA
-    i: "execute",
+  "execute": { // VoA
     presentSimple: {
       s: "executes",
       p: "execute",
@@ -2504,8 +2277,7 @@ const VERBS_ALL: Verb[] = [
       p: "executed",
     },
   },
-  { // VoA
-    i: "exercise",
+  "exercise": { // VoA
     presentSimple: {
       s: "exercises",
       p: "exercise",
@@ -2515,8 +2287,7 @@ const VERBS_ALL: Verb[] = [
       p: "exercised",
     },
   },
-  { // VoA
-    i: "exile",
+  "exile": { // VoA
     presentSimple: {
       s: "exiles",
       p: "exile",
@@ -2526,8 +2297,7 @@ const VERBS_ALL: Verb[] = [
       p: "exiled",
     },
   },
-  { // VoA
-    i: "exist",
+  "exist": { // VoA
     presentSimple: {
       s: "exists",
       p: "exist",
@@ -2537,8 +2307,7 @@ const VERBS_ALL: Verb[] = [
       p: "existed",
     },
   },
-  { // VoA
-    i: "expand",
+  "expand": { // VoA
     presentSimple: {
       s: "expands",
       p: "expand",
@@ -2548,8 +2317,7 @@ const VERBS_ALL: Verb[] = [
       p: "expanded",
     },
   },
-  { // VoA
-    i: "expect",
+  "expect": { // VoA
     presentSimple: {
       s: "expects",
       p: "expect",
@@ -2559,8 +2327,7 @@ const VERBS_ALL: Verb[] = [
       p: "expected",
     },
   },
-  { // VoA
-    i: "expel",
+  "expel": { // VoA
     presentSimple: {
       s: "expels",
       p: "expel",
@@ -2570,8 +2337,7 @@ const VERBS_ALL: Verb[] = [
       p: "expelled",
     },
   },
-  { // VoA
-    i: "experience",
+  "experience": { // VoA
     presentSimple: {
       s: "experiences",
       p: "experience",
@@ -2581,8 +2347,7 @@ const VERBS_ALL: Verb[] = [
       p: "experienced",
     },
   },
-  { // VoA
-    i: "experiment",
+  "experiment": { // VoA
     presentSimple: {
       s: "experiments",
       p: "experiment",
@@ -2592,8 +2357,7 @@ const VERBS_ALL: Verb[] = [
       p: "experimented",
     },
   },
-  { // VoA
-    i: "explain",
+  "explain": { // VoA
     presentSimple: {
       s: "explains",
       p: "explain",
@@ -2603,8 +2367,7 @@ const VERBS_ALL: Verb[] = [
       p: "explained",
     },
   },
-  { // VoA
-    i: "explode",
+  "explode": { // VoA
     presentSimple: {
       s: "explodes",
       p: "explode",
@@ -2614,8 +2377,7 @@ const VERBS_ALL: Verb[] = [
       p: "exploded",
     },
   },
-  { // VoA
-    i: "explore",
+  "explore": { // VoA
     presentSimple: {
       s: "explores",
       p: "explore",
@@ -2625,8 +2387,7 @@ const VERBS_ALL: Verb[] = [
       p: "explored",
     },
   },
-  { // VoA
-    i: "export",
+  "export": { // VoA
     presentSimple: {
       s: "exports",
       p: "export",
@@ -2636,8 +2397,7 @@ const VERBS_ALL: Verb[] = [
       p: "exported",
     },
   },
-  { // VoA
-    i: "express",
+  "express": { // VoA
     presentSimple: {
       s: "expresses",
       p: "express",
@@ -2647,8 +2407,7 @@ const VERBS_ALL: Verb[] = [
       p: "expressed",
     },
   },
-  { // VoA
-    i: "extend",
+  "extend": { // VoA
     presentSimple: {
       s: "extends",
       p: "extend",
@@ -2658,8 +2417,7 @@ const VERBS_ALL: Verb[] = [
       p: "extended",
     },
   },
-  { // VoA
-    i: "face",
+  "face": { // VoA
     presentSimple: {
       s: "faces",
       p: "face",
@@ -2669,8 +2427,7 @@ const VERBS_ALL: Verb[] = [
       p: "faced",
     },
   },
-  { // VoA
-    i: "fail",
+  "fail": { // VoA
     presentSimple: {
       s: "fails",
       p: "fail",
@@ -2680,8 +2437,7 @@ const VERBS_ALL: Verb[] = [
       p: "failed",
     },
   },
-  { // VoA
-    i: "fall",
+  "fall": { // VoA
     presentSimple: {
       s: "falls",
       p: "fall",
@@ -2691,8 +2447,7 @@ const VERBS_ALL: Verb[] = [
       p: "fell",
     },
   },
-  { // my adaptation of "fair"
-    i: "fare",
+  "fare": { // my adaptation of "fair"
     presentSimple: {
       s: "fares",
       p: "fare",
@@ -2702,8 +2457,7 @@ const VERBS_ALL: Verb[] = [
       p: "fared",
     },
   },
-  { // VoA
-    i: "farm",
+  "farm": { // VoA
     presentSimple: {
       s: "farms",
       p: "farm",
@@ -2713,8 +2467,7 @@ const VERBS_ALL: Verb[] = [
       p: "farmed",
     },
   },
-  { // VoA
-    i: "father",
+  "father": { // VoA
     presentSimple: {
       s: "fathers",
       p: "father",
@@ -2724,8 +2477,7 @@ const VERBS_ALL: Verb[] = [
       p: "fathered",
     },
   },
-  { // VoA
-    i: "fear",
+  "fear": { // VoA
     presentSimple: {
       s: "fears",
       p: "fear",
@@ -2735,8 +2487,7 @@ const VERBS_ALL: Verb[] = [
       p: "feared",
     },
   },
-  { // VoA
-    i: "feed",
+  "feed": { // VoA
     presentSimple: {
       s: "feeds",
       p: "feed",
@@ -2746,8 +2497,7 @@ const VERBS_ALL: Verb[] = [
       p: "fed",
     },
   },
-  { // VoA
-    i: "feel",
+  "feel": { // VoA
     presentSimple: {
       s: "feels",
       p: "feel",
@@ -2757,8 +2507,7 @@ const VERBS_ALL: Verb[] = [
       p: "felt",
     },
   },
-  { // VoA
-    i: "field",
+  "field": { // VoA
     presentSimple: {
       s: "fields",
       p: "field",
@@ -2768,8 +2517,7 @@ const VERBS_ALL: Verb[] = [
       p: "fielded",
     },
   },
-  { // VoA
-    i: "fight",
+  "fight": { // VoA
     presentSimple: {
       s: "fights",
       p: "fight",
@@ -2779,8 +2527,7 @@ const VERBS_ALL: Verb[] = [
       p: "fought",
     },
   },
-  { // VoA
-    i: "fill",
+  "fill": { // VoA
     presentSimple: {
       s: "fills",
       p: "fill",
@@ -2790,8 +2537,7 @@ const VERBS_ALL: Verb[] = [
       p: "filled",
     },
   },
-  { // VoA
-    i: "film",
+  "film": { // VoA
     presentSimple: {
       s: "films",
       p: "film",
@@ -2801,8 +2547,7 @@ const VERBS_ALL: Verb[] = [
       p: "filmed",
     },
   },
-  { // VoA
-    i: "find",
+  "find": { // VoA
     presentSimple: {
       s: "finds",
       p: "find",
@@ -2812,8 +2557,7 @@ const VERBS_ALL: Verb[] = [
       p: "found",
     },
   },
-  { // VoA
-    i: "fine",
+  "fine": { // VoA
     presentSimple: {
       s: "fines",
       p: "fine",
@@ -2823,8 +2567,7 @@ const VERBS_ALL: Verb[] = [
       p: "fined",
     },
   },
-  { // VoA
-    i: "finish",
+  "finish": { // VoA
     presentSimple: {
       s: "finishes",
       p: "finish",
@@ -2834,8 +2577,7 @@ const VERBS_ALL: Verb[] = [
       p: "finished",
     },
   },
-  { // VoA
-    i: "fire",
+  "fire": { // VoA
     presentSimple: {
       s: "fires",
       p: "fire",
@@ -2845,8 +2587,7 @@ const VERBS_ALL: Verb[] = [
       p: "fired",
     },
   },
-  { // VoA
-    i: "fish",
+  "fish": { // VoA
     presentSimple: {
       s: "fishes",
       p: "fish",
@@ -2856,8 +2597,7 @@ const VERBS_ALL: Verb[] = [
       p: "fished",
     },
   },
-  { // VoA
-    i: "fit",
+  "fit": { // VoA
     presentSimple: {
       s: "fits",
       p: "fit",
@@ -2867,8 +2607,7 @@ const VERBS_ALL: Verb[] = [
       p: "fit",
     },
   },
-  { // VoA
-    i: "fix",
+  "fix": { // VoA
     presentSimple: {
       s: "fixes",
       p: "fix",
@@ -2878,8 +2617,7 @@ const VERBS_ALL: Verb[] = [
       p: "fixed",
     },
   },
-  { // VoA
-    i: "flag",
+  "flag": { // VoA
     presentSimple: {
       s: "flags",
       p: "flag",
@@ -2889,8 +2627,7 @@ const VERBS_ALL: Verb[] = [
       p: "flagged",
     },
   },
-  { // VoA
-    i: "flee",
+  "flee": { // VoA
     presentSimple: {
       s: "flees",
       p: "flee",
@@ -2900,8 +2637,7 @@ const VERBS_ALL: Verb[] = [
       p: "fleed",
     },
   },
-  { // VoA
-    i: "float",
+  "float": { // VoA
     presentSimple: {
       s: "floats",
       p: "float",
@@ -2911,8 +2647,7 @@ const VERBS_ALL: Verb[] = [
       p: "floated",
     },
   },
-  { // VoA
-    i: "flood",
+  "flood": { // VoA
     presentSimple: {
       s: "floods",
       p: "flood",
@@ -2922,8 +2657,7 @@ const VERBS_ALL: Verb[] = [
       p: "flooded",
     },
   },
-  { // VoA
-    i: "flow",
+  "flow": { // VoA
     presentSimple: {
       s: "flows",
       p: "flow",
@@ -2933,8 +2667,7 @@ const VERBS_ALL: Verb[] = [
       p: "flowed",
     },
   },
-  { // VoA
-    i: "flower",
+  "flower": { // VoA
     presentSimple: {
       s: "flowers",
       p: "flower",
@@ -2944,8 +2677,7 @@ const VERBS_ALL: Verb[] = [
       p: "flowered",
     },
   },
-  { // VoA
-    i: "fly",
+  "fly": { // VoA
     presentSimple: {
       s: "flies",
       p: "fly",
@@ -2955,8 +2687,7 @@ const VERBS_ALL: Verb[] = [
       p: "flew",
     },
   },
-  { // VoA
-    i: "follow",
+  "follow": { // VoA
     presentSimple: {
       s: "follows",
       p: "follow",
@@ -2966,8 +2697,7 @@ const VERBS_ALL: Verb[] = [
       p: "followed",
     },
   },
-  { // VoA
-    i: "fool",
+  "fool": { // VoA
     presentSimple: {
       s: "fools",
       p: "fool",
@@ -2977,8 +2707,7 @@ const VERBS_ALL: Verb[] = [
       p: "fooled",
     },
   },
-  { // VoA
-    i: "force",
+  "force": { // VoA
     presentSimple: {
       s: "forces",
       p: "force",
@@ -2988,8 +2717,7 @@ const VERBS_ALL: Verb[] = [
       p: "forced",
     },
   },
-  { // VoA
-    i: "forget",
+  "forget": { // VoA
     presentSimple: {
       s: "forgets",
       p: "forget",
@@ -2999,8 +2727,7 @@ const VERBS_ALL: Verb[] = [
       p: "forgot",
     },
   },
-  { // VoA
-    i: "forgive",
+  "forgive": { // VoA
     presentSimple: {
       s: "forgives",
       p: "forgive",
@@ -3010,8 +2737,7 @@ const VERBS_ALL: Verb[] = [
       p: "forgave",
     },
   },
-  { // VoA
-    i: "form",
+  "form": { // VoA
     presentSimple: {
       s: "forms",
       p: "form",
@@ -3021,8 +2747,7 @@ const VERBS_ALL: Verb[] = [
       p: "formed",
     },
   },
-  { // VoA
-    i: "forward",
+  "forward": { // VoA
     presentSimple: {
       s: "forwards",
       p: "forward",
@@ -3032,8 +2757,7 @@ const VERBS_ALL: Verb[] = [
       p: "forwarded",
     },
   },
-  { // VoA
-    i: "free",
+  "free": { // VoA
     presentSimple: {
       s: "frees",
       p: "free",
@@ -3043,8 +2767,7 @@ const VERBS_ALL: Verb[] = [
       p: "freed",
     },
   },
-  { // VoA
-    i: "freeze",
+  "freeze": { // VoA
     presentSimple: {
       s: "freezes",
       p: "freeze",
@@ -3054,8 +2777,7 @@ const VERBS_ALL: Verb[] = [
       p: "froze",
     },
   },
-  { // VoA
-    i: "frighten",
+  "frighten": { // VoA
     presentSimple: {
       s: "frightens",
       p: "frighten",
@@ -3065,8 +2787,7 @@ const VERBS_ALL: Verb[] = [
       p: "frightened",
     },
   },
-  { // VoA
-    i: "fuel",
+  "fuel": { // VoA
     presentSimple: {
       s: "fuels",
       p: "fuel",
@@ -3076,8 +2797,7 @@ const VERBS_ALL: Verb[] = [
       p: "fueled",
     },
   },
-  { // VoA
-    i: "gain",
+  "gain": { // VoA
     presentSimple: {
       s: "gains",
       p: "gain",
@@ -3087,8 +2807,7 @@ const VERBS_ALL: Verb[] = [
       p: "gained",
     },
   },
-  { // VoA
-    i: "game",
+  "game": { // VoA
     presentSimple: {
       s: "games",
       p: "game",
@@ -3098,8 +2817,7 @@ const VERBS_ALL: Verb[] = [
       p: "gamed",
     },
   },
-  { // VoA
-    i: "gather",
+  "gather": { // VoA
     presentSimple: {
       s: "gathers",
       p: "gather",
@@ -3109,8 +2827,7 @@ const VERBS_ALL: Verb[] = [
       p: "gathered",
     },
   },
-  { // VoA
-    i: "get",
+  "get": { // VoA
     presentSimple: {
       s: "gets",
       p: "get",
@@ -3120,8 +2837,7 @@ const VERBS_ALL: Verb[] = [
       p: "got",
     },
   },
-  { // VoA
-    i: "gift",
+  "gift": { // VoA
     presentSimple: {
       s: "gifts",
       p: "gift",
@@ -3131,8 +2847,7 @@ const VERBS_ALL: Verb[] = [
       p: "gifted",
     },
   },
-  { // VoA
-    i: "give",
+  "give": { // VoA
     presentSimple: {
       s: "gives",
       p: "give",
@@ -3142,8 +2857,7 @@ const VERBS_ALL: Verb[] = [
       p: "gave",
     },
   },
-  { // VoA
-    i: "go",
+  "go": { // VoA
     presentSimple: {
       s: "goes",
       p: "go",
@@ -3153,8 +2867,7 @@ const VERBS_ALL: Verb[] = [
       p: "went",
     },
   },
-  { // VoA
-    i: "govern",
+  "govern": { // VoA
     presentSimple: {
       s: "governs",
       p: "govern",
@@ -3164,8 +2877,7 @@ const VERBS_ALL: Verb[] = [
       p: "governed",
     },
   },
-  { // VoA
-    i: "grind",
+  "grind": { // VoA
     presentSimple: {
       s: "grinds",
       p: "grind",
@@ -3175,8 +2887,7 @@ const VERBS_ALL: Verb[] = [
       p: "ground",
     },
   },
-  { // VoA
-    i: "ground",
+  "ground": { // VoA
     presentSimple: {
       s: "grounds",
       p: "ground",
@@ -3186,8 +2897,7 @@ const VERBS_ALL: Verb[] = [
       p: "grounded",
     },
   },
-  { // VoA
-    i: "group",
+  "group": { // VoA
     presentSimple: {
       s: "groups",
       p: "group",
@@ -3197,8 +2907,7 @@ const VERBS_ALL: Verb[] = [
       p: "grouped",
     },
   },
-  { // VoA
-    i: "grow",
+  "grow": { // VoA
     presentSimple: {
       s: "grows",
       p: "grow",
@@ -3208,8 +2917,7 @@ const VERBS_ALL: Verb[] = [
       p: "grew",
     },
   },
-  { // VoA
-    i: "guarantee",
+  "guarantee": { // VoA
     presentSimple: {
       s: "guarantees",
       p: "guarantee",
@@ -3219,8 +2927,7 @@ const VERBS_ALL: Verb[] = [
       p: "guaranteed",
     },
   },
-  { // VoA
-    i: "guard",
+  "guard": { // VoA
     presentSimple: {
       s: "guards",
       p: "guard",
@@ -3230,8 +2937,7 @@ const VERBS_ALL: Verb[] = [
       p: "guarded",
     },
   },
-  { // VoA
-    i: "guide",
+  "guide": { // VoA
     presentSimple: {
       s: "guides",
       p: "guide",
@@ -3241,8 +2947,7 @@ const VERBS_ALL: Verb[] = [
       p: "guided",
     },
   },
-  { // VoA
-    i: "halt",
+  "halt": { // VoA
     presentSimple: {
       s: "halts",
       p: "halt",
@@ -3252,8 +2957,7 @@ const VERBS_ALL: Verb[] = [
       p: "halted",
     },
   },
-  { // VoA
-    i: "hang",
+  "hang": { // VoA
     presentSimple: {
       s: "hangs",
       p: "hang",
@@ -3263,8 +2967,7 @@ const VERBS_ALL: Verb[] = [
       p: "hanged",
     },
   },
-  { // VoA
-    i: "happen",
+  "happen": { // VoA
     presentSimple: {
       s: "happens",
       p: "happen",
@@ -3274,8 +2977,7 @@ const VERBS_ALL: Verb[] = [
       p: "happened",
     },
   },
-  { // VoA
-    i: "harm",
+  "harm": { // VoA
     presentSimple: {
       s: "harms",
       p: "harm",
@@ -3285,8 +2987,7 @@ const VERBS_ALL: Verb[] = [
       p: "harmed",
     },
   },
-  { // VoA
-    i: "harvest",
+  "harvest": { // VoA
     presentSimple: {
       s: "harvests",
       p: "harvest",
@@ -3296,8 +2997,7 @@ const VERBS_ALL: Verb[] = [
       p: "harvested",
     },
   },
-  { // VoA
-    i: "hate",
+  "hate": { // VoA
     presentSimple: {
       s: "hates",
       p: "hate",
@@ -3307,8 +3007,7 @@ const VERBS_ALL: Verb[] = [
       p: "hated",
     },
   },
-  { // VoA
-    i: "have",
+  "have": { // VoA
     presentSimple: {
       s: "has",
       p: "have",
@@ -3318,8 +3017,7 @@ const VERBS_ALL: Verb[] = [
       p: "had",
     },
   },
-  { // VoA
-    i: "head",
+  "head": { // VoA
     presentSimple: {
       s: "heads",
       p: "head",
@@ -3329,8 +3027,7 @@ const VERBS_ALL: Verb[] = [
       p: "headed",
     },
   },
-  { // VoA
-    i: "heal",
+  "heal": { // VoA
     presentSimple: {
       s: "heals",
       p: "heal",
@@ -3340,8 +3037,7 @@ const VERBS_ALL: Verb[] = [
       p: "healed",
     },
   },
-  { // VoA
-    i: "hear",
+  "hear": { // VoA
     presentSimple: {
       s: "hears",
       p: "hear",
@@ -3351,8 +3047,7 @@ const VERBS_ALL: Verb[] = [
       p: "heard",
     },
   },
-  { // VoA
-    i: "heat",
+  "heat": { // VoA
     presentSimple: {
       s: "heats",
       p: "heat",
@@ -3362,8 +3057,7 @@ const VERBS_ALL: Verb[] = [
       p: "heated",
     },
   },
-  { // VoA
-    i: "help",
+  "help": { // VoA
     presentSimple: {
       s: "helps",
       p: "help",
@@ -3373,8 +3067,7 @@ const VERBS_ALL: Verb[] = [
       p: "helped",
     },
   },
-  { // VoA
-    i: "hide",
+  "hide": { // VoA
     presentSimple: {
       s: "hides",
       p: "hide",
@@ -3384,8 +3077,7 @@ const VERBS_ALL: Verb[] = [
       p: "hid",
     },
   },
-  { // VoA
-    i: "hijack",
+  "hijack": { // VoA
     presentSimple: {
       s: "hijacks",
       p: "hijack",
@@ -3395,8 +3087,7 @@ const VERBS_ALL: Verb[] = [
       p: "hijacked",
     },
   },
-  { // VoA
-    i: "hit",
+  "hit": { // VoA
     presentSimple: {
       s: "hits",
       p: "hit",
@@ -3406,8 +3097,7 @@ const VERBS_ALL: Verb[] = [
       p: "hit",
     },
   },
-  { // VoA
-    i: "hold",
+  "hold": { // VoA
     presentSimple: {
       s: "holds",
       p: "hold",
@@ -3417,8 +3107,7 @@ const VERBS_ALL: Verb[] = [
       p: "held",
     },
   },
-  { // VoA
-    i: "honor",
+  "honor": { // VoA
     presentSimple: {
       s: "honors",
       p: "honor",
@@ -3428,8 +3117,7 @@ const VERBS_ALL: Verb[] = [
       p: "honored",
     },
   },
-  { // VoA
-    i: "hope",
+  "hope": { // VoA
     presentSimple: {
       s: "hopes",
       p: "hope",
@@ -3439,8 +3127,7 @@ const VERBS_ALL: Verb[] = [
       p: "hoped",
     },
   },
-  { // VoA
-    i: "humor",
+  "humor": { // VoA
     presentSimple: {
       s: "humors",
       p: "humor",
@@ -3450,8 +3137,7 @@ const VERBS_ALL: Verb[] = [
       p: "humored",
     },
   },
-  { // VoA
-    i: "hunger",
+  "hunger": { // VoA
     presentSimple: {
       s: "hungers",
       p: "hunger",
@@ -3461,8 +3147,7 @@ const VERBS_ALL: Verb[] = [
       p: "hungered",
     },
   },
-  { // VoA
-    i: "hunt",
+  "hunt": { // VoA
     presentSimple: {
       s: "hunts",
       p: "hunt",
@@ -3472,8 +3157,7 @@ const VERBS_ALL: Verb[] = [
       p: "hunted",
     },
   },
-  { // VoA
-    i: "hurry",
+  "hurry": { // VoA
     presentSimple: {
       s: "hurries",
       p: "hurry",
@@ -3483,8 +3167,7 @@ const VERBS_ALL: Verb[] = [
       p: "hurried",
     },
   },
-  { // VoA
-    i: "hurt",
+  "hurt": { // VoA
     presentSimple: {
       s: "hurts",
       p: "hurt",
@@ -3494,8 +3177,7 @@ const VERBS_ALL: Verb[] = [
       p: "hurt",
     },
   },
-  { // VoA
-    i: "ice",
+  "ice": { // VoA
     presentSimple: {
       s: "ices",
       p: "ice",
@@ -3505,8 +3187,7 @@ const VERBS_ALL: Verb[] = [
       p: "iced",
     },
   },
-  { // VoA
-    i: "identify",
+  "identify": { // VoA
     presentSimple: {
       s: "identifies",
       p: "identify",
@@ -3516,8 +3197,7 @@ const VERBS_ALL: Verb[] = [
       p: "identified",
     },
   },
-  { // VoA
-    i: "imagine",
+  "imagine": { // VoA
     presentSimple: {
       s: "imagines",
       p: "imagine",
@@ -3527,8 +3207,7 @@ const VERBS_ALL: Verb[] = [
       p: "imagined",
     },
   },
-  { // VoA
-    i: "import",
+  "import": { // VoA
     presentSimple: {
       s: "imports",
       p: "import",
@@ -3538,8 +3217,7 @@ const VERBS_ALL: Verb[] = [
       p: "imported",
     },
   },
-  { // VoA
-    i: "improve",
+  "improve": { // VoA
     presentSimple: {
       s: "improves",
       p: "improve",
@@ -3549,8 +3227,7 @@ const VERBS_ALL: Verb[] = [
       p: "improved",
     },
   },
-  { // VoA
-    i: "incite",
+  "incite": { // VoA
     presentSimple: {
       s: "incites",
       p: "incite",
@@ -3560,8 +3237,7 @@ const VERBS_ALL: Verb[] = [
       p: "incited",
     },
   },
-  { // VoA
-    i: "include",
+  "include": { // VoA
     presentSimple: {
       s: "includes",
       p: "include",
@@ -3571,8 +3247,7 @@ const VERBS_ALL: Verb[] = [
       p: "included",
     },
   },
-  { // VoA
-    i: "increase",
+  "increase": { // VoA
     presentSimple: {
       s: "increases",
       p: "increase",
@@ -3582,8 +3257,7 @@ const VERBS_ALL: Verb[] = [
       p: "increased",
     },
   },
-  { // VoA
-    i: "infect",
+  "infect": { // VoA
     presentSimple: {
       s: "infects",
       p: "infect",
@@ -3593,8 +3267,7 @@ const VERBS_ALL: Verb[] = [
       p: "infected",
     },
   },
-  { // VoA
-    i: "influence",
+  "influence": { // VoA
     presentSimple: {
       s: "influences",
       p: "influence",
@@ -3604,8 +3277,7 @@ const VERBS_ALL: Verb[] = [
       p: "influenced",
     },
   },
-  { // VoA
-    i: "inform",
+  "inform": { // VoA
     presentSimple: {
       s: "informs",
       p: "inform",
@@ -3615,8 +3287,7 @@ const VERBS_ALL: Verb[] = [
       p: "informed",
     },
   },
-  { // VoA
-    i: "inject",
+  "inject": { // VoA
     presentSimple: {
       s: "injects",
       p: "inject",
@@ -3626,8 +3297,7 @@ const VERBS_ALL: Verb[] = [
       p: "injected",
     },
   },
-  { // VoA
-    i: "injure",
+  "injure": { // VoA
     presentSimple: {
       s: "injures",
       p: "injure",
@@ -3637,8 +3307,7 @@ const VERBS_ALL: Verb[] = [
       p: "injured",
     },
   },
-  { // VoA
-    i: "inspect",
+  "inspect": { // VoA
     presentSimple: {
       s: "inspects",
       p: "inspect",
@@ -3648,8 +3317,7 @@ const VERBS_ALL: Verb[] = [
       p: "inspected",
     },
   },
-  { // VoA
-    i: "instrument",
+  "instrument": { // VoA
     presentSimple: {
       s: "instruments",
       p: "instrument",
@@ -3659,8 +3327,7 @@ const VERBS_ALL: Verb[] = [
       p: "instrumented",
     },
   },
-  { // VoA
-    i: "insult",
+  "insult": { // VoA
     presentSimple: {
       s: "insults",
       p: "insult",
@@ -3670,8 +3337,7 @@ const VERBS_ALL: Verb[] = [
       p: "insulted",
     },
   },
-  { // VoA
-    i: "interfere",
+  "interfere": { // VoA
     presentSimple: {
       s: "interferes",
       p: "interfere",
@@ -3681,8 +3347,7 @@ const VERBS_ALL: Verb[] = [
       p: "interfered",
     },
   },
-  { // VoA
-    i: "intervene",
+  "intervene": { // VoA
     presentSimple: {
       s: "intervenes",
       p: "intervene",
@@ -3692,8 +3357,7 @@ const VERBS_ALL: Verb[] = [
       p: "intervened",
     },
   },
-  { // VoA
-    i: "invade",
+  "invade": { // VoA
     presentSimple: {
       s: "invades",
       p: "invade",
@@ -3703,8 +3367,7 @@ const VERBS_ALL: Verb[] = [
       p: "invaded",
     },
   },
-  { // VoA
-    i: "invent",
+  "invent": { // VoA
     presentSimple: {
       s: "invents",
       p: "invent",
@@ -3714,8 +3377,7 @@ const VERBS_ALL: Verb[] = [
       p: "invented",
     },
   },
-  { // VoA
-    i: "invest",
+  "invest": { // VoA
     presentSimple: {
       s: "invests",
       p: "invest",
@@ -3725,8 +3387,7 @@ const VERBS_ALL: Verb[] = [
       p: "invested",
     },
   },
-  { // VoA
-    i: "investigate",
+  "investigate": { // VoA
     presentSimple: {
       s: "investigates",
       p: "investigate",
@@ -3736,8 +3397,7 @@ const VERBS_ALL: Verb[] = [
       p: "investigated",
     },
   },
-  { // VoA
-    i: "invite",
+  "invite": { // VoA
     presentSimple: {
       s: "invites",
       p: "invite",
@@ -3747,8 +3407,7 @@ const VERBS_ALL: Verb[] = [
       p: "invited",
     },
   },
-  { // VoA
-    i: "involve",
+  "involve": { // VoA
     presentSimple: {
       s: "involves",
       p: "involve",
@@ -3758,8 +3417,7 @@ const VERBS_ALL: Verb[] = [
       p: "involved",
     },
   },
-  { // VoA
-    i: "iron",
+  "iron": { // VoA
     presentSimple: {
       s: "irons",
       p: "iron",
@@ -3769,8 +3427,7 @@ const VERBS_ALL: Verb[] = [
       p: "ironed",
     },
   },
-  { // VoA
-    i: "issue",
+  "issue": { // VoA
     presentSimple: {
       s: "issues",
       p: "issue",
@@ -3780,8 +3437,7 @@ const VERBS_ALL: Verb[] = [
       p: "issued",
     },
   },
-  { // VoA
-    i: "jail",
+  "jail": { // VoA
     presentSimple: {
       s: "jails",
       p: "jail",
@@ -3791,8 +3447,7 @@ const VERBS_ALL: Verb[] = [
       p: "jailed",
     },
   },
-  { // VoA
-    i: "join",
+  "join": { // VoA
     presentSimple: {
       s: "joins",
       p: "join",
@@ -3802,8 +3457,7 @@ const VERBS_ALL: Verb[] = [
       p: "joined",
     },
   },
-  { // VoA
-    i: "joke",
+  "joke": { // VoA
     presentSimple: {
       s: "jokes",
       p: "joke",
@@ -3813,8 +3467,7 @@ const VERBS_ALL: Verb[] = [
       p: "joked",
     },
   },
-  { // VoA
-    i: "judge",
+  "judge": { // VoA
     presentSimple: {
       s: "judges",
       p: "judge",
@@ -3824,8 +3477,7 @@ const VERBS_ALL: Verb[] = [
       p: "judged",
     },
   },
-  { // VoA
-    i: "jump",
+  "jump": { // VoA
     presentSimple: {
       s: "jumps",
       p: "jump",
@@ -3835,8 +3487,7 @@ const VERBS_ALL: Verb[] = [
       p: "jumped",
     },
   },
-  { // VoA
-    i: "keep",
+  "keep": { // VoA
     presentSimple: {
       s: "keeps",
       p: "keep",
@@ -3846,8 +3497,7 @@ const VERBS_ALL: Verb[] = [
       p: "kept",
     },
   },
-  { // VoA
-    i: "kick",
+  "kick": { // VoA
     presentSimple: {
       s: "kicks",
       p: "kick",
@@ -3857,8 +3507,7 @@ const VERBS_ALL: Verb[] = [
       p: "kicked",
     },
   },
-  { // VoA
-    i: "kidnap",
+  "kidnap": { // VoA
     presentSimple: {
       s: "kidnaps",
       p: "kidnap",
@@ -3868,8 +3517,7 @@ const VERBS_ALL: Verb[] = [
       p: "kidnapped",
     },
   },
-  { // VoA
-    i: "kill",
+  "kill": { // VoA
     presentSimple: {
       s: "kills",
       p: "kill",
@@ -3879,8 +3527,7 @@ const VERBS_ALL: Verb[] = [
       p: "killed",
     },
   },
-  { // VoA
-    i: "kiss",
+  "kiss": { // VoA
     presentSimple: {
       s: "kisses",
       p: "kiss",
@@ -3890,8 +3537,7 @@ const VERBS_ALL: Verb[] = [
       p: "kissed",
     },
   },
-  { // VoA
-    i: "know",
+  "know": { // VoA
     presentSimple: {
       s: "knows",
       p: "know",
@@ -3901,8 +3547,7 @@ const VERBS_ALL: Verb[] = [
       p: "knew",
     },
   },
-  { // VoA
-    i: "labor",
+  "labor": { // VoA
     presentSimple: {
       s: "labors",
       p: "labor",
@@ -3912,8 +3557,7 @@ const VERBS_ALL: Verb[] = [
       p: "labored",
     },
   },
-  { // VoA
-    i: "lack",
+  "lack": { // VoA
     presentSimple: {
       s: "lacks",
       p: "lack",
@@ -3923,8 +3567,7 @@ const VERBS_ALL: Verb[] = [
       p: "lacked",
     },
   },
-  { // VoA
-    i: "land",
+  "land": { // VoA
     presentSimple: {
       s: "lands",
       p: "land",
@@ -3934,8 +3577,7 @@ const VERBS_ALL: Verb[] = [
       p: "landed",
     },
   },
-  { // VoA
-    i: "laugh",
+  "laugh": { // VoA
     presentSimple: {
       s: "laughs",
       p: "laugh",
@@ -3945,8 +3587,7 @@ const VERBS_ALL: Verb[] = [
       p: "laughed",
     },
   },
-  { // VoA
-    i: "launch",
+  "launch": { // VoA
     presentSimple: {
       s: "launches",
       p: "launch",
@@ -3956,8 +3597,7 @@ const VERBS_ALL: Verb[] = [
       p: "launched",
     },
   },
-  { // VoA
-    i: "lead",
+  "lead": { // VoA
     presentSimple: {
       s: "leads",
       p: "lead",
@@ -3967,8 +3607,7 @@ const VERBS_ALL: Verb[] = [
       p: "led",
     },
   },
-  { // VoA
-    i: "leak",
+  "leak": { // VoA
     presentSimple: {
       s: "leaks",
       p: "leak",
@@ -3978,8 +3617,7 @@ const VERBS_ALL: Verb[] = [
       p: "leaked",
     },
   },
-  { // VoA
-    i: "learn",
+  "learn": { // VoA
     presentSimple: {
       s: "learns",
       p: "learn",
@@ -3989,8 +3627,7 @@ const VERBS_ALL: Verb[] = [
       p: "learned",
     },
   },
-  { // VoA
-    i: "leave",
+  "leave": { // VoA
     presentSimple: {
       s: "leaves",
       p: "leave",
@@ -4000,8 +3637,7 @@ const VERBS_ALL: Verb[] = [
       p: "left",
     },
   },
-  { // VoA
-    i: "lend",
+  "lend": { // VoA
     presentSimple: {
       s: "lends",
       p: "lend",
@@ -4011,8 +3647,7 @@ const VERBS_ALL: Verb[] = [
       p: "lent",
     },
   },
-  { // VoA
-    i: "let",
+  "let": { // VoA
     presentSimple: {
       s: "lets",
       p: "let",
@@ -4022,8 +3657,7 @@ const VERBS_ALL: Verb[] = [
       p: "let",
     },
   },
-  { // VoA
-    i: "level",
+  "level": { // VoA
     presentSimple: {
       s: "levels",
       p: "level",
@@ -4033,8 +3667,7 @@ const VERBS_ALL: Verb[] = [
       p: "leveled",
     },
   },
-  { // VoA
-    i: "lie",
+  "lie": { // VoA
     presentSimple: {
       s: "lies",
       p: "lie",
@@ -4044,8 +3677,7 @@ const VERBS_ALL: Verb[] = [
       p: "lied",
     },
   },
-  { // VoA
-    i: "lift",
+  "lift": { // VoA
     presentSimple: {
       s: "lifts",
       p: "lift",
@@ -4055,8 +3687,7 @@ const VERBS_ALL: Verb[] = [
       p: "lifted",
     },
   },
-  { // VoA
-    i: "light",
+  "light": { // VoA
     presentSimple: {
       s: "lights",
       p: "light",
@@ -4066,8 +3697,7 @@ const VERBS_ALL: Verb[] = [
       p: "lit",
     },
   },
-  { // VoA
-    i: "like",
+  "like": { // VoA
     presentSimple: {
       s: "likes",
       p: "like",
@@ -4077,8 +3707,7 @@ const VERBS_ALL: Verb[] = [
       p: "liked",
     },
   },
-  { // VoA
-    i: "limit",
+  "limit": { // VoA
     presentSimple: {
       s: "limits",
       p: "limit",
@@ -4088,8 +3717,7 @@ const VERBS_ALL: Verb[] = [
       p: "limited",
     },
   },
-  { // VoA
-    i: "line",
+  "line": { // VoA
     presentSimple: {
       s: "lines",
       p: "line",
@@ -4099,8 +3727,7 @@ const VERBS_ALL: Verb[] = [
       p: "lined",
     },
   },
-  { // VoA
-    i: "link",
+  "link": { // VoA
     presentSimple: {
       s: "links",
       p: "link",
@@ -4110,8 +3737,7 @@ const VERBS_ALL: Verb[] = [
       p: "linked",
     },
   },
-  { // VoA
-    i: "list",
+  "list": { // VoA
     presentSimple: {
       s: "lists",
       p: "list",
@@ -4121,8 +3747,7 @@ const VERBS_ALL: Verb[] = [
       p: "listed",
     },
   },
-  { // VoA
-    i: "listen",
+  "listen": { // VoA
     presentSimple: {
       s: "listens",
       p: "listen",
@@ -4132,8 +3757,7 @@ const VERBS_ALL: Verb[] = [
       p: "listened",
     },
   },
-  { // VoA
-    i: "live",
+  "live": { // VoA
     presentSimple: {
       s: "lives",
       p: "live",
@@ -4143,8 +3767,7 @@ const VERBS_ALL: Verb[] = [
       p: "lived",
     },
   },
-  { // VoA
-    i: "load",
+  "load": { // VoA
     presentSimple: {
       s: "loads",
       p: "load",
@@ -4154,8 +3777,7 @@ const VERBS_ALL: Verb[] = [
       p: "loaded",
     },
   },
-  { // VoA
-    i: "loan",
+  "loan": { // VoA
     presentSimple: {
       s: "loans",
       p: "loan",
@@ -4165,8 +3787,7 @@ const VERBS_ALL: Verb[] = [
       p: "loaned",
     },
   },
-  { // VoA
-    i: "look",
+  "look": { // VoA
     presentSimple: {
       s: "looks",
       p: "look",
@@ -4176,8 +3797,7 @@ const VERBS_ALL: Verb[] = [
       p: "looked",
     },
   },
-  { // VoA
-    i: "lose",
+  "lose": { // VoA
     presentSimple: {
       s: "loses",
       p: "lose",
@@ -4187,8 +3807,7 @@ const VERBS_ALL: Verb[] = [
       p: "lost",
     },
   },
-  { // VoA
-    i: "love",
+  "love": { // VoA
     presentSimple: {
       s: "loves",
       p: "love",
@@ -4198,8 +3817,7 @@ const VERBS_ALL: Verb[] = [
       p: "loved",
     },
   },
-  { // VoA
-    i: "mail",
+  "mail": { // VoA
     presentSimple: {
       s: "mails",
       p: "mail",
@@ -4209,8 +3827,7 @@ const VERBS_ALL: Verb[] = [
       p: "mailed",
     },
   },
-  { // VoA
-    i: "make",
+  "make": { // VoA
     presentSimple: {
       s: "makes",
       p: "make",
@@ -4220,8 +3837,7 @@ const VERBS_ALL: Verb[] = [
       p: "made",
     },
   },
-  { // VoA
-    i: "map",
+  "map": { // VoA
     presentSimple: {
       s: "maps",
       p: "map",
@@ -4231,8 +3847,7 @@ const VERBS_ALL: Verb[] = [
       p: "mapped",
     },
   },
-  { // VoA
-    i: "march",
+  "march": { // VoA
     presentSimple: {
       s: "marches",
       p: "march",
@@ -4242,8 +3857,7 @@ const VERBS_ALL: Verb[] = [
       p: "marched",
     },
   },
-  { // VoA
-    i: "mark",
+  "mark": { // VoA
     presentSimple: {
       s: "marks",
       p: "mark",
@@ -4253,8 +3867,7 @@ const VERBS_ALL: Verb[] = [
       p: "marked",
     },
   },
-  { // VoA
-    i: "market",
+  "market": { // VoA
     presentSimple: {
       s: "markets",
       p: "market",
@@ -4264,8 +3877,7 @@ const VERBS_ALL: Verb[] = [
       p: "marketed",
     },
   },
-  { // VoA
-    i: "marry",
+  "marry": { // VoA
     presentSimple: {
       s: "marries",
       p: "marry",
@@ -4275,8 +3887,7 @@ const VERBS_ALL: Verb[] = [
       p: "married",
     },
   },
-  { // VoA
-    i: "mate",
+  "mate": { // VoA
     presentSimple: {
       s: "mates",
       p: "mate",
@@ -4286,8 +3897,7 @@ const VERBS_ALL: Verb[] = [
       p: "mated",
     },
   },
-  { // VoA
-    i: "matter",
+  "matter": { // VoA
     presentSimple: {
       s: "matters",
       p: "matter",
@@ -4297,8 +3907,7 @@ const VERBS_ALL: Verb[] = [
       p: "mattered",
     },
   },
-  { // VoA
-    i: "measure",
+  "measure": { // VoA
     presentSimple: {
       s: "measures",
       p: "measure",
@@ -4308,8 +3917,7 @@ const VERBS_ALL: Verb[] = [
       p: "measured",
     },
   },
-  { // VoA
-    i: "meet",
+  "meet": { // VoA
     presentSimple: {
       s: "meets",
       p: "meet",
@@ -4319,8 +3927,7 @@ const VERBS_ALL: Verb[] = [
       p: "met",
     },
   },
-  { // VoA
-    i: "melt",
+  "melt": { // VoA
     presentSimple: {
       s: "melts",
       p: "melt",
@@ -4330,8 +3937,7 @@ const VERBS_ALL: Verb[] = [
       p: "melted",
     },
   },
-  { // VoA
-    i: "message",
+  "message": { // VoA
     presentSimple: {
       s: "messages",
       p: "message",
@@ -4341,8 +3947,7 @@ const VERBS_ALL: Verb[] = [
       p: "messaged",
     },
   },
-  { // VoA
-    i: "milk",
+  "milk": { // VoA
     presentSimple: {
       s: "milks",
       p: "milk",
@@ -4352,8 +3957,7 @@ const VERBS_ALL: Verb[] = [
       p: "milked",
     },
   },
-  { // VoA
-    i: "mind",
+  "mind": { // VoA
     presentSimple: {
       s: "minds",
       p: "mind",
@@ -4363,8 +3967,7 @@ const VERBS_ALL: Verb[] = [
       p: "minded",
     },
   },
-  { // VoA
-    i: "mine",
+  "mine": { // VoA
     presentSimple: {
       s: "mines",
       p: "mine",
@@ -4374,8 +3977,7 @@ const VERBS_ALL: Verb[] = [
       p: "mined",
     },
   },
-  { // VoA
-    i: "miss",
+  "miss": { // VoA
     presentSimple: {
       s: "misses",
       p: "miss",
@@ -4385,8 +3987,7 @@ const VERBS_ALL: Verb[] = [
       p: "missed",
     },
   },
-  { // VoA
-    i: "mix",
+  "mix": { // VoA
     presentSimple: {
       s: "mixes",
       p: "mix",
@@ -4396,8 +3997,7 @@ const VERBS_ALL: Verb[] = [
       p: "mixed",
     },
   },
-  { // VoA
-    i: "mob",
+  "mob": { // VoA
     presentSimple: {
       s: "mobs",
       p: "mob",
@@ -4407,8 +4007,7 @@ const VERBS_ALL: Verb[] = [
       p: "mobbed",
     },
   },
-  { // VoA
-    i: "model",
+  "model": { // VoA
     presentSimple: {
       s: "models",
       p: "model",
@@ -4418,8 +4017,7 @@ const VERBS_ALL: Verb[] = [
       p: "modeled",
     },
   },
-  { // VoA
-    i: "moderate",
+  "moderate": { // VoA
     presentSimple: {
       s: "moderates",
       p: "moderate",
@@ -4429,8 +4027,7 @@ const VERBS_ALL: Verb[] = [
       p: "moderated",
     },
   },
-  { // VoA
-    i: "mother",
+  "mother": { // VoA
     presentSimple: {
       s: "mothers",
       p: "mother",
@@ -4441,8 +4038,7 @@ const VERBS_ALL: Verb[] = [
     },
   },
 
-  { // VoA
-    i: "motion",
+  "motion": { // VoA
     presentSimple: {
       s: "motions",
       p: "motion",
@@ -4452,8 +4048,7 @@ const VERBS_ALL: Verb[] = [
       p: "motioned",
     },
   },
-  { // VoA
-    i: "mourn",
+  "mourn": { // VoA
     presentSimple: {
       s: "mourns",
       p: "mourn",
@@ -4463,8 +4058,7 @@ const VERBS_ALL: Verb[] = [
       p: "mourned",
     },
   },
-  { // VoA
-    i: "move",
+  "move": { // VoA
     presentSimple: {
       s: "moves",
       p: "move",
@@ -4474,8 +4068,7 @@ const VERBS_ALL: Verb[] = [
       p: "moved",
     },
   },
-  { // VoA
-    i: "murder",
+  "murder": { // VoA
     presentSimple: {
       s: "murders",
       p: "murder",
@@ -4485,8 +4078,7 @@ const VERBS_ALL: Verb[] = [
       p: "murdered",
     },
   },
-  { // VoA
-    i: "name",
+  "name": { // VoA
     presentSimple: {
       s: "names",
       p: "name",
@@ -4496,8 +4088,7 @@ const VERBS_ALL: Verb[] = [
       p: "named",
     },
   },
-  { // VoA
-    i: "narrow",
+  "narrow": { // VoA
     presentSimple: {
       s: "narrows",
       p: "narrow",
@@ -4507,8 +4098,7 @@ const VERBS_ALL: Verb[] = [
       p: "narrowed",
     },
   },
-  { // VoA
-    i: "need",
+  "need": { // VoA
     presentSimple: {
       s: "needs",
       p: "need",
@@ -4518,8 +4108,7 @@ const VERBS_ALL: Verb[] = [
       p: "needed",
     },
   },
-  { // VoA
-    i: "negotiate",
+  "negotiate": { // VoA
     presentSimple: {
       s: "negotiates",
       p: "negotiate",
@@ -4529,8 +4118,7 @@ const VERBS_ALL: Verb[] = [
       p: "negotiated",
     },
   },
-  { // VoA
-    i: "nominate",
+  "nominate": { // VoA
     presentSimple: {
       s: "nominates",
       p: "nominate",
@@ -4540,8 +4128,7 @@ const VERBS_ALL: Verb[] = [
       p: "nominated",
     },
   },
-  { // VoA
-    i: "note",
+  "note": { // VoA
     presentSimple: {
       s: "notes",
       p: "note",
@@ -4551,8 +4138,7 @@ const VERBS_ALL: Verb[] = [
       p: "noted",
     },
   },
-  { // VoA
-    i: "number",
+  "number": { // VoA
     presentSimple: {
       s: "numbers",
       p: "number",
@@ -4562,8 +4148,7 @@ const VERBS_ALL: Verb[] = [
       p: "numbered",
     },
   },
-  { // VoA
-    i: "obey",
+  "obey": { // VoA
     presentSimple: {
       s: "obeys",
       p: "obey",
@@ -4573,8 +4158,7 @@ const VERBS_ALL: Verb[] = [
       p: "obeyed",
     },
   },
-  { // VoA
-    i: "object",
+  "object": { // VoA
     presentSimple: {
       s: "objects",
       p: "object",
@@ -4584,8 +4168,7 @@ const VERBS_ALL: Verb[] = [
       p: "objected",
     },
   },
-  { // VoA
-    i: "observe",
+  "observe": { // VoA
     presentSimple: {
       s: "observes",
       p: "observe",
@@ -4595,8 +4178,7 @@ const VERBS_ALL: Verb[] = [
       p: "observed",
     },
   },
-  { // VoA
-    i: "occupy",
+  "occupy": { // VoA
     presentSimple: {
       s: "occupies",
       p: "occupy",
@@ -4606,8 +4188,7 @@ const VERBS_ALL: Verb[] = [
       p: "occupied",
     },
   },
-  { // VoA
-    i: "offer",
+  "offer": { // VoA
     presentSimple: {
       s: "offers",
       p: "offer",
@@ -4617,8 +4198,7 @@ const VERBS_ALL: Verb[] = [
       p: "offered",
     },
   },
-  { // VoA
-    i: "oil",
+  "oil": { // VoA
     presentSimple: {
       s: "oils",
       p: "oil",
@@ -4628,8 +4208,7 @@ const VERBS_ALL: Verb[] = [
       p: "oiled",
     },
   },
-  { // VoA
-    i: "open",
+  "open": { // VoA
     presentSimple: {
       s: "opens",
       p: "open",
@@ -4639,8 +4218,7 @@ const VERBS_ALL: Verb[] = [
       p: "opened",
     },
   },
-  { // VoA
-    i: "operate",
+  "operate": { // VoA
     presentSimple: {
       s: "operates",
       p: "operate",
@@ -4650,8 +4228,7 @@ const VERBS_ALL: Verb[] = [
       p: "operated",
     },
   },
-  { // VoA
-    i: "oppose",
+  "oppose": { // VoA
     presentSimple: {
       s: "opposes",
       p: "oppose",
@@ -4661,8 +4238,7 @@ const VERBS_ALL: Verb[] = [
       p: "opposed",
     },
   },
-  { // VoA
-    i: "oppress",
+  "oppress": { // VoA
     presentSimple: {
       s: "oppresses",
       p: "oppress",
@@ -4672,8 +4248,7 @@ const VERBS_ALL: Verb[] = [
       p: "oppressed",
     },
   },
-  { // VoA
-    i: "orbit",
+  "orbit": { // VoA
     presentSimple: {
       s: "orbits",
       p: "orbit",
@@ -4683,8 +4258,7 @@ const VERBS_ALL: Verb[] = [
       p: "orbited",
     },
   },
-  { // VoA
-    i: "order",
+  "order": { // VoA
     presentSimple: {
       s: "orders",
       p: "order",
@@ -4694,8 +4268,7 @@ const VERBS_ALL: Verb[] = [
       p: "ordered",
     },
   },
-  { // VoA
-    i: "organize",
+  "organize": { // VoA
     presentSimple: {
       s: "organizes",
       p: "organize",
@@ -4705,8 +4278,7 @@ const VERBS_ALL: Verb[] = [
       p: "organized",
     },
   },
-  { // VoA
-    i: "oust",
+  "oust": { // VoA
     presentSimple: {
       s: "ousts",
       p: "oust",
@@ -4716,8 +4288,7 @@ const VERBS_ALL: Verb[] = [
       p: "ousted",
     },
   },
-  { // VoA
-    i: "out",
+  "out": { // VoA
     presentSimple: {
       s: "outs",
       p: "out",
@@ -4727,8 +4298,7 @@ const VERBS_ALL: Verb[] = [
       p: "outed",
     },
   },
-  { // VoA
-    i: "overthrow",
+  "overthrow": { // VoA
     presentSimple: {
       s: "overthrows",
       p: "overthrow",
@@ -4738,8 +4308,7 @@ const VERBS_ALL: Verb[] = [
       p: "overthrew",
     },
   },
-  { // VoA
-    i: "owe",
+  "owe": { // VoA
     presentSimple: {
       s: "owes",
       p: "owe",
@@ -4749,8 +4318,7 @@ const VERBS_ALL: Verb[] = [
       p: "owed",
     },
   },
-  { // VoA
-    i: "own",
+  "own": { // VoA
     presentSimple: {
       s: "owns",
       p: "own",
@@ -4760,8 +4328,7 @@ const VERBS_ALL: Verb[] = [
       p: "owned",
     },
   },
-  { // VoA
-    i: "paint",
+  "paint": { // VoA
     presentSimple: {
       s: "paints",
       p: "paint",
@@ -4771,8 +4338,7 @@ const VERBS_ALL: Verb[] = [
       p: "painted",
     },
   },
-  { // VoA
-    i: "pan",
+  "pan": { // VoA
     presentSimple: {
       s: "pans",
       p: "pan",
@@ -4782,8 +4348,7 @@ const VERBS_ALL: Verb[] = [
       p: "panned",
     },
   },
-  { // VoA
-    i: "parachute",
+  "parachute": { // VoA
     presentSimple: {
       s: "parachutes",
       p: "parachute",
@@ -4793,8 +4358,7 @@ const VERBS_ALL: Verb[] = [
       p: "parachuted",
     },
   },
-  { // VoA
-    i: "parade",
+  "parade": { // VoA
     presentSimple: {
       s: "parades",
       p: "parade",
@@ -4804,8 +4368,7 @@ const VERBS_ALL: Verb[] = [
       p: "paraded",
     },
   },
-  { // VoA
-    i: "pardon",
+  "pardon": { // VoA
     presentSimple: {
       s: "pardons",
       p: "pardon",
@@ -4815,8 +4378,7 @@ const VERBS_ALL: Verb[] = [
       p: "pardoned",
     },
   },
-  { // VoA
-    i: "parent",
+  "parent": { // VoA
     presentSimple: {
       s: "parents",
       p: "parent",
@@ -4826,8 +4388,7 @@ const VERBS_ALL: Verb[] = [
       p: "parented",
     },
   },
-  { // VoA
-    i: "part",
+  "part": { // VoA
     presentSimple: {
       s: "parts",
       p: "part",
@@ -4837,8 +4398,7 @@ const VERBS_ALL: Verb[] = [
       p: "parted",
     },
   },
-  { // VoA
-    i: "party",
+  "party": { // VoA
     presentSimple: {
       s: "parties",
       p: "party",
@@ -4848,8 +4408,7 @@ const VERBS_ALL: Verb[] = [
       p: "partied",
     },
   },
-  { // VoA
-    i: "pass",
+  "pass": { // VoA
     presentSimple: {
       s: "passes",
       p: "pass",
@@ -4859,8 +4418,7 @@ const VERBS_ALL: Verb[] = [
       p: "passed",
     },
   },
-  { // VoA
-    i: "pay",
+  "pay": { // VoA
     presentSimple: {
       s: "pays",
       p: "pay",
@@ -4870,8 +4428,7 @@ const VERBS_ALL: Verb[] = [
       p: "paid",
     },
   },
-  { // VoA
-    i: "perfect",
+  "perfect": { // VoA
     presentSimple: {
       s: "perfects",
       p: "perfect",
@@ -4881,8 +4438,7 @@ const VERBS_ALL: Verb[] = [
       p: "perfected",
     },
   },
-  { // VoA
-    i: "perform",
+  "perform": { // VoA
     presentSimple: {
       s: "performs",
       p: "perform",
@@ -4892,8 +4448,7 @@ const VERBS_ALL: Verb[] = [
       p: "performed",
     },
   },
-  { // VoA
-    i: "permit",
+  "permit": { // VoA
     presentSimple: {
       s: "permits",
       p: "permit",
@@ -4903,8 +4458,7 @@ const VERBS_ALL: Verb[] = [
       p: "permitted",
     },
   },
-  { // VoA
-    i: "picture",
+  "picture": { // VoA
     presentSimple: {
       s: "pictures",
       p: "picture",
@@ -4914,8 +4468,7 @@ const VERBS_ALL: Verb[] = [
       p: "pictured",
     },
   },
-  { // VoA
-    i: "piece",
+  "piece": { // VoA
     presentSimple: {
       s: "pieces",
       p: "piece",
@@ -4925,8 +4478,7 @@ const VERBS_ALL: Verb[] = [
       p: "pieced",
     },
   },
-  { // VoA
-    i: "pilot",
+  "pilot": { // VoA
     presentSimple: {
       s: "pilots",
       p: "pilot",
@@ -4936,8 +4488,7 @@ const VERBS_ALL: Verb[] = [
       p: "piloted",
     },
   },
-  { // VoA
-    i: "pipe",
+  "pipe": { // VoA
     presentSimple: {
       s: "pipes",
       p: "pipe",
@@ -4947,8 +4498,7 @@ const VERBS_ALL: Verb[] = [
       p: "piped",
     },
   },
-  { // VoA
-    i: "place",
+  "place": { // VoA
     presentSimple: {
       s: "places",
       p: "place",
@@ -4958,8 +4508,7 @@ const VERBS_ALL: Verb[] = [
       p: "placed",
     },
   },
-  { // VoA
-    i: "plan",
+  "plan": { // VoA
     presentSimple: {
       s: "plans",
       p: "plan",
@@ -4969,8 +4518,7 @@ const VERBS_ALL: Verb[] = [
       p: "planned",
     },
   },
-  { // VoA
-    i: "plant",
+  "plant": { // VoA
     presentSimple: {
       s: "plants",
       p: "plant",
@@ -4980,8 +4528,7 @@ const VERBS_ALL: Verb[] = [
       p: "planted",
     },
   },
-  { // VoA
-    i: "play",
+  "play": { // VoA
     presentSimple: {
       s: "plays",
       p: "play",
@@ -4991,8 +4538,7 @@ const VERBS_ALL: Verb[] = [
       p: "played",
     },
   },
-  { // VoA
-    i: "please",
+  "please": { // VoA
     presentSimple: {
       s: "pleases",
       p: "please",
@@ -5002,8 +4548,7 @@ const VERBS_ALL: Verb[] = [
       p: "pleased",
     },
   },
-  { // VoA
-    i: "plot",
+  "plot": { // VoA
     presentSimple: {
       s: "plots",
       p: "plot",
@@ -5013,8 +4558,7 @@ const VERBS_ALL: Verb[] = [
       p: "plotted",
     },
   },
-  { // VoA
-    i: "point",
+  "point": { // VoA
     presentSimple: {
       s: "points",
       p: "point",
@@ -5024,8 +4568,7 @@ const VERBS_ALL: Verb[] = [
       p: "pointed",
     },
   },
-  { // VoA
-    i: "poison",
+  "poison": { // VoA
     presentSimple: {
       s: "poisons",
       p: "poison",
@@ -5035,8 +4578,7 @@ const VERBS_ALL: Verb[] = [
       p: "poisoned",
     },
   },
-  { // VoA
-    i: "police",
+  "police": { // VoA
     presentSimple: {
       s: "polices",
       p: "police",
@@ -5046,8 +4588,7 @@ const VERBS_ALL: Verb[] = [
       p: "policed",
     },
   },
-  { // VoA
-    i: "pollute",
+  "pollute": { // VoA
     presentSimple: {
       s: "pollutes",
       p: "pollute",
@@ -5057,8 +4598,7 @@ const VERBS_ALL: Verb[] = [
       p: "polluted",
     },
   },
-  { // VoA
-    i: "position",
+  "position": { // VoA
     presentSimple: {
       s: "positions",
       p: "position",
@@ -5068,8 +4608,7 @@ const VERBS_ALL: Verb[] = [
       p: "positioned",
     },
   },
-  { // VoA
-    i: "possess",
+  "possess": { // VoA
     presentSimple: {
       s: "possesses",
       p: "possess",
@@ -5079,8 +4618,7 @@ const VERBS_ALL: Verb[] = [
       p: "possessed",
     },
   },
-  { // VoA
-    i: "postpone",
+  "postpone": { // VoA
     presentSimple: {
       s: "postpones",
       p: "postpone",
@@ -5090,8 +4628,7 @@ const VERBS_ALL: Verb[] = [
       p: "postponed",
     },
   },
-  { // VoA
-    i: "pour",
+  "pour": { // VoA
     presentSimple: {
       s: "pours",
       p: "pour",
@@ -5101,8 +4638,7 @@ const VERBS_ALL: Verb[] = [
       p: "poured",
     },
   },
-  { // VoA
-    i: "power",
+  "power": { // VoA
     presentSimple: {
       s: "powers",
       p: "power",
@@ -5112,8 +4648,7 @@ const VERBS_ALL: Verb[] = [
       p: "powered",
     },
   },
-  { // VoA
-    i: "praise",
+  "praise": { // VoA
     presentSimple: {
       s: "praises",
       p: "praise",
@@ -5123,8 +4658,7 @@ const VERBS_ALL: Verb[] = [
       p: "praised",
     },
   },
-  { // VoA
-    i: "pray",
+  "pray": { // VoA
     presentSimple: {
       s: "prays",
       p: "pray",
@@ -5134,8 +4668,7 @@ const VERBS_ALL: Verb[] = [
       p: "prayed",
     },
   },
-  { // VoA
-    i: "present",
+  "present": { // VoA
     presentSimple: {
       s: "presents",
       p: "present",
@@ -5145,8 +4678,7 @@ const VERBS_ALL: Verb[] = [
       p: "presented",
     },
   },
-  { // VoA
-    i: "press",
+  "press": { // VoA
     presentSimple: {
       s: "presses",
       p: "press",
@@ -5156,8 +4688,7 @@ const VERBS_ALL: Verb[] = [
       p: "pressed",
     },
   },
-  { // VoA
-    i: "prevent",
+  "prevent": { // VoA
     presentSimple: {
       s: "prevents",
       p: "prevent",
@@ -5167,8 +4698,7 @@ const VERBS_ALL: Verb[] = [
       p: "prevented",
     },
   },
-  { // VoA
-    i: "price",
+  "price": { // VoA
     presentSimple: {
       s: "prices",
       p: "price",
@@ -5178,8 +4708,7 @@ const VERBS_ALL: Verb[] = [
       p: "priced",
     },
   },
-  { // VoA
-    i: "prize",
+  "prize": { // VoA
     presentSimple: {
       s: "prizes",
       p: "prize",
@@ -5189,8 +4718,7 @@ const VERBS_ALL: Verb[] = [
       p: "prized",
     },
   },
-  { // VoA
-    i: "process",
+  "process": { // VoA
     presentSimple: {
       s: "processes",
       p: "process",
@@ -5200,8 +4728,7 @@ const VERBS_ALL: Verb[] = [
       p: "processed",
     },
   },
-  { // VoA
-    i: "produce",
+  "produce": { // VoA
     presentSimple: {
       s: "produces",
       p: "produce",
@@ -5211,8 +4738,7 @@ const VERBS_ALL: Verb[] = [
       p: "produced",
     },
   },
-  { // VoA
-    i: "profit",
+  "profit": { // VoA
     presentSimple: {
       s: "profits",
       p: "profit",
@@ -5222,8 +4748,7 @@ const VERBS_ALL: Verb[] = [
       p: "profited",
     },
   },
-  { // VoA
-    i: "program",
+  "program": { // VoA
     presentSimple: {
       s: "programs",
       p: "program",
@@ -5233,8 +4758,7 @@ const VERBS_ALL: Verb[] = [
       p: "programmed",
     },
   },
-  { // VoA
-    i: "progress",
+  "progress": { // VoA
     presentSimple: {
       s: "progresses",
       p: "progress",
@@ -5244,8 +4768,7 @@ const VERBS_ALL: Verb[] = [
       p: "progressed",
     },
   },
-  { // VoA
-    i: "project",
+  "project": { // VoA
     presentSimple: {
       s: "projects",
       p: "project",
@@ -5255,8 +4778,7 @@ const VERBS_ALL: Verb[] = [
       p: "projected",
     },
   },
-  { // VoA
-    i: "propose",
+  "propose": { // VoA
     presentSimple: {
       s: "proposes",
       p: "propose",
@@ -5266,8 +4788,7 @@ const VERBS_ALL: Verb[] = [
       p: "proposed",
     },
   },
-  { // VoA
-    i: "protect",
+  "protect": { // VoA
     presentSimple: {
       s: "protects",
       p: "protect",
@@ -5277,8 +4798,7 @@ const VERBS_ALL: Verb[] = [
       p: "protected",
     },
   },
-  { // VoA
-    i: "protest",
+  "protest": { // VoA
     presentSimple: {
       s: "protests",
       p: "protest",
@@ -5288,8 +4808,7 @@ const VERBS_ALL: Verb[] = [
       p: "protested",
     },
   },
-  { // VoA
-    i: "prove",
+  "prove": { // VoA
     presentSimple: {
       s: "proves",
       p: "prove",
@@ -5299,8 +4818,7 @@ const VERBS_ALL: Verb[] = [
       p: "proved",
     },
   },
-  { // VoA
-    i: "provide",
+  "provide": { // VoA
     presentSimple: {
       s: "provides",
       p: "provide",
@@ -5310,8 +4828,7 @@ const VERBS_ALL: Verb[] = [
       p: "provided",
     },
   },
-  { // VoA
-    i: "publish",
+  "publish": { // VoA
     presentSimple: {
       s: "publishes",
       p: "publish",
@@ -5321,8 +4838,7 @@ const VERBS_ALL: Verb[] = [
       p: "published",
     },
   },
-  { // VoA
-    i: "pull",
+  "pull": { // VoA
     presentSimple: {
       s: "pulls",
       p: "pull",
@@ -5332,8 +4848,7 @@ const VERBS_ALL: Verb[] = [
       p: "pulled",
     },
   },
-  { // VoA
-    i: "pump",
+  "pump": { // VoA
     presentSimple: {
       s: "pumps",
       p: "pump",
@@ -5343,8 +4858,7 @@ const VERBS_ALL: Verb[] = [
       p: "pumped",
     },
   },
-  { // VoA
-    i: "punish",
+  "punish": { // VoA
     presentSimple: {
       s: "punishes",
       p: "punish",
@@ -5354,8 +4868,7 @@ const VERBS_ALL: Verb[] = [
       p: "punished",
     },
   },
-  { // VoA
-    i: "purchase",
+  "purchase": { // VoA
     presentSimple: {
       s: "purchases",
       p: "purchase",
@@ -5365,8 +4878,7 @@ const VERBS_ALL: Verb[] = [
       p: "purchased",
     },
   },
-  { // VoA
-    i: "push",
+  "push": { // VoA
     presentSimple: {
       s: "pushes",
       p: "push",
@@ -5376,8 +4888,7 @@ const VERBS_ALL: Verb[] = [
       p: "pushed",
     },
   },
-  { // VoA
-    i: "put",
+  "put": { // VoA
     presentSimple: {
       s: "puts",
       p: "put",
@@ -5387,8 +4898,7 @@ const VERBS_ALL: Verb[] = [
       p: "put",
     },
   },
-  { // VoA
-    i: "question",
+  "question": { // VoA
     presentSimple: {
       s: "questions",
       p: "question",
@@ -5398,8 +4908,7 @@ const VERBS_ALL: Verb[] = [
       p: "questioned",
     },
   },
-  { // VoA
-    i: "quiet",
+  "quiet": { // VoA
     presentSimple: {
       s: "quiets",
       p: "quiet",
@@ -5409,8 +4918,7 @@ const VERBS_ALL: Verb[] = [
       p: "quieted",
     },
   },
-  { // VoA
-    i: "race",
+  "race": { // VoA
     presentSimple: {
       s: "races",
       p: "race",
@@ -5420,8 +4928,7 @@ const VERBS_ALL: Verb[] = [
       p: "raced",
     },
   },
-  { // VoA
-    i: "radio",
+  "radio": { // VoA
     presentSimple: {
       s: "radios",
       p: "radio",
@@ -5431,8 +4938,7 @@ const VERBS_ALL: Verb[] = [
       p: "radioed",
     },
   },
-  { // VoA
-    i: "raid",
+  "raid": { // VoA
     presentSimple: {
       s: "raids",
       p: "raid",
@@ -5442,8 +4948,7 @@ const VERBS_ALL: Verb[] = [
       p: "raided",
     },
   },
-  { // VoA
-    i: "rain",
+  "rain": { // VoA
     presentSimple: {
       s: "rains",
       p: "rain",
@@ -5453,8 +4958,7 @@ const VERBS_ALL: Verb[] = [
       p: "rained",
     },
   },
-  { // VoA
-    i: "raise",
+  "raise": { // VoA
     presentSimple: {
       s: "raises",
       p: "raise",
@@ -5464,8 +4968,7 @@ const VERBS_ALL: Verb[] = [
       p: "raised",
     },
   },
-  { // VoA
-    i: "rate",
+  "rate": { // VoA
     presentSimple: {
       s: "rates",
       p: "rate",
@@ -5475,8 +4978,7 @@ const VERBS_ALL: Verb[] = [
       p: "rated",
     },
   },
-  { // VoA
-    i: "reach",
+  "reach": { // VoA
     presentSimple: {
       s: "reaches",
       p: "reach",
@@ -5486,8 +4988,7 @@ const VERBS_ALL: Verb[] = [
       p: "reached",
     },
   },
-  { // VoA
-    i: "react",
+  "react": { // VoA
     presentSimple: {
       s: "reacts",
       p: "react",
@@ -5497,8 +4998,7 @@ const VERBS_ALL: Verb[] = [
       p: "reacted",
     },
   },
-  { // VoA
-    i: "read",
+  "read": { // VoA
     presentSimple: {
       s: "reads",
       p: "read",
@@ -5508,8 +5008,7 @@ const VERBS_ALL: Verb[] = [
       p: "read",
     },
   },
-  { // VoA
-    i: "ready",
+  "ready": { // VoA
     presentSimple: {
       s: "readies",
       p: "ready",
@@ -5519,8 +5018,7 @@ const VERBS_ALL: Verb[] = [
       p: "readied",
     },
   },
-  { // VoA
-    i: "reason",
+  "reason": { // VoA
     presentSimple: {
       s: "reasons",
       p: "reason",
@@ -5530,8 +5028,7 @@ const VERBS_ALL: Verb[] = [
       p: "reasoned",
     },
   },
-  { // VoA
-    i: "rebel",
+  "rebel": { // VoA
     presentSimple: {
       s: "rebels",
       p: "rebel",
@@ -5541,8 +5038,7 @@ const VERBS_ALL: Verb[] = [
       p: "rebelled",
     },
   },
-  { // VoA
-    i: "receive",
+  "receive": { // VoA
     presentSimple: {
       s: "receives",
       p: "receive",
@@ -5552,8 +5048,7 @@ const VERBS_ALL: Verb[] = [
       p: "received",
     },
   },
-  { // VoA
-    i: "recognize",
+  "recognize": { // VoA
     presentSimple: {
       s: "recognizes",
       p: "recognize",
@@ -5563,8 +5058,7 @@ const VERBS_ALL: Verb[] = [
       p: "recognized",
     },
   },
-  { // VoA
-    i: "record",
+  "record": { // VoA
     presentSimple: {
       s: "records",
       p: "record",
@@ -5574,8 +5068,7 @@ const VERBS_ALL: Verb[] = [
       p: "recorded",
     },
   },
-  { // VoA
-    i: "recover",
+  "recover": { // VoA
     presentSimple: {
       s: "recovers",
       p: "recover",
@@ -5585,8 +5078,7 @@ const VERBS_ALL: Verb[] = [
       p: "recovered",
     },
   },
-  { // VoA
-    i: "reduce",
+  "reduce": { // VoA
     presentSimple: {
       s: "reduces",
       p: "reduce",
@@ -5596,8 +5088,7 @@ const VERBS_ALL: Verb[] = [
       p: "reduced",
     },
   },
-  { // VoA
-    i: "reform",
+  "reform": { // VoA
     presentSimple: {
       s: "reforms",
       p: "reform",
@@ -5607,8 +5098,7 @@ const VERBS_ALL: Verb[] = [
       p: "reformed",
     },
   },
-  { // VoA
-    i: "refuse",
+  "refuse": { // VoA
     presentSimple: {
       s: "refuses",
       p: "refuse",
@@ -5618,8 +5108,7 @@ const VERBS_ALL: Verb[] = [
       p: "refused",
     },
   },
-  { // VoA
-    i: "regret",
+  "regret": { // VoA
     presentSimple: {
       s: "regrets",
       p: "regret",
@@ -5629,8 +5118,7 @@ const VERBS_ALL: Verb[] = [
       p: "regretted",
     },
   },
-  { // VoA
-    i: "reject",
+  "reject": { // VoA
     presentSimple: {
       s: "rejects",
       p: "reject",
@@ -5640,8 +5128,7 @@ const VERBS_ALL: Verb[] = [
       p: "rejected",
     },
   },
-  { // VoA
-    i: "release",
+  "release": { // VoA
     presentSimple: {
       s: "releases",
       p: "release",
@@ -5651,8 +5138,7 @@ const VERBS_ALL: Verb[] = [
       p: "released",
     },
   },
-  { // VoA
-    i: "remain",
+  "remain": { // VoA
     presentSimple: {
       s: "remains",
       p: "remain",
@@ -5662,8 +5148,7 @@ const VERBS_ALL: Verb[] = [
       p: "remained",
     },
   },
-  { // VoA
-    i: "remember",
+  "remember": { // VoA
     presentSimple: {
       s: "remembers",
       p: "remember",
@@ -5673,8 +5158,7 @@ const VERBS_ALL: Verb[] = [
       p: "remembered",
     },
   },
-  { // VoA
-    i: "remove",
+  "remove": { // VoA
     presentSimple: {
       s: "removes",
       p: "remove",
@@ -5684,8 +5168,7 @@ const VERBS_ALL: Verb[] = [
       p: "removed",
     },
   },
-  { // VoA
-    i: "repair",
+  "repair": { // VoA
     presentSimple: {
       s: "repairs",
       p: "repair",
@@ -5695,8 +5178,7 @@ const VERBS_ALL: Verb[] = [
       p: "repaired",
     },
   },
-  { // VoA
-    i: "repeat",
+  "repeat": { // VoA
     presentSimple: {
       s: "repeats",
       p: "repeat",
@@ -5706,8 +5188,7 @@ const VERBS_ALL: Verb[] = [
       p: "repeated",
     },
   },
-  { // VoA
-    i: "report",
+  "report": { // VoA
     presentSimple: {
       s: "reports",
       p: "report",
@@ -5717,8 +5198,7 @@ const VERBS_ALL: Verb[] = [
       p: "reported",
     },
   },
-  { // VoA
-    i: "represent",
+  "represent": { // VoA
     presentSimple: {
       s: "represents",
       p: "represent",
@@ -5728,8 +5208,7 @@ const VERBS_ALL: Verb[] = [
       p: "represented",
     },
   },
-  { // VoA
-    i: "repress",
+  "repress": { // VoA
     presentSimple: {
       s: "represses",
       p: "repress",
@@ -5739,8 +5218,7 @@ const VERBS_ALL: Verb[] = [
       p: "repressed",
     },
   },
-  { // VoA
-    i: "request",
+  "request": { // VoA
     presentSimple: {
       s: "requests",
       p: "request",
@@ -5750,8 +5228,7 @@ const VERBS_ALL: Verb[] = [
       p: "requested",
     },
   },
-  { // VoA
-    i: "require",
+  "require": { // VoA
     presentSimple: {
       s: "requires",
       p: "require",
@@ -5761,8 +5238,7 @@ const VERBS_ALL: Verb[] = [
       p: "required",
     },
   },
-  { // VoA
-    i: "rescue",
+  "rescue": { // VoA
     presentSimple: {
       s: "rescues",
       p: "rescue",
@@ -5772,8 +5248,7 @@ const VERBS_ALL: Verb[] = [
       p: "rescued",
     },
   },
-  { // VoA
-    i: "research",
+  "research": { // VoA
     presentSimple: {
       s: "researches",
       p: "research",
@@ -5783,8 +5258,7 @@ const VERBS_ALL: Verb[] = [
       p: "researched",
     },
   },
-  { // VoA
-    i: "resign",
+  "resign": { // VoA
     presentSimple: {
       s: "resigns",
       p: "resign",
@@ -5794,8 +5268,7 @@ const VERBS_ALL: Verb[] = [
       p: "resigned",
     },
   },
-  { // VoA
-    i: "resist",
+  "resist": { // VoA
     presentSimple: {
       s: "resists",
       p: "resist",
@@ -5805,8 +5278,7 @@ const VERBS_ALL: Verb[] = [
       p: "resisted",
     },
   },
-  { // VoA
-    i: "rest",
+  "rest": { // VoA
     presentSimple: {
       s: "rests",
       p: "rest",
@@ -5816,8 +5288,7 @@ const VERBS_ALL: Verb[] = [
       p: "rested",
     },
   },
-  { // VoA
-    i: "restrain",
+  "restrain": { // VoA
     presentSimple: {
       s: "restrains",
       p: "restrain",
@@ -5827,8 +5298,7 @@ const VERBS_ALL: Verb[] = [
       p: "restrained",
     },
   },
-  { // VoA
-    i: "restrict",
+  "restrict": { // VoA
     presentSimple: {
       s: "restricts",
       p: "restrict",
@@ -5838,8 +5308,7 @@ const VERBS_ALL: Verb[] = [
       p: "restricted",
     },
   },
-  { // VoA
-    i: "result",
+  "result": { // VoA
     presentSimple: {
       s: "results",
       p: "result",
@@ -5849,8 +5318,7 @@ const VERBS_ALL: Verb[] = [
       p: "resulted",
     },
   },
-  { // VoA
-    i: "retire",
+  "retire": { // VoA
     presentSimple: {
       s: "retires",
       p: "retire",
@@ -5860,8 +5328,7 @@ const VERBS_ALL: Verb[] = [
       p: "retired",
     },
   },
-  { // VoA
-    i: "return",
+  "return": { // VoA
     presentSimple: {
       s: "returns",
       p: "return",
@@ -5871,8 +5338,7 @@ const VERBS_ALL: Verb[] = [
       p: "returned",
     },
   },
-  { // VoA
-    i: "revolt",
+  "revolt": { // VoA
     presentSimple: {
       s: "revolts",
       p: "revolt",
@@ -5882,8 +5348,7 @@ const VERBS_ALL: Verb[] = [
       p: "revolted",
     },
   },
-  { // VoA
-    i: "ride",
+  "ride": { // VoA
     presentSimple: {
       s: "rides",
       p: "ride",
@@ -5893,8 +5358,7 @@ const VERBS_ALL: Verb[] = [
       p: "rode",
     },
   },
-  { // VoA
-    i: "riot",
+  "riot": { // VoA
     presentSimple: {
       s: "riots",
       p: "riot",
@@ -5904,8 +5368,7 @@ const VERBS_ALL: Verb[] = [
       p: "rioted",
     },
   },
-  { // VoA
-    i: "rise",
+  "rise": { // VoA
     presentSimple: {
       s: "rises",
       p: "rise",
@@ -5915,8 +5378,7 @@ const VERBS_ALL: Verb[] = [
       p: "rose",
     },
   },
-  { // VoA
-    i: "risk",
+  "risk": { // VoA
     presentSimple: {
       s: "risks",
       p: "risk",
@@ -5926,8 +5388,7 @@ const VERBS_ALL: Verb[] = [
       p: "risked",
     },
   },
-  { // VoA
-    i: "rob",
+  "rob": { // VoA
     presentSimple: {
       s: "robs",
       p: "rob",
@@ -5937,8 +5398,7 @@ const VERBS_ALL: Verb[] = [
       p: "robbed",
     },
   },
-  { // VoA
-    i: "rock",
+  "rock": { // VoA
     presentSimple: {
       s: "rocks",
       p: "rock",
@@ -5948,8 +5408,7 @@ const VERBS_ALL: Verb[] = [
       p: "rocked",
     },
   },
-  { // VoA
-    i: "roll",
+  "roll": { // VoA
     presentSimple: {
       s: "rolls",
       p: "roll",
@@ -5959,8 +5418,7 @@ const VERBS_ALL: Verb[] = [
       p: "rolled",
     },
   },
-  { // VoA
-    i: "root",
+  "root": { // VoA
     presentSimple: {
       s: "roots",
       p: "root",
@@ -5970,8 +5428,7 @@ const VERBS_ALL: Verb[] = [
       p: "rooted",
     },
   },
-  { // VoA
-    i: "round",
+  "round": { // VoA
     presentSimple: {
       s: "rounds",
       p: "round",
@@ -5981,8 +5438,7 @@ const VERBS_ALL: Verb[] = [
       p: "rounded",
     },
   },
-  { // VoA
-    i: "rub",
+  "rub": { // VoA
     presentSimple: {
       s: "rubs",
       p: "rub",
@@ -5992,8 +5448,7 @@ const VERBS_ALL: Verb[] = [
       p: "rubbed",
     },
   },
-  { // VoA
-    i: "ruin",
+  "ruin": { // VoA
     presentSimple: {
       s: "ruins",
       p: "ruin",
@@ -6003,8 +5458,7 @@ const VERBS_ALL: Verb[] = [
       p: "ruined",
     },
   },
-  { // VoA
-    i: "rule",
+  "rule": { // VoA
     presentSimple: {
       s: "rules",
       p: "rule",
@@ -6014,8 +5468,7 @@ const VERBS_ALL: Verb[] = [
       p: "ruled",
     },
   },
-  { // VoA
-    i: "run",
+  "run": { // VoA
     presentSimple: {
       s: "runs",
       p: "run",
@@ -6025,8 +5478,7 @@ const VERBS_ALL: Verb[] = [
       p: "ran",
     },
   },
-  { // VoA
-    i: "sabotage",
+  "sabotage": { // VoA
     presentSimple: {
       s: "sabotages",
       p: "sabotage",
@@ -6036,8 +5488,7 @@ const VERBS_ALL: Verb[] = [
       p: "sabotaged",
     },
   },
-  { // VoA
-    i: "sacrifice",
+  "sacrifice": { // VoA
     presentSimple: {
       s: "sacrifices",
       p: "sacrifice",
@@ -6047,8 +5498,7 @@ const VERBS_ALL: Verb[] = [
       p: "sacrificed",
     },
   },
-  { // VoA
-    i: "sail",
+  "sail": { // VoA
     presentSimple: {
       s: "sails",
       p: "sail",
@@ -6058,8 +5508,7 @@ const VERBS_ALL: Verb[] = [
       p: "sailed",
     },
   },
-  { // VoA
-    i: "salt",
+  "salt": { // VoA
     presentSimple: {
       s: "salts",
       p: "salt",
@@ -6069,8 +5518,7 @@ const VERBS_ALL: Verb[] = [
       p: "salted",
     },
   },
-  { // VoA
-    i: "sand",
+  "sand": { // VoA
     presentSimple: {
       s: "sands",
       p: "sand",
@@ -6080,8 +5528,7 @@ const VERBS_ALL: Verb[] = [
       p: "sanded",
     },
   },
-  { // VoA
-    i: "satisfy",
+  "satisfy": { // VoA
     presentSimple: {
       s: "satisfies",
       p: "satisfy",
@@ -6091,8 +5538,7 @@ const VERBS_ALL: Verb[] = [
       p: "satisfied",
     },
   },
-  { // VoA
-    i: "save",
+  "save": { // VoA
     presentSimple: {
       s: "saves",
       p: "save",
@@ -6102,8 +5548,7 @@ const VERBS_ALL: Verb[] = [
       p: "saved",
     },
   },
-  { // VoA
-    i: "say",
+  "say": { // VoA
     presentSimple: {
       s: "says",
       p: "say",
@@ -6113,8 +5558,7 @@ const VERBS_ALL: Verb[] = [
       p: "said",
     },
   },
-  { // VoA
-    i: "search",
+  "search": { // VoA
     presentSimple: {
       s: "searches",
       p: "search",
@@ -6124,8 +5568,7 @@ const VERBS_ALL: Verb[] = [
       p: "searched",
     },
   },
-  { // VoA
-    i: "season",
+  "season": { // VoA
     presentSimple: {
       s: "seasons",
       p: "season",
@@ -6135,8 +5578,7 @@ const VERBS_ALL: Verb[] = [
       p: "seasoned",
     },
   },
-  { // VoA
-    i: "see",
+  "see": { // VoA
     presentSimple: {
       s: "sees",
       p: "see",
@@ -6146,8 +5588,7 @@ const VERBS_ALL: Verb[] = [
       p: "saw",
     },
   },
-  { // VoA
-    i: "seed",
+  "seed": { // VoA
     presentSimple: {
       s: "seeds",
       p: "seed",
@@ -6157,8 +5598,7 @@ const VERBS_ALL: Verb[] = [
       p: "seeded",
     },
   },
-  { // VoA
-    i: "seek",
+  "seek": { // VoA
     presentSimple: {
       s: "seeks",
       p: "seek",
@@ -6168,8 +5608,7 @@ const VERBS_ALL: Verb[] = [
       p: "sought",
     },
   },
-  { // VoA
-    i: "seem",
+  "seem": { // VoA
     presentSimple: {
       s: "seems",
       p: "seem",
@@ -6179,8 +5618,7 @@ const VERBS_ALL: Verb[] = [
       p: "seemed",
     },
   },
-  { // VoA
-    i: "seize",
+  "seize": { // VoA
     presentSimple: {
       s: "seizes",
       p: "seize",
@@ -6190,8 +5628,7 @@ const VERBS_ALL: Verb[] = [
       p: "seized",
     },
   },
-  { // VoA
-    i: "sell",
+  "sell": { // VoA
     presentSimple: {
       s: "sells",
       p: "sell",
@@ -6201,8 +5638,7 @@ const VERBS_ALL: Verb[] = [
       p: "sold",
     },
   },
-  { // VoA
-    i: "send",
+  "send": { // VoA
     presentSimple: {
       s: "sends",
       p: "send",
@@ -6212,8 +5648,7 @@ const VERBS_ALL: Verb[] = [
       p: "sent",
     },
   },
-  { // VoA
-    i: "sense",
+  "sense": { // VoA
     presentSimple: {
       s: "senses",
       p: "sense",
@@ -6223,8 +5658,7 @@ const VERBS_ALL: Verb[] = [
       p: "sensed",
     },
   },
-  { // VoA
-    i: "sentence",
+  "sentence": { // VoA
     presentSimple: {
       s: "sentences",
       p: "sentence",
@@ -6234,8 +5668,7 @@ const VERBS_ALL: Verb[] = [
       p: "sentenced",
     },
   },
-  { // VoA
-    i: "separate",
+  "separate": { // VoA
     presentSimple: {
       s: "separates",
       p: "separate",
@@ -6245,8 +5678,7 @@ const VERBS_ALL: Verb[] = [
       p: "separated",
     },
   },
-  { // VoA
-    i: "serve",
+  "serve": { // VoA
     presentSimple: {
       s: "serves",
       p: "serve",
@@ -6256,8 +5688,7 @@ const VERBS_ALL: Verb[] = [
       p: "served",
     },
   },
-  { // VoA
-    i: "service",
+  "service": { // VoA
     presentSimple: {
       s: "services",
       p: "service",
@@ -6267,8 +5698,7 @@ const VERBS_ALL: Verb[] = [
       p: "serviced",
     },
   },
-  { // VoA
-    i: "set",
+  "set": { // VoA
     presentSimple: {
       s: "sets",
       p: "set",
@@ -6278,8 +5708,7 @@ const VERBS_ALL: Verb[] = [
       p: "set",
     },
   },
-  { // VoA
-    i: "settle",
+  "settle": { // VoA
     presentSimple: {
       s: "settles",
       p: "settle",
@@ -6289,8 +5718,7 @@ const VERBS_ALL: Verb[] = [
       p: "settled",
     },
   },
-  { // VoA
-    i: "shake",
+  "shake": { // VoA
     presentSimple: {
       s: "shakes",
       p: "shake",
@@ -6300,8 +5728,7 @@ const VERBS_ALL: Verb[] = [
       p: "shook",
     },
   },
-  { // VoA
-    i: "shape",
+  "shape": { // VoA
     presentSimple: {
       s: "shapes",
       p: "shape",
@@ -6311,8 +5738,7 @@ const VERBS_ALL: Verb[] = [
       p: "shaped",
     },
   },
-  { // VoA
-    i: "share",
+  "share": { // VoA
     presentSimple: {
       s: "shares",
       p: "share",
@@ -6322,8 +5748,7 @@ const VERBS_ALL: Verb[] = [
       p: "shared",
     },
   },
-  { // VoA
-    i: "shell",
+  "shell": { // VoA
     presentSimple: {
       s: "shells",
       p: "shell",
@@ -6333,8 +5758,7 @@ const VERBS_ALL: Verb[] = [
       p: "shelled",
     },
   },
-  { // VoA
-    i: "shelter",
+  "shelter": { // VoA
     presentSimple: {
       s: "shelters",
       p: "shelter",
@@ -6344,8 +5768,7 @@ const VERBS_ALL: Verb[] = [
       p: "sheltered",
     },
   },
-  { // VoA
-    i: "shine",
+  "shine": { // VoA
     presentSimple: {
       s: "shines",
       p: "shine",
@@ -6355,8 +5778,7 @@ const VERBS_ALL: Verb[] = [
       p: "shone",
     },
   },
-  { // VoA
-    i: "ship",
+  "ship": { // VoA
     presentSimple: {
       s: "ships",
       p: "ship",
@@ -6366,8 +5788,7 @@ const VERBS_ALL: Verb[] = [
       p: "shipped",
     },
   },
-  { // VoA
-    i: "shock",
+  "shock": { // VoA
     presentSimple: {
       s: "shocks",
       p: "shock",
@@ -6377,8 +5798,7 @@ const VERBS_ALL: Verb[] = [
       p: "shocked",
     },
   },
-  { // VoA
-    i: "shoot",
+  "shoot": { // VoA
     presentSimple: {
       s: "shoots",
       p: "shoot",
@@ -6388,8 +5808,7 @@ const VERBS_ALL: Verb[] = [
       p: "shot",
     },
   },
-  { // VoA
-    i: "should",
+  "should": { // VoA
     presentSimple: {
       s: "should",
       p: "should",
@@ -6399,8 +5818,7 @@ const VERBS_ALL: Verb[] = [
       p: "should have",
     },
   },
-  { // VoA
-    i: "shout",
+  "shout": { // VoA
     presentSimple: {
       s: "shouts",
       p: "shout",
@@ -6410,8 +5828,7 @@ const VERBS_ALL: Verb[] = [
       p: "shouted",
     },
   },
-  { // VoA
-    i: "show",
+  "show": { // VoA
     presentSimple: {
       s: "shows",
       p: "show",
@@ -6421,8 +5838,7 @@ const VERBS_ALL: Verb[] = [
       p: "showed",
     },
   },
-  { // VoA
-    i: "shrink",
+  "shrink": { // VoA
     presentSimple: {
       s: "shrinks",
       p: "shrink",
@@ -6432,8 +5848,7 @@ const VERBS_ALL: Verb[] = [
       p: "shrank",
     },
   },
-  { // VoA
-    i: "side",
+  "side": { // VoA
     presentSimple: {
       s: "sides",
       p: "side",
@@ -6443,8 +5858,7 @@ const VERBS_ALL: Verb[] = [
       p: "sided",
     },
   },
-  { // VoA
-    i: "sign",
+  "sign": { // VoA
     presentSimple: {
       s: "signs",
       p: "sign",
@@ -6454,8 +5868,7 @@ const VERBS_ALL: Verb[] = [
       p: "signed",
     },
   },
-  { // VoA
-    i: "signal",
+  "signal": { // VoA
     presentSimple: {
       s: "signals",
       p: "signal",
@@ -6465,8 +5878,7 @@ const VERBS_ALL: Verb[] = [
       p: "signaled",
     },
   },
-  { // VoA
-    i: "silence",
+  "silence": { // VoA
     presentSimple: {
       s: "silences",
       p: "silence",
@@ -6476,8 +5888,7 @@ const VERBS_ALL: Verb[] = [
       p: "silenced",
     },
   },
-  { // VoA
-    i: "sing",
+  "sing": { // VoA
     presentSimple: {
       s: "sings",
       p: "sing",
@@ -6487,8 +5898,7 @@ const VERBS_ALL: Verb[] = [
       p: "sang",
     },
   },
-  { // VoA
-    i: "sink",
+  "sink": { // VoA
     presentSimple: {
       s: "sinks",
       p: "sink",
@@ -6498,8 +5908,7 @@ const VERBS_ALL: Verb[] = [
       p: "sank",
     },
   },
-  { // VoA
-    i: "sit",
+  "sit": { // VoA
     presentSimple: {
       s: "sits",
       p: "sit",
@@ -6509,8 +5918,7 @@ const VERBS_ALL: Verb[] = [
       p: "sat",
     },
   },
-  { // VoA
-    i: "size",
+  "size": { // VoA
     presentSimple: {
       s: "sizes",
       p: "size",
@@ -6520,8 +5928,7 @@ const VERBS_ALL: Verb[] = [
       p: "sized",
     },
   },
-  { // VoA
-    i: "sleep",
+  "sleep": { // VoA
     presentSimple: {
       s: "sleeps",
       p: "sleep",
@@ -6531,8 +5938,7 @@ const VERBS_ALL: Verb[] = [
       p: "slept",
     },
   },
-  { // VoA
-    i: "slide",
+  "slide": { // VoA
     presentSimple: {
       s: "slides",
       p: "slide",
@@ -6542,8 +5948,7 @@ const VERBS_ALL: Verb[] = [
       p: "slid",
     },
   },
-  { // VoA
-    i: "slow",
+  "slow": { // VoA
     presentSimple: {
       s: "slows",
       p: "slow",
@@ -6553,8 +5958,7 @@ const VERBS_ALL: Verb[] = [
       p: "slowed",
     },
   },
-  { // VoA
-    i: "smash",
+  "smash": { // VoA
     presentSimple: {
       s: "smashes",
       p: "smash",
@@ -6564,8 +5968,7 @@ const VERBS_ALL: Verb[] = [
       p: "smashed",
     },
   },
-  { // VoA
-    i: "smell",
+  "smell": { // VoA
     presentSimple: {
       s: "smells",
       p: "smell",
@@ -6575,8 +5978,7 @@ const VERBS_ALL: Verb[] = [
       p: "smelled",
     },
   },
-  { // VoA
-    i: "smoke",
+  "smoke": { // VoA
     presentSimple: {
       s: "smokes",
       p: "smoke",
@@ -6586,8 +5988,7 @@ const VERBS_ALL: Verb[] = [
       p: "smoked",
     },
   },
-  { // VoA
-    i: "smooth",
+  "smooth": { // VoA
     presentSimple: {
       s: "smooths",
       p: "smooth",
@@ -6597,8 +5998,7 @@ const VERBS_ALL: Verb[] = [
       p: "smoothed",
     },
   },
-  { // VoA
-    i: "snow",
+  "snow": { // VoA
     presentSimple: {
       s: "snows",
       p: "snow",
@@ -6608,8 +6008,7 @@ const VERBS_ALL: Verb[] = [
       p: "snowed",
     },
   },
-  { // VoA
-    i: "soil",
+  "soil": { // VoA
     presentSimple: {
       s: "soils",
       p: "soil",
@@ -6619,8 +6018,7 @@ const VERBS_ALL: Verb[] = [
       p: "soiled",
     },
   },
-  { // VoA
-    i: "solve",
+  "solve": { // VoA
     presentSimple: {
       s: "solves",
       p: "solve",
@@ -6630,8 +6028,7 @@ const VERBS_ALL: Verb[] = [
       p: "solved",
     },
   },
-  { // VoA
-    i: "sort",
+  "sort": { // VoA
     presentSimple: {
       s: "sorts",
       p: "sort",
@@ -6641,8 +6038,7 @@ const VERBS_ALL: Verb[] = [
       p: "sorted",
     },
   },
-  { // VoA
-    i: "sound",
+  "sound": { // VoA
     presentSimple: {
       s: "sounds",
       p: "sound",
@@ -6652,8 +6048,7 @@ const VERBS_ALL: Verb[] = [
       p: "sounded",
     },
   },
-  { // VoA
-    i: "speak",
+  "speak": { // VoA
     presentSimple: {
       s: "speaks",
       p: "speak",
@@ -6663,8 +6058,7 @@ const VERBS_ALL: Verb[] = [
       p: "spoke",
     },
   },
-  { // VoA
-    i: "speed",
+  "speed": { // VoA
     presentSimple: {
       s: "speeds",
       p: "speed",
@@ -6674,8 +6068,7 @@ const VERBS_ALL: Verb[] = [
       p: "sped",
     },
   },
-  { // VoA
-    i: "spend",
+  "spend": { // VoA
     presentSimple: {
       s: "spends",
       p: "spend",
@@ -6685,8 +6078,7 @@ const VERBS_ALL: Verb[] = [
       p: "spent",
     },
   },
-  { // VoA
-    i: "spill",
+  "spill": { // VoA
     presentSimple: {
       s: "spills",
       p: "spill",
@@ -6696,8 +6088,7 @@ const VERBS_ALL: Verb[] = [
       p: "spilled",
     },
   },
-  { // VoA
-    i: "split",
+  "split": { // VoA
     presentSimple: {
       s: "splits",
       p: "split",
@@ -6707,8 +6098,7 @@ const VERBS_ALL: Verb[] = [
       p: "split",
     },
   },
-  { // VoA
-    i: "spread",
+  "spread": { // VoA
     presentSimple: {
       s: "spreads",
       p: "spread",
@@ -6718,8 +6108,7 @@ const VERBS_ALL: Verb[] = [
       p: "spread",
     },
   },
-  { // VoA
-    i: "spring",
+  "spring": { // VoA
     presentSimple: {
       s: "springs",
       p: "spring",
@@ -6729,8 +6118,7 @@ const VERBS_ALL: Verb[] = [
       p: "sprung",
     },
   },
-  { // VoA
-    i: "spy",
+  "spy": { // VoA
     presentSimple: {
       s: "spies",
       p: "spy",
@@ -6740,8 +6128,7 @@ const VERBS_ALL: Verb[] = [
       p: "spied",
     },
   },
-  { // VoA
-    i: "square",
+  "square": { // VoA
     presentSimple: {
       s: "squares",
       p: "square",
@@ -6751,8 +6138,7 @@ const VERBS_ALL: Verb[] = [
       p: "squared",
     },
   },
-  { // VoA
-    i: "stab",
+  "stab": { // VoA
     presentSimple: {
       s: "stabs",
       p: "stab",
@@ -6762,8 +6148,7 @@ const VERBS_ALL: Verb[] = [
       p: "stabbed",
     },
   },
-  { // VoA
-    i: "stand",
+  "stand": { // VoA
     presentSimple: {
       s: "stands",
       p: "stand",
@@ -6773,8 +6158,7 @@ const VERBS_ALL: Verb[] = [
       p: "stood",
     },
   },
-  { // VoA
-    i: "star",
+  "star": { // VoA
     presentSimple: {
       s: "stars",
       p: "star",
@@ -6784,8 +6168,7 @@ const VERBS_ALL: Verb[] = [
       p: "starred",
     },
   },
-  { // VoA
-    i: "start",
+  "start": { // VoA
     presentSimple: {
       s: "starts",
       p: "start",
@@ -6795,8 +6178,7 @@ const VERBS_ALL: Verb[] = [
       p: "started",
     },
   },
-  { // VoA
-    i: "starve",
+  "starve": { // VoA
     presentSimple: {
       s: "starves",
       p: "starve",
@@ -6806,8 +6188,7 @@ const VERBS_ALL: Verb[] = [
       p: "starved",
     },
   },
-  { // VoA
-    i: "state",
+  "state": { // VoA
     presentSimple: {
       s: "states",
       p: "state",
@@ -6817,8 +6198,7 @@ const VERBS_ALL: Verb[] = [
       p: "stated",
     },
   },
-  { // VoA
-    i: "station",
+  "station": { // VoA
     presentSimple: {
       s: "stations",
       p: "station",
@@ -6828,8 +6208,7 @@ const VERBS_ALL: Verb[] = [
       p: "stationed",
     },
   },
-  { // VoA
-    i: "stay",
+  "stay": { // VoA
     presentSimple: {
       s: "stays",
       p: "stay",
@@ -6839,8 +6218,7 @@ const VERBS_ALL: Verb[] = [
       p: "stayed",
     },
   },
-  { // VoA
-    i: "steal",
+  "steal": { // VoA
     presentSimple: {
       s: "steals",
       p: "steal",
@@ -6850,8 +6228,7 @@ const VERBS_ALL: Verb[] = [
       p: "stole",
     },
   },
-  { // VoA
-    i: "steam",
+  "steam": { // VoA
     presentSimple: {
       s: "steams",
       p: "steam",
@@ -6861,8 +6238,7 @@ const VERBS_ALL: Verb[] = [
       p: "steamed",
     },
   },
-  { // VoA
-    i: "step",
+  "step": { // VoA
     presentSimple: {
       s: "steps",
       p: "step",
@@ -6872,8 +6248,7 @@ const VERBS_ALL: Verb[] = [
       p: "stepped",
     },
   },
-  { // VoA
-    i: "stick",
+  "stick": { // VoA
     presentSimple: {
       s: "sticks",
       p: "stick",
@@ -6883,8 +6258,7 @@ const VERBS_ALL: Verb[] = [
       p: "stuck",
     },
   },
-  { // VoA
-    i: "stop",
+  "stop": { // VoA
     presentSimple: {
       s: "stops",
       p: "stop",
@@ -6894,8 +6268,7 @@ const VERBS_ALL: Verb[] = [
       p: "stopped",
     },
   },
-  { // VoA
-    i: "store",
+  "store": { // VoA
     presentSimple: {
       s: "stores",
       p: "store",
@@ -6905,8 +6278,7 @@ const VERBS_ALL: Verb[] = [
       p: "stored",
     },
   },
-  { // VoA
-    i: "storm",
+  "storm": { // VoA
     presentSimple: {
       s: "storms",
       p: "storm",
@@ -6916,8 +6288,7 @@ const VERBS_ALL: Verb[] = [
       p: "stormed",
     },
   },
-  { // VoA
-    i: "stretch",
+  "stretch": { // VoA
     presentSimple: {
       s: "stretches",
       p: "stretch",
@@ -6927,8 +6298,7 @@ const VERBS_ALL: Verb[] = [
       p: "stretched",
     },
   },
-  { // VoA
-    i: "strike",
+  "strike": { // VoA
     presentSimple: {
       s: "strikes",
       p: "strike",
@@ -6938,8 +6308,7 @@ const VERBS_ALL: Verb[] = [
       p: "striked",
     },
   },
-  { // VoA
-    i: "struggle",
+  "struggle": { // VoA
     presentSimple: {
       s: "struggles",
       p: "struggle",
@@ -6949,8 +6318,7 @@ const VERBS_ALL: Verb[] = [
       p: "struggled",
     },
   },
-  { // VoA
-    i: "study",
+  "study": { // VoA
     presentSimple: {
       s: "studies",
       p: "study",
@@ -6960,8 +6328,7 @@ const VERBS_ALL: Verb[] = [
       p: "studied",
     },
   },
-  { // VoA
-    i: "substitute",
+  "substitute": { // VoA
     presentSimple: {
       s: "substitutes",
       p: "substitute",
@@ -6971,8 +6338,7 @@ const VERBS_ALL: Verb[] = [
       p: "substituted",
     },
   },
-  { // VoA
-    i: "succeed",
+  "succeed": { // VoA
     presentSimple: {
       s: "succeeds",
       p: "succeed",
@@ -6982,8 +6348,7 @@ const VERBS_ALL: Verb[] = [
       p: "succeeded",
     },
   },
-  { // VoA
-    i: "suffer",
+  "suffer": { // VoA
     presentSimple: {
       s: "suffers",
       p: "suffer",
@@ -6993,8 +6358,7 @@ const VERBS_ALL: Verb[] = [
       p: "suffered",
     },
   },
-  { // VoA
-    i: "suggest",
+  "suggest": { // VoA
     presentSimple: {
       s: "suggests",
       p: "suggest",
@@ -7004,8 +6368,7 @@ const VERBS_ALL: Verb[] = [
       p: "suggested",
     },
   },
-  { // VoA
-    i: "supervise",
+  "supervise": { // VoA
     presentSimple: {
       s: "supervises",
       p: "supervise",
@@ -7015,8 +6378,7 @@ const VERBS_ALL: Verb[] = [
       p: "supervised",
     },
   },
-  { // VoA
-    i: "supply",
+  "supply": { // VoA
     presentSimple: {
       s: "supplies",
       p: "supply",
@@ -7026,8 +6388,7 @@ const VERBS_ALL: Verb[] = [
       p: "supplied",
     },
   },
-  { // VoA
-    i: "support",
+  "support": { // VoA
     presentSimple: {
       s: "supports",
       p: "support",
@@ -7037,8 +6398,7 @@ const VERBS_ALL: Verb[] = [
       p: "supported",
     },
   },
-  { // VoA
-    i: "suppose",
+  "suppose": { // VoA
     presentSimple: {
       s: "supposes",
       p: "suppose",
@@ -7048,8 +6408,7 @@ const VERBS_ALL: Verb[] = [
       p: "supposed",
     },
   },
-  { // VoA
-    i: "suppress",
+  "suppress": { // VoA
     presentSimple: {
       s: "suppresses",
       p: "suppress",
@@ -7059,8 +6418,7 @@ const VERBS_ALL: Verb[] = [
       p: "suppressed",
     },
   },
-  { // VoA
-    i: "surface",
+  "surface": { // VoA
     presentSimple: {
       s: "surfaces",
       p: "surface",
@@ -7070,8 +6428,7 @@ const VERBS_ALL: Verb[] = [
       p: "surfaced",
     },
   },
-  { // VoA
-    i: "surprise",
+  "surprise": { // VoA
     presentSimple: {
       s: "surprises",
       p: "surprise",
@@ -7081,8 +6438,7 @@ const VERBS_ALL: Verb[] = [
       p: "surprised",
     },
   },
-  { // VoA
-    i: "surrender",
+  "surrender": { // VoA
     presentSimple: {
       s: "surrenders",
       p: "surrender",
@@ -7092,8 +6448,7 @@ const VERBS_ALL: Verb[] = [
       p: "surrendered",
     },
   },
-  { // VoA
-    i: "surround",
+  "surround": { // VoA
     presentSimple: {
       s: "surrounds",
       p: "surround",
@@ -7103,8 +6458,7 @@ const VERBS_ALL: Verb[] = [
       p: "surrounded",
     },
   },
-  { // VoA
-    i: "survive",
+  "survive": { // VoA
     presentSimple: {
       s: "survives",
       p: "survive",
@@ -7114,8 +6468,7 @@ const VERBS_ALL: Verb[] = [
       p: "survived",
     },
   },
-  { // VoA
-    i: "suspect",
+  "suspect": { // VoA
     presentSimple: {
       s: "suspects",
       p: "suspect",
@@ -7125,8 +6478,7 @@ const VERBS_ALL: Verb[] = [
       p: "suspected",
     },
   },
-  { // VoA
-    i: "suspend",
+  "suspend": { // VoA
     presentSimple: {
       s: "suspends",
       p: "suspend",
@@ -7136,8 +6488,7 @@ const VERBS_ALL: Verb[] = [
       p: "suspended",
     },
   },
-  { // VoA
-    i: "swallow",
+  "swallow": { // VoA
     presentSimple: {
       s: "swallows",
       p: "swallow",
@@ -7147,8 +6498,7 @@ const VERBS_ALL: Verb[] = [
       p: "swallowed",
     },
   },
-  { // VoA
-    i: "swim",
+  "swim": { // VoA
     presentSimple: {
       s: "swims",
       p: "swim",
@@ -7158,8 +6508,7 @@ const VERBS_ALL: Verb[] = [
       p: "swam",
     },
   },
-  { // VoA
-    i: "take",
+  "take": { // VoA
     presentSimple: {
       s: "takes",
       p: "take",
@@ -7169,8 +6518,7 @@ const VERBS_ALL: Verb[] = [
       p: "took",
     },
   },
-  { // VoA
-    i: "talk",
+  "talk": { // VoA
     presentSimple: {
       s: "talks",
       p: "talk",
@@ -7180,8 +6528,7 @@ const VERBS_ALL: Verb[] = [
       p: "talked",
     },
   },
-  { // VoA
-    i: "target",
+  "target": { // VoA
     presentSimple: {
       s: "targets",
       p: "target",
@@ -7191,8 +6538,7 @@ const VERBS_ALL: Verb[] = [
       p: "targeted",
     },
   },
-  { // VoA
-    i: "taste",
+  "taste": { // VoA
     presentSimple: {
       s: "tastes",
       p: "taste",
@@ -7202,8 +6548,7 @@ const VERBS_ALL: Verb[] = [
       p: "tasted",
     },
   },
-  { // VoA
-    i: "tax",
+  "tax": { // VoA
     presentSimple: {
       s: "taxes",
       p: "tax",
@@ -7213,8 +6558,7 @@ const VERBS_ALL: Verb[] = [
       p: "taxed",
     },
   },
-  { // VoA
-    i: "teach",
+  "teach": { // VoA
     presentSimple: {
       s: "teaches",
       p: "teach",
@@ -7224,8 +6568,7 @@ const VERBS_ALL: Verb[] = [
       p: "taught",
     },
   },
-  { // VoA
-    i: "tear",
+  "tear": { // VoA
     presentSimple: {
       s: "tears",
       p: "tear",
@@ -7235,8 +6578,7 @@ const VERBS_ALL: Verb[] = [
       p: "teared",
     },
   },
-  { // VoA
-    i: "telephone",
+  "telephone": { // VoA
     presentSimple: {
       s: "telephones",
       p: "telephone",
@@ -7246,8 +6588,7 @@ const VERBS_ALL: Verb[] = [
       p: "telephoned",
     },
   },
-  { // VoA
-    i: "tell",
+  "tell": { // VoA
     presentSimple: {
       s: "tells",
       p: "tell",
@@ -7257,8 +6598,7 @@ const VERBS_ALL: Verb[] = [
       p: "told",
     },
   },
-  { // VoA
-    i: "tense",
+  "tense": { // VoA
     presentSimple: {
       s: "tenses",
       p: "tense",
@@ -7268,8 +6608,7 @@ const VERBS_ALL: Verb[] = [
       p: "tensed",
     },
   },
-  { // VoA
-    i: "test",
+  "test": { // VoA
     presentSimple: {
       s: "tests",
       p: "test",
@@ -7279,8 +6618,7 @@ const VERBS_ALL: Verb[] = [
       p: "tested",
     },
   },
-  { // VoA
-    i: "thank",
+  "thank": { // VoA
     presentSimple: {
       s: "thanks",
       p: "thank",
@@ -7290,8 +6628,7 @@ const VERBS_ALL: Verb[] = [
       p: "thanked",
     },
   },
-  { // VoA
-    i: "thin",
+  "thin": { // VoA
     presentSimple: {
       s: "thins",
       p: "thin",
@@ -7301,8 +6638,7 @@ const VERBS_ALL: Verb[] = [
       p: "thinned",
     },
   },
-  { // VoA
-    i: "think",
+  "think": { // VoA
     presentSimple: {
       s: "thinks",
       p: "think",
@@ -7312,8 +6648,7 @@ const VERBS_ALL: Verb[] = [
       p: "thought",
     },
   },
-  { // VoA
-    i: "threaten",
+  "threaten": { // VoA
     presentSimple: {
       s: "threatens",
       p: "threaten",
@@ -7323,8 +6658,7 @@ const VERBS_ALL: Verb[] = [
       p: "threatened",
     },
   },
-  { // VoA
-    i: "throw",
+  "throw": { // VoA
     presentSimple: {
       s: "throws",
       p: "throw",
@@ -7334,8 +6668,7 @@ const VERBS_ALL: Verb[] = [
       p: "threw",
     },
   },
-  { // VoA
-    i: "tie",
+  "tie": { // VoA
     presentSimple: {
       s: "ties",
       p: "tie",
@@ -7345,8 +6678,7 @@ const VERBS_ALL: Verb[] = [
       p: "tied",
     },
   },
-  { // VoA
-    i: "time",
+  "time": { // VoA
     presentSimple: {
       s: "times",
       p: "time",
@@ -7356,8 +6688,7 @@ const VERBS_ALL: Verb[] = [
       p: "timed",
     },
   },
-  { // VoA
-    i: "top",
+  "top": { // VoA
     presentSimple: {
       s: "tops",
       p: "top",
@@ -7367,8 +6698,7 @@ const VERBS_ALL: Verb[] = [
       p: "topped",
     },
   },
-  { // VoA
-    i: "torture",
+  "torture": { // VoA
     presentSimple: {
       s: "tortures",
       p: "torture",
@@ -7378,8 +6708,7 @@ const VERBS_ALL: Verb[] = [
       p: "tortured",
     },
   },
-  { // VoA
-    i: "total",
+  "total": { // VoA
     presentSimple: {
       s: "totals",
       p: "total",
@@ -7389,8 +6718,7 @@ const VERBS_ALL: Verb[] = [
       p: "totaled",
     },
   },
-  { // VoA
-    i: "touch",
+  "touch": { // VoA
     presentSimple: {
       s: "touches",
       p: "touch",
@@ -7400,8 +6728,7 @@ const VERBS_ALL: Verb[] = [
       p: "touched",
     },
   },
-  { // VoA
-    i: "trade",
+  "trade": { // VoA
     presentSimple: {
       s: "trades",
       p: "trade",
@@ -7411,8 +6738,7 @@ const VERBS_ALL: Verb[] = [
       p: "traded",
     },
   },
-  { // VoA
-    i: "train",
+  "train": { // VoA
     presentSimple: {
       s: "trains",
       p: "train",
@@ -7422,8 +6748,7 @@ const VERBS_ALL: Verb[] = [
       p: "trained",
     },
   },
-  { // VoA
-    i: "transport",
+  "transport": { // VoA
     presentSimple: {
       s: "transports",
       p: "transport",
@@ -7433,8 +6758,7 @@ const VERBS_ALL: Verb[] = [
       p: "transported",
     },
   },
-  { // VoA
-    i: "trap",
+  "trap": { // VoA
     presentSimple: {
       s: "traps",
       p: "trap",
@@ -7444,8 +6768,7 @@ const VERBS_ALL: Verb[] = [
       p: "trapped",
     },
   },
-  { // VoA
-    i: "travel",
+  "travel": { // VoA
     presentSimple: {
       s: "travels",
       p: "travel",
@@ -7455,8 +6778,7 @@ const VERBS_ALL: Verb[] = [
       p: "traveled",
     },
   },
-  { // VoA
-    i: "treasure",
+  "treasure": { // VoA
     presentSimple: {
       s: "treasures",
       p: "treasure",
@@ -7466,8 +6788,7 @@ const VERBS_ALL: Verb[] = [
       p: "treasured",
     },
   },
-  { // VoA
-    i: "treat",
+  "treat": { // VoA
     presentSimple: {
       s: "treats",
       p: "treat",
@@ -7477,8 +6798,7 @@ const VERBS_ALL: Verb[] = [
       p: "treated",
     },
   },
-  { // VoA
-    i: "trial",
+  "trial": { // VoA
     presentSimple: {
       s: "trials",
       p: "trial",
@@ -7488,8 +6808,7 @@ const VERBS_ALL: Verb[] = [
       p: "trialed",
     },
   },
-  { // VoA
-    i: "trick",
+  "trick": { // VoA
     presentSimple: {
       s: "tricks",
       p: "trick",
@@ -7499,8 +6818,7 @@ const VERBS_ALL: Verb[] = [
       p: "tricked",
     },
   },
-  { // VoA
-    i: "trip",
+  "trip": { // VoA
     presentSimple: {
       s: "trips",
       p: "trip",
@@ -7510,8 +6828,7 @@ const VERBS_ALL: Verb[] = [
       p: "tripped",
     },
   },
-  { // VoA
-    i: "trouble",
+  "trouble": { // VoA
     presentSimple: {
       s: "troubles",
       p: "trouble",
@@ -7521,8 +6838,7 @@ const VERBS_ALL: Verb[] = [
       p: "troubled",
     },
   },
-  { // VoA
-    i: "trust",
+  "trust": { // VoA
     presentSimple: {
       s: "trusts",
       p: "trust",
@@ -7532,8 +6848,7 @@ const VERBS_ALL: Verb[] = [
       p: "trusted",
     },
   },
-  { // VoA
-    i: "try",
+  "try": { // VoA
     presentSimple: {
       s: "tries",
       p: "try",
@@ -7543,8 +6858,7 @@ const VERBS_ALL: Verb[] = [
       p: "tried",
     },
   },
-  { // VoA
-    i: "turn",
+  "turn": { // VoA
     presentSimple: {
       s: "turns",
       p: "turn",
@@ -7554,8 +6868,7 @@ const VERBS_ALL: Verb[] = [
       p: "turned",
     },
   },
-  { // VoA
-    i: "understand",
+  "understand": { // VoA
     presentSimple: {
       s: "understands",
       p: "understand",
@@ -7565,8 +6878,7 @@ const VERBS_ALL: Verb[] = [
       p: "understood",
     },
   },
-  { // VoA
-    i: "unite",
+  "unite": { // VoA
     presentSimple: {
       s: "unites",
       p: "unite",
@@ -7576,8 +6888,7 @@ const VERBS_ALL: Verb[] = [
       p: "united",
     },
   },
-  { // VoA
-    i: "urge",
+  "urge": { // VoA
     presentSimple: {
       s: "urges",
       p: "urge",
@@ -7587,8 +6898,7 @@ const VERBS_ALL: Verb[] = [
       p: "urged",
     },
   },
-  { // VoA
-    i: "use",
+  "use": { // VoA
     presentSimple: {
       s: "uses",
       p: "use",
@@ -7598,8 +6908,7 @@ const VERBS_ALL: Verb[] = [
       p: "used",
     },
   },
-  { // VoA
-    i: "value",
+  "value": { // VoA
     presentSimple: {
       s: "values",
       p: "value",
@@ -7609,8 +6918,7 @@ const VERBS_ALL: Verb[] = [
       p: "valued",
     },
   },
-  { // VoA
-    i: "veto",
+  "veto": { // VoA
     presentSimple: {
       s: "vetoes",
       p: "veto",
@@ -7620,8 +6928,7 @@ const VERBS_ALL: Verb[] = [
       p: "vetoed",
     },
   },
-  { // VoA
-    i: "violate",
+  "violate": { // VoA
     presentSimple: {
       s: "violates",
       p: "violate",
@@ -7631,8 +6938,7 @@ const VERBS_ALL: Verb[] = [
       p: "violated",
     },
   },
-  { // VoA
-    i: "visit",
+  "visit": { // VoA
     presentSimple: {
       s: "visits",
       p: "visit",
@@ -7642,8 +6948,7 @@ const VERBS_ALL: Verb[] = [
       p: "visited",
     },
   },
-  { // VoA
-    i: "voice",
+  "voice": { // VoA
     presentSimple: {
       s: "voices",
       p: "voice",
@@ -7653,8 +6958,7 @@ const VERBS_ALL: Verb[] = [
       p: "voiced",
     },
   },
-  { // VoA
-    i: "vote",
+  "vote": { // VoA
     presentSimple: {
       s: "votes",
       p: "vote",
@@ -7664,8 +6968,7 @@ const VERBS_ALL: Verb[] = [
       p: "voted",
     },
   },
-  { // VoA
-    i: "wait",
+  "wait": { // VoA
     presentSimple: {
       s: "waits",
       p: "wait",
@@ -7675,8 +6978,7 @@ const VERBS_ALL: Verb[] = [
       p: "waited",
     },
   },
-  { // VoA
-    i: "walk",
+  "walk": { // VoA
     presentSimple: {
       s: "walks",
       p: "walk",
@@ -7686,8 +6988,7 @@ const VERBS_ALL: Verb[] = [
       p: "walked",
     },
   },
-  { // VoA
-    i: "want",
+  "want": { // VoA
     presentSimple: {
       s: "wants",
       p: "want",
@@ -7697,8 +6998,7 @@ const VERBS_ALL: Verb[] = [
       p: "wanted",
     },
   },
-  { // VoA
-    i: "war",
+  "war": { // VoA
     presentSimple: {
       s: "wars",
       p: "war",
@@ -7708,8 +7008,7 @@ const VERBS_ALL: Verb[] = [
       p: "warred",
     },
   },
-  { // VoA
-    i: "warm",
+  "warm": { // VoA
     presentSimple: {
       s: "warms",
       p: "warm",
@@ -7719,8 +7018,7 @@ const VERBS_ALL: Verb[] = [
       p: "warmed",
     },
   },
-  { // VoA
-    i: "warn",
+  "warn": { // VoA
     presentSimple: {
       s: "warns",
       p: "warn",
@@ -7730,8 +7028,7 @@ const VERBS_ALL: Verb[] = [
       p: "warned",
     },
   },
-  { // VoA
-    i: "wash",
+  "wash": { // VoA
     presentSimple: {
       s: "washes",
       p: "wash",
@@ -7741,8 +7038,7 @@ const VERBS_ALL: Verb[] = [
       p: "washed",
     },
   },
-  { // VoA
-    i: "waste",
+  "waste": { // VoA
     presentSimple: {
       s: "wastes",
       p: "waste",
@@ -7752,8 +7048,7 @@ const VERBS_ALL: Verb[] = [
       p: "wasted",
     },
   },
-  { // VoA
-    i: "watch",
+  "watch": { // VoA
     presentSimple: {
       s: "watches",
       p: "watch",
@@ -7763,8 +7058,7 @@ const VERBS_ALL: Verb[] = [
       p: "watched",
     },
   },
-  { // VoA
-    i: "water",
+  "water": { // VoA
     presentSimple: {
       s: "waters",
       p: "water",
@@ -7774,8 +7068,7 @@ const VERBS_ALL: Verb[] = [
       p: "watered",
     },
   },
-  { // VoA
-    i: "wave",
+  "wave": { // VoA
     presentSimple: {
       s: "waves",
       p: "wave",
@@ -7785,8 +7078,7 @@ const VERBS_ALL: Verb[] = [
       p: "waved",
     },
   },
-  { // VoA
-    i: "wear",
+  "wear": { // VoA
     presentSimple: {
       s: "wears",
       p: "wear",
@@ -7796,8 +7088,7 @@ const VERBS_ALL: Verb[] = [
       p: "wore",
     },
   },
-  { // VoA
-    i: "weather",
+  "weather": { // VoA
     presentSimple: {
       s: "weathers",
       p: "weather",
@@ -7807,8 +7098,7 @@ const VERBS_ALL: Verb[] = [
       p: "weathered",
     },
   },
-  { // VoA
-    i: "weigh",
+  "weigh": { // VoA
     presentSimple: {
       s: "weighs",
       p: "weigh",
@@ -7818,8 +7108,7 @@ const VERBS_ALL: Verb[] = [
       p: "weighed",
     },
   },
-  { // VoA
-    i: "welcome",
+  "welcome": { // VoA
     presentSimple: {
       s: "welcomes",
       p: "welcome",
@@ -7829,8 +7118,7 @@ const VERBS_ALL: Verb[] = [
       p: "welcomed",
     },
   },
-  { // VoA
-    i: "wet",
+  "wet": { // VoA
     presentSimple: {
       s: "wets",
       p: "wet",
@@ -7840,8 +7128,7 @@ const VERBS_ALL: Verb[] = [
       p: "wet",
     },
   },
-  { // VoA
-    i: "wheel",
+  "wheel": { // VoA
     presentSimple: {
       s: "wheels",
       p: "wheel",
@@ -7851,8 +7138,7 @@ const VERBS_ALL: Verb[] = [
       p: "wheeled",
     },
   },
-  { // VoA
-    i: "will",
+  "will": { // VoA
     presentSimple: {
       s: "wills",
       p: "will",
@@ -7862,8 +7148,7 @@ const VERBS_ALL: Verb[] = [
       p: "willed",
     },
   },
-  { // VoA
-    i: "win",
+  "win": { // VoA
     presentSimple: {
       s: "wins",
       p: "win",
@@ -7873,8 +7158,7 @@ const VERBS_ALL: Verb[] = [
       p: "won",
     },
   },
-  { // VoA
-    i: "wind",
+  "wind": { // VoA
     presentSimple: {
       s: "winds",
       p: "wind",
@@ -7884,8 +7168,7 @@ const VERBS_ALL: Verb[] = [
       p: "wound",
     },
   },
-  { // VoA
-    i: "wire",
+  "wire": { // VoA
     presentSimple: {
       s: "wires",
       p: "wire",
@@ -7895,8 +7178,7 @@ const VERBS_ALL: Verb[] = [
       p: "wired",
     },
   },
-  { // VoA
-    i: "wish",
+  "wish": { // VoA
     presentSimple: {
       s: "wishes",
       p: "wish",
@@ -7906,8 +7188,7 @@ const VERBS_ALL: Verb[] = [
       p: "wished",
     },
   },
-  { // VoA
-    i: "withdraw",
+  "withdraw": { // VoA
     presentSimple: {
       s: "withdraws",
       p: "withdraw",
@@ -7917,8 +7198,7 @@ const VERBS_ALL: Verb[] = [
       p: "withdrew",
     },
   },
-  { // VoA
-    i: "wonder",
+  "wonder": { // VoA
     presentSimple: {
       s: "wonders",
       p: "wonder",
@@ -7928,8 +7208,7 @@ const VERBS_ALL: Verb[] = [
       p: "wondered",
     },
   },
-  { // VoA
-    i: "work",
+  "work": { // VoA
     presentSimple: {
       s: "works",
       p: "work",
@@ -7939,8 +7218,7 @@ const VERBS_ALL: Verb[] = [
       p: "worked",
     },
   },
-  { // VoA
-    i: "worry",
+  "worry": { // VoA
     presentSimple: {
       s: "worries",
       p: "worry",
@@ -7950,8 +7228,7 @@ const VERBS_ALL: Verb[] = [
       p: "worried",
     },
   },
-  { // VoA
-    i: "wound",
+  "wound": { // VoA
     presentSimple: {
       s: "wounds",
       p: "wound",
@@ -7961,8 +7238,7 @@ const VERBS_ALL: Verb[] = [
       p: "wounded",
     },
   },
-  { // VoA
-    i: "wreck",
+  "wreck": { // VoA
     presentSimple: {
       s: "wrecks",
       p: "wreck",
@@ -7972,8 +7248,7 @@ const VERBS_ALL: Verb[] = [
       p: "wrecked",
     },
   },
-  { // VoA
-    i: "write",
+  "write": { // VoA
     presentSimple: {
       s: "writes",
       p: "write",
@@ -7983,8 +7258,7 @@ const VERBS_ALL: Verb[] = [
       p: "wrote",
     },
   },
-  { // VoA
-    i: "wrong",
+  "wrong": { // VoA
     presentSimple: {
       s: "wrongs",
       p: "wrong",
@@ -7994,8 +7268,7 @@ const VERBS_ALL: Verb[] = [
       p: "wronged",
     },
   },
-  { // VoA
-    i: "compound",
+  "compound": { // VoA
     presentSimple: {
       s: "compounds",
       p: "compound",
@@ -8005,26 +7278,4 @@ const VERBS_ALL: Verb[] = [
       p: "compounded",
     },
   },
-];
-
-const LIST_BITS = maxBitsForList(VERBS_ALL);
-const VERBS = takeNBitsBestItemsOf(VERBS_ALL, LIST_BITS, (v) => v.presentSimple.s);
-const VERB_BITS = LIST_BITS + 1; // present + past
-
-export class VerbBank implements IWordbank {
-  bits() {
-    return VERB_BITS;
-  }
-
-  getEntry(i: number, qty?: number) {
-    // `i` has enough entropy to select both the verb and its form. We split `i` into these two parts.
-    const verb_i = Math.floor(i / 2);
-    const tenseIsPresent = i % 2 === 0;
-    const isPlural = qty && qty > 1;
-
-    const overallVerb = VERBS[verb_i];
-    const tenseVerb = tenseIsPresent ? overallVerb.presentSimple : overallVerb.pastSimple;
-
-    return isPlural ? tenseVerb.p : tenseVerb.s;
-  }
-}
+};

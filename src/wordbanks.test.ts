@@ -13,7 +13,8 @@ const BITS_EXPECTED: BitsDict = {
   [PartType.preposition]: 5,
   [PartType.symbol]: 4,
   [PartType.uncountNoun]: 7,
-  [PartType.verb]: 11,
+  [PartType.transitiveVerb]: 11,
+  [PartType.intransitiveVerb]: 11,
 };
 
 describe("wordbanks", () => {
