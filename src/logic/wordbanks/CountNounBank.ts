@@ -756,7 +756,6 @@ const COUNT_NOUNS_ALL: CountNoun[] = [
   {singular: "telephone", plural: "telephones"}, // VoA
   {singular: "telescope", plural: "telescopes"}, // VoA
   {singular: "television", plural: "televisions"}, // VoA
-  {singular: "tell", plural: "tells"}, // VoA
   {singular: "temperature", plural: "temperatures"}, // VoA
   {singular: "tense", plural: "tenses"}, // VoA
   {singular: "term", plural: "terms"}, // VoA

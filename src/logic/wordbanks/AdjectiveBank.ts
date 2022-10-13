@@ -218,7 +218,6 @@ const ADJECTIVES_ALL = [
   "period", // VoA
   "permanent", // VoA
   "physical", // VoA
-  "pilot", // VoA
   "plastic", // VoA
   "poor", // VoA
   "popular", // VoA
