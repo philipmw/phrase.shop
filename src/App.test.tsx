@@ -3,7 +3,6 @@ import Adapter from "enzyme-adapter-preact-pure";
 
 import { App } from "./App";
 import { IEntropySource } from "./IEntropySource";
-import { PhraseGenState } from "./Phrase";
 import {makePhraseHard, makePhraseMedium} from "./logic/phraseTemplates";
 
 configure({ adapter: new Adapter() });
@@ -43,7 +42,7 @@ describe("App", () => {
     const wrapper = shallow(<App entropySource={mockEntropySource}/>);
 
     expect(wrapper.state("phraseGenState"))
-      .toEqual(PhraseGenState.ANIMATING.valueOf());
+      .toEqual("animating");
   });
 
   it("finishes animation", () => {
@@ -53,7 +52,7 @@ describe("App", () => {
         .onAnimationFinish();
 
     expect(wrapper.state("phraseGenState"))
-        .toEqual(PhraseGenState.GENERATED.valueOf());
+        .toEqual("generated");
   });
 
   it("updates entropy attributes on entropy change", () => {

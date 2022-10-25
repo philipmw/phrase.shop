@@ -39,7 +39,7 @@ export class Entropy extends Component<IProps, IState> {
                      this.props.setEntropySource(new ComputerEntropySource());
                    }}
                    checked={this.props.source instanceof ComputerEntropySource}
-                   disabled={this.props.phraseGenState === PhraseGenState.ANIMATING}
+                   disabled={this.props.phraseGenState === "animating"}
                    value="computer"/> 🖥 use my computer's random number generator
           </label>
         </li>
@@ -52,7 +52,7 @@ export class Entropy extends Component<IProps, IState> {
                      this.props.setEntropySource(new DiceEntropySource());
                    }}
                    checked={this.props.source instanceof DiceEntropySource}
-                   disabled={this.props.phraseGenState === PhraseGenState.ANIMATING}
+                   disabled={this.props.phraseGenState === "animating"}
                    value="dice"/> 🎲 I will roll my dice
           </label>
         </li>
@@ -60,7 +60,7 @@ export class Entropy extends Component<IProps, IState> {
 
       {
         this.props.source instanceof DiceEntropySource
-            && this.props.phraseGenState !== PhraseGenState.ANIMATING
+            && this.props.phraseGenState !== "animating"
         ? <Dice bitsAvailable={this.props.bitsAvailable}
                 diceSides={this.state.diceSides}
                 onDiceSidesChange={this.onDiceSidesChange}

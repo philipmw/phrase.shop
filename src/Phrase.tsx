@@ -3,11 +3,7 @@ import { Component } from "preact";
 import {PhrasePartUi, PhrasePartUiProps} from "./PhrasePartUi";
 import {PhraseStruct} from "./logic/phrase";
 
-export enum PhraseGenState {
-  NOT_STARTED,
-  ANIMATING,
-  GENERATED,
-}
+export type PhraseGenState = "not-started" | "animating" | "generated";
 
 interface IProps {
   genState: PhraseGenState;
@@ -26,7 +22,7 @@ export class Phrase extends Component<IProps> {
      * don't stretch to the full height of flexbox. I did not find a setting of `align-items`
      * that works without an inner div.
      */
-    return <div id="phrase">
+    return <div id="phrase" class={this.props.genState}>
       <div id="phrase-inner">
         {orderedPhraseParts.map((part, i) =>
           <span key={this.props.ppUiProps[i].key}>

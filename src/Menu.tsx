@@ -27,7 +27,7 @@ export class Menu extends Component<IProps> {
               id="template-small"
               class="template"
               title={`${entropyForSmall} bits of entropy`}
-              disabled={this.props.phraseGenState === PhraseGenState.ANIMATING
+              disabled={this.props.phraseGenState === "animating"
                 || this.props.entropyBitsAvailable < entropyForSmall}
               onClick={() => { this.props.setPhraseStruct(makePhraseSimple()); }}>
         <span className="callToAction">💪</span>
@@ -36,7 +36,7 @@ export class Menu extends Component<IProps> {
               id="template-medium"
               class="template"
               title={`${entropyForMed} bits of entropy`}
-              disabled={this.props.phraseGenState === PhraseGenState.ANIMATING
+              disabled={this.props.phraseGenState === "animating"
                 || this.props.entropyBitsAvailable < entropyForMed}
               onClick={() => { this.props.setPhraseStruct(makePhraseMedium()); }}>
         <span className="callToAction">💪💪</span>
@@ -45,7 +45,7 @@ export class Menu extends Component<IProps> {
               id="template-large"
               class="template"
               title={`${entropyForLarge} bits of entropy`}
-              disabled={this.props.phraseGenState === PhraseGenState.ANIMATING
+              disabled={this.props.phraseGenState === "animating"
                 || this.props.entropyBitsAvailable < entropyForLarge}
               onClick={() => { this.props.setPhraseStruct(makePhraseHard()); }}>
         <span className="callToAction">💪💪💪</span>

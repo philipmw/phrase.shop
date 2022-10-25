@@ -35,7 +35,7 @@ export class App extends Component<IProps, IState> {
     this.state = {
       entropyBitsAvailable: entropySource.bitsAvailable(),
       entropySource,
-      phraseGenState: PhraseGenState.NOT_STARTED,
+      phraseGenState: "not-started",
       phraseStruct: makePhraseSimple(),
       phrasePartsUiProps: makePhrasePartUiProps(makePhraseSimple()),
       urlSearchParams: getUrlSearchParams(),
@@ -74,14 +74,14 @@ export class App extends Component<IProps, IState> {
       );
 
       return {
-        phraseGenState: PhraseGenState.ANIMATING,
+        phraseGenState: "animating",
       };
     });
   }
 
   private readonly onAnimationFinish = () => {
     this.setState({
-      phraseGenState: PhraseGenState.GENERATED,
+      phraseGenState: "generated",
       phrasePartsUiProps: this.state.phrasePartsUiProps.map(prop => ({
         ...prop,
         animation: undefined,
@@ -117,7 +117,7 @@ export class App extends Component<IProps, IState> {
 
     const newPpUiProps = makePhrasePartUiProps(phraseStruct);
     this.setState(() => ({
-      phraseGenState: PhraseGenState.NOT_STARTED,
+      phraseGenState: "not-started",
       phraseStruct,
       phrasePartsUiProps: newPpUiProps,
     }));

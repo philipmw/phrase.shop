@@ -2,7 +2,6 @@ import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 
 import { Menu } from "./Menu";
-import { PhraseGenState } from "./Phrase";
 import {makePhraseHard, makePhraseMedium, makePhraseSimple} from "./logic/phraseTemplates";
 
 configure({ adapter: new Adapter() });
@@ -21,7 +20,7 @@ describe("Menu", () => {
       wrapper = shallow(<Menu
           setPhraseStruct={setPhraseStructFn}
           entropyBitsAvailable={100}
-          phraseGenState={PhraseGenState.NOT_STARTED}
+          phraseGenState={"not-started"}
       />);
     });
 
@@ -81,7 +80,7 @@ describe("Menu", () => {
     const wrapper = shallow(<Menu
         setPhraseStruct={setPhraseStructFn}
         entropyBitsAvailable={100}
-        phraseGenState={PhraseGenState.ANIMATING}
+        phraseGenState={"animating"}
     />);
 
     it("has disabled phrase template buttons", () => {
@@ -104,7 +103,7 @@ describe("Menu", () => {
       wrapper = shallow(<Menu
           setPhraseStruct={setPhraseStructFn}
           entropyBitsAvailable={1000}
-          phraseGenState={PhraseGenState.GENERATED}
+          phraseGenState={"generated"}
       />);
     });
 
@@ -128,7 +127,7 @@ describe("Menu", () => {
       wrapper = shallow(<Menu
         setPhraseStruct={setPhraseStructFn}
         entropyBitsAvailable={30}
-        phraseGenState={PhraseGenState.GENERATED}
+        phraseGenState={"generated"}
       />);
     });
 

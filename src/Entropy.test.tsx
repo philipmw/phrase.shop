@@ -6,7 +6,6 @@ import { Dice } from "./Dice";
 import { DiceEntropySource } from "./DiceEntropySource";
 import { Entropy } from "./Entropy";
 import { IEntropySource } from "./IEntropySource";
-import { PhraseGenState } from "./Phrase";
 
 configure({ adapter: new Adapter() });
 
@@ -21,7 +20,7 @@ describe("Entropy", () => {
   describe("when phrase is being generated", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.ANIMATING}
+                                     phraseGenState={"animating"}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
@@ -37,7 +36,7 @@ describe("Entropy", () => {
   describe("when phrase is generated", () => {
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.GENERATED}
+                                     phraseGenState={"generated"}
                                      setEntropySource={emptySetEntropySourceFn}
                                      source={testSource}/>);
 
@@ -54,7 +53,7 @@ describe("Entropy", () => {
     const setEntropySourceFn = jest.fn();
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.NOT_STARTED}
+                                     phraseGenState={"not-started"}
                                      setEntropySource={setEntropySourceFn}
                                      source={new ComputerEntropySource()}/>);
 
@@ -81,7 +80,7 @@ describe("Entropy", () => {
     const setEntropySourceFn = jest.fn();
     const wrapper = shallow(<Entropy bitsAvailable={0}
                                      onEntropyChange={emptyOnEntropyChangeFn}
-                                     phraseGenState={PhraseGenState.NOT_STARTED}
+                                     phraseGenState={"not-started"}
                                      setEntropySource={setEntropySourceFn}
                                      source={new DiceEntropySource()}/>);
 

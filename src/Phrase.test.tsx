@@ -1,7 +1,7 @@
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-preact-pure";
 
-import { Phrase, PhraseGenState } from "./Phrase";
+import { Phrase } from "./Phrase";
 import {makePhraseSimple} from "./logic/phraseTemplates";
 import {makePhrasePartUiProps} from "./ui/phrasePartUiProps";
 import {makeTestPhraseOfOneNoun} from "./test/testPhraseTemplates";
@@ -31,9 +31,16 @@ describe("Phrase", () => {
     ];
 
     const wrapper = shallow(
-      <Phrase genState={PhraseGenState.ANIMATING}
+      <Phrase genState={"animating"}
               phraseStruct={testPhraseStruct}
               ppUiProps={testPpUiProps}/>);
+
+    it("indicates animation state on phrase div", () => {
+      const phraseWrapper = wrapper.find("#phrase");
+      expect(phraseWrapper)
+        .toHaveLength(1);
+      expect(phraseWrapper.render().attr("class")).toBe("animating");
+    });
 
     it("renders phrase parts", () => {
       const phraseWrapper = wrapper.find("#phrase");
@@ -60,9 +67,16 @@ describe("Phrase", () => {
   describe("when generated", () => {
     const testPhraseStruct = makeTestPhraseOfOneNoun("testworld");
     const wrapper = shallow(
-      <Phrase genState={PhraseGenState.GENERATED}
+      <Phrase genState={"generated"}
               ppUiProps={makePhrasePartUiProps(testPhraseStruct)}
               phraseStruct={testPhraseStruct}/>);
+
+    it("indicates animation state on phrase div", () => {
+      const phraseWrapper = wrapper.find("#phrase");
+      expect(phraseWrapper)
+        .toHaveLength(1);
+      expect(phraseWrapper.render().attr("class")).toBe("generated");
+    });
 
     it("renders phrase parts", () => {
       const phraseWrapper = wrapper.find("#phrase");
